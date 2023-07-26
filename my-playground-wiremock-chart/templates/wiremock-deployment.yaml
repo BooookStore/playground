@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
       - name: wiremock
-        image: wiremock/wiremock:2.35.0-1
+        image: wiremock/wiremock:{{ .Values.image.tag }}
