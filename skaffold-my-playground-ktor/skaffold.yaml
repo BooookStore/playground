@@ -4,7 +4,7 @@ metadata:
   name: my-playground-ktor
 build:
   artifacts:
-    - image: booookstore.my-playground-ktor
+    - image: booookstore/my-playground-ktor
       docker:
         dockerfile: Dockerfile
   tagPolicy:
@@ -14,4 +14,10 @@ build:
   local:
     push: false
     useBuildkit: true
-  
+deploy:
+  helm:
+    releases:
+      - name: my-playground-ktor
+        chartPath: helm
+        setValueTemplates:
+          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_my_playground_ktor }}"
