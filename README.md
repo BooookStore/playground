@@ -1,3 +1,3 @@
-# helm-playground
+# playground
 
-helm playground.
+playground
