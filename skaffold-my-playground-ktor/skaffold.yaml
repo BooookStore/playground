@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: my-playground-ktor
+build:
+  artifacts:
+    - image: booookstore.my-playground-ktor
+      docker:
+        dockerfile: Dockerfile
+  tagPolicy:
+    dateTime:
+      format: "2006-01-02_15-04-05.999_MST"
+      timezone: "Local"
+  local:
+    push: false
+    useBuildkit: true
+  
