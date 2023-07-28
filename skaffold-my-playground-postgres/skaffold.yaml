@@ -1,0 +1,24 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: my-playground-postgres
+build:
+  artifacts:
+    - image: booookstore/my-playground-postgres
+      docker:
+        dockerfile: Dockerfile
+  tagPolicy:
+    dateTime:
+      format: "2006-01-02_15-04-05.999_MST"
+      timezone: "Local"
+  local:
+    push: false
+    useBuildkit: true
+deploy:
+  helm:
+    releases:
+      - name: my-playground-postgres
+        chartPath: helm
+        setValueTemplates:
+          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_my_playground_postgres }}"
+      
