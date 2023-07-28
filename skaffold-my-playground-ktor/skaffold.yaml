@@ -6,10 +6,7 @@ requires:
   - path: ../skaffold-my-playground-postgres
 build:
   artifacts:
-    - image: booookstore/my-playground-ktor-1
-      docker:
-        dockerfile: Dockerfile
-    - image: booookstore/my-playground-ktor-2
+    - image: booookstore/my-playground-ktor
       docker:
         dockerfile: Dockerfile
   tagPolicy:
@@ -22,11 +19,7 @@ build:
 deploy:
   helm:
     releases:
-      - name: my-playground-ktor-1
+      - name: my-playground-ktor
         chartPath: helm
         setValueTemplates:
-          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_my_playground_ktor_1 }}"
-      - name: my-playground-ktor-2
-        chartPath: helm
-        setValueTemplates:
-          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_my_playground_ktor_2 }}"
+          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_my_playground_ktor }}"
