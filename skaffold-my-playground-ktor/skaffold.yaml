@@ -2,6 +2,8 @@ apiVersion: skaffold/v4beta6
 kind: Config
 metadata:
   name: my-playground-ktor
+requires:
+  - path: ../skaffold-my-playground-postgres
 build:
   artifacts:
     - image: booookstore/my-playground-ktor-1
