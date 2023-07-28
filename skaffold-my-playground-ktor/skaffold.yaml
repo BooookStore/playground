@@ -4,7 +4,10 @@ metadata:
   name: my-playground-ktor
 build:
   artifacts:
-    - image: booookstore/my-playground-ktor
+    - image: booookstore/my-playground-ktor-1
+      docker:
+        dockerfile: Dockerfile
+    - image: booookstore/my-playground-ktor-2
       docker:
         dockerfile: Dockerfile
   tagPolicy:
@@ -17,7 +20,11 @@ build:
 deploy:
   helm:
     releases:
-      - name: my-playground-ktor
+      - name: my-playground-ktor-1
         chartPath: helm
         setValueTemplates:
-          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_my_playground_ktor }}"
+          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_my_playground_ktor_1 }}"
+      - name: my-playground-ktor-2
+        chartPath: helm
+        setValueTemplates:
+          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_my_playground_ktor_2 }}"
