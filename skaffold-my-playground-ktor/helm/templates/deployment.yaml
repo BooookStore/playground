@@ -15,3 +15,7 @@ spec:
       containers:
       - name: web
         image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
