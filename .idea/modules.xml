@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ktor-item-order-service/item-order-api/item-order-api.iml" filepath="$PROJECT_DIR$/ktor-item-order-service/item-order-api/item-order-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/playground.iml" filepath="$PROJECT_DIR$/.idea/playground.iml" />
     </modules>
   </component>
