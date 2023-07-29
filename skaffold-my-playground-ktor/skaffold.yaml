@@ -4,6 +4,7 @@ metadata:
   name: my-playground-ktor
 requires:
   - path: ../skaffold-my-playground-postgres
+  - path: ../skaffold-my-playground-wiremock
 build:
   artifacts:
     - image: booookstore/my-playground-ktor

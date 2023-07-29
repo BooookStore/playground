@@ -1,0 +1,11 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: my-playground-wiremock
+deploy:
+  helm:
+    releases:
+    - name: my-playground-wiremock
+      chartPath: helm
+      setValues:
+        image: wiremock/wiremock:2.35.0-1
