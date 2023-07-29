@@ -19,6 +19,12 @@ build:
 deploy:
   helm:
     releases:
+    - name: item-order-api
+      chartPath: helm
+      setValues:
+        name: item-order-api
+      setValueTemplates:
+        image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_playground_item_order_api }}"
     - name: item-search-api
       chartPath: ../wiremock/helm
       setValues:
