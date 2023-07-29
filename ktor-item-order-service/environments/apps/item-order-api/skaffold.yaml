@@ -1,7 +1,21 @@
+#file: noinspection KubernetesUnknownResourcesInspection
 apiVersion: skaffold/v4beta6
 kind: Config
 metadata:
   name: item-order-api
+build:
+  artifacts:
+    - image: booookstore/playground/item-order-api
+      context: ../../../apps/item-order-api
+      jib:
+        type: maven
+  tagPolicy:
+    dateTime:
+      format: 2006-01-02_15-04-05.999_MST
+      timezone: "Local"
+  local:
+    useBuildkit: true
+    push: false
 deploy:
   helm:
     releases:
