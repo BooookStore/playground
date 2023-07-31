@@ -13,5 +13,5 @@ spec:
         app: {{ .Release.Name }}
     spec:
       containers:
-      - name: wiremock
-        image: wiremock/wiremock:{{ .Values.image.tag }}
+        - name: wiremock
+          image: wiremock/wiremock:{{ .Values.image.tag }}
