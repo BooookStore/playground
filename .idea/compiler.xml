@@ -9,5 +9,10 @@
         <module name="item-order-api" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com.example.ktor-hello-world" target="11" />
+      <module name="com.example.ktor-hello-world.main" target="11" />
+      <module name="com.example.ktor-hello-world.test" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
