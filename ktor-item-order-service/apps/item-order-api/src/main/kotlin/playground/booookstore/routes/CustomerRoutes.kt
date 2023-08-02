@@ -14,7 +14,7 @@ fun Route.customerRouting() {
     route("/customer") {
         get {
             if (customerStorage.isNotEmpty()) {
-                call.respond<List<Customer>>(customerStorage)
+                call.respond<MutableList<Customer>>(customerStorage)
             } else {
                 call.respondText("No customers found")
             }
@@ -35,6 +35,7 @@ fun Route.customerRouting() {
             Mutex().withLock {
                 customerStorage.add(customer)
             }
+            call.application.environment.log.info("Customer created. id: ${customer.id}")
             call.respondText("Customer storage correctly", status = HttpStatusCode.Created)
         }
         delete("{id?}") {
