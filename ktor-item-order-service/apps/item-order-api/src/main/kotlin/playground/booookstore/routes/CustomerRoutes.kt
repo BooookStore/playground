@@ -5,6 +5,8 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import playground.booookstore.models.Customer
 import playground.booookstore.models.customerStorage
 
@@ -30,11 +32,20 @@ fun Route.customerRouting() {
         }
         post {
             val customer = call.receive<Customer>()
-            // FIX ME: 複数のリクエストが同時に発生した場合、複数のスレッドが変数へアクセスすることを考慮すること。
-            customerStorage.add(customer)
+            Mutex().withLock {
+                customerStorage.add(customer)
+            }
             call.respondText("Customer storage correctly", status = HttpStatusCode.Created)
         }
-        delete {
+        delete("{id?}") {
+            val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+            Mutex().withLock {
+                if (customerStorage.removeIf { it.id == id }) {
+                    call.respondText("Customer remove correctly", status = HttpStatusCode.Accepted)
+                } else {
+                    call.respondText("Not Found", status = HttpStatusCode.NotFound)
+                }
+            }
         }
     }
 }
