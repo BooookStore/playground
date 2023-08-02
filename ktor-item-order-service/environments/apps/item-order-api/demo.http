@@ -11,3 +11,13 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/customer
 Accept: application/json
+
+> {%
+    client.global.set("id", response.body[0].id)
+%}
+
+###
+< {%
+    client.log("delete customer by id " + client.global.get("id"))
+%}
+DELETE http://localhost:8080/customer/{{id}}
