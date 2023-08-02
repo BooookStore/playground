@@ -1,0 +1,13 @@
+POST http://localhost:8080/customer
+Content-Type: application/json
+
+{
+  "id": "{{$random.uuid}}",
+  "firstName": "book",
+  "lastName": "store",
+  "email": "{{$random.email}}"
+}
+
+###
+GET http://localhost:8080/customer
+Accept: application/json
