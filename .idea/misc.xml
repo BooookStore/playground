@@ -4,6 +4,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/ktor-item-order-service/apps/item-order-api/pom.xml" />
+        <option value="$PROJECT_DIR$/kotlin-coroutine/pom.xml" />
       </list>
     </option>
   </component>

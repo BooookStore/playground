@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="item-order-api" />
+        <module name="kotlin-coroutine" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
