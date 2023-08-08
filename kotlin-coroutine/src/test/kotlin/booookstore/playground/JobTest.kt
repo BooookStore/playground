@@ -1,6 +1,7 @@
 package booookstore.playground
 
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -11,12 +12,15 @@ class JobTest {
     @Test
     fun job() = runBlocking {
         var message = ""
-        val job = launch {
+        val jobA = launch {
             delay(100L)
             message += "hello"
         }
-        job.join()
-        assertEquals("hello", message)
+        val jobB = launch {
+            delay(200L)
+            message += ",world"
+        }
+        listOf(jobA, jobB).joinAll()
+        assertEquals("hello,world", message)
     }
-
 }
