@@ -7,8 +7,8 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import playground.booookstore.models.Customer
-import playground.booookstore.models.customerStorage
+import playground.booookstore.domain.Customer
+import playground.booookstore.domain.customerStorage
 
 fun Route.customerRouting() {
     route("/customer") {
