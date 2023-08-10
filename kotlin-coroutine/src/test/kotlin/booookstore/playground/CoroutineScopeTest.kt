@@ -7,13 +7,24 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+@Suppress("NonAsciiCharacters")
 class CoroutineScopeTest {
 
-    /**
-     * CoroutineScopeは新たなCoroutineを作成するのではなく、現在のCoroutineを引き継ぐ。
-     */
     @Test
     fun coroutineScope() = runBlocking {
+        val message = secondCoroutineScope()
+        assertEquals("hello", message)
+    }
+
+    private suspend fun secondCoroutineScope(): String = coroutineScope {
+        async {
+            delay(100L)
+            "hello"
+        }.await()
+    }
+
+    @Test
+    fun `CoroutineScopeは新たなCoroutineを作成するのではなく、現在のCoroutineを引き継ぐ`() = runBlocking {
         val message = otherCoroutineScope()
         println("${Thread.currentThread().name}: > receive message from otherCoroutineScope")
         assertEquals("hello", message)
