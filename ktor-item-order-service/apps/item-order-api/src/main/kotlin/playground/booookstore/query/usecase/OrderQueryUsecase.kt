@@ -2,12 +2,12 @@ package playground.booookstore.query.usecase
 
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 import playground.booookstore.query.repository.ItemQueryRepository
 import playground.booookstore.query.repository.OrderQueryRepository
 import playground.booookstore.query.type.ItemId
 import playground.booookstore.query.type.OrderId
-import java.time.LocalDateTime
 
 class OrderQueryUsecase(
     private val orderQueryRepository: OrderQueryRepository,
@@ -24,7 +24,7 @@ class OrderQueryUsecase(
         OrderQueryView(
             id = order.id,
             orderDateTime = order.orderDateTime,
-            items = items.set.map { OrderQueryViewItem(id = it.id, name = it.name) }
+            items = items.set.map { OrderQueryViewItem(id = it.id, name = it.name) }.toMutableList()
         )
     }
 
@@ -34,7 +34,7 @@ class OrderQueryUsecase(
 data class OrderQueryView(
     val id: OrderId,
     val orderDateTime: LocalDateTime,
-    val items: List<OrderQueryViewItem>,
+    val items: MutableList<OrderQueryViewItem>,
 )
 
 @Serializable

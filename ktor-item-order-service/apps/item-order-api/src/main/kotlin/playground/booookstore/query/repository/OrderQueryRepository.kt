@@ -1,7 +1,7 @@
 package playground.booookstore.query.repository
 
+import kotlinx.datetime.LocalDateTime
 import playground.booookstore.query.type.OrderId
-import java.time.LocalDateTime
 
 interface OrderQueryRepository {
 

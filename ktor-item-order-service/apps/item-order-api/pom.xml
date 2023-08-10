@@ -16,7 +16,8 @@
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <main.class>playground.booookstore.ApplicationKt</main.class>
         <jib.maven.plugin-version>3.3.2</jib.maven.plugin-version>
-        <serialization.version>1.5.1</serialization.version>
+        <serialization.version>1.6.0-RC</serialization.version>
+        <kotlinx.datetime.version>0.4.0</kotlinx.datetime.version>
     </properties>
     <repositories>
     </repositories>
@@ -40,6 +41,11 @@
             <groupId>io.ktor</groupId>
             <artifactId>ktor-serialization-kotlinx-json-jvm</artifactId>
             <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-datetime-jvm</artifactId>
+            <version>${kotlinx.datetime.version}</version>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
@@ -81,6 +87,9 @@
                 <version>${kotlin_version}</version>
                 <configuration>
                     <jvmTarget>1.8</jvmTarget>
+                    <compilerPlugins>
+                        <plugin>kotlinx-serialization</plugin>
+                    </compilerPlugins>
                 </configuration>
                 <executions>
                     <execution>
