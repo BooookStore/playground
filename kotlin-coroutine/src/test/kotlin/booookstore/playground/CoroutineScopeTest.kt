@@ -12,14 +12,19 @@ class CoroutineScopeTest {
     @Test
     fun coroutineScope() = runBlocking {
         val message = otherCoroutineScope()
-        println("receive message from otherCoroutineScope")
+        println("${Thread.currentThread().name}: > receive message from otherCoroutineScope")
         assertEquals("hello", message)
     }
 
     private suspend fun otherCoroutineScope(): String = coroutineScope {
-        println("entry otherCoroutineScope")
+        println("${Thread.currentThread().name}: > entry otherCoroutineScope")
         val deferred = async {
+            println("${Thread.currentThread().name}: >> entry async in otherCoroutineScope")
             delay(100L)
+            coroutineScope {
+                println("${Thread.currentThread().name}: >> entry coroutineScope in async in otherCoroutineScope")
+                delay(100L)
+            }
             "hello"
         }
         deferred.await()
