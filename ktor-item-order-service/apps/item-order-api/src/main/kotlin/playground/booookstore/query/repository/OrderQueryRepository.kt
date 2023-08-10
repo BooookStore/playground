@@ -5,7 +5,7 @@ import playground.booookstore.query.type.OrderId
 
 interface OrderQueryRepository {
 
-    suspend fun findOrder(orderId: OrderId): OrderQueryModel
+    suspend fun find(orderId: OrderId): OrderQueryModel
 
 }
 

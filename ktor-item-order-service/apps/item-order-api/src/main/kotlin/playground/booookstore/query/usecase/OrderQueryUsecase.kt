@@ -15,7 +15,7 @@ class OrderQueryUsecase(
 ) {
 
     suspend fun execute(orderId: OrderId) = coroutineScope {
-        val orderDeferred = async { orderQueryRepository.findOrder(orderId) }
+        val orderDeferred = async { orderQueryRepository.find(orderId) }
         val itemsDeferred = async { itemQueryRepository.find(orderId) }
 
         val order = orderDeferred.await()
