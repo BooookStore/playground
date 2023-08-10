@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test
 
 class CoroutineScopeTest {
 
+    /**
+     * CoroutineScopeは新たなCoroutineを作成するのではなく、現在のCoroutineを引き継ぐ。
+     */
     @Test
     fun coroutineScope() = runBlocking {
         val message = otherCoroutineScope()
