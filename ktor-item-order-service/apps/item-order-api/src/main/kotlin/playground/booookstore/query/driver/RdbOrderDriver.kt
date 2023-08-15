@@ -8,6 +8,7 @@ class RdbOrderDriver {
         delay(3000L)
         return mapOf(
             "id" to orderId,
+            "shopId" to "SA0057",
             "orderDateTime" to "2023-08-10T21:12:00.00",
         )
     }

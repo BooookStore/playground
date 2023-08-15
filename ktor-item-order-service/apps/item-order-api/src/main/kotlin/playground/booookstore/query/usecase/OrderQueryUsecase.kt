@@ -8,6 +8,7 @@ import playground.booookstore.query.gateway.ItemQueryGateway
 import playground.booookstore.query.gateway.OrderQueryGateway
 import playground.booookstore.query.type.ItemId
 import playground.booookstore.query.type.OrderId
+import playground.booookstore.query.type.ShopId
 
 class OrderQueryUsecase(
     private val orderQueryGateway: OrderQueryGateway,
@@ -24,6 +25,7 @@ class OrderQueryUsecase(
         OrderQueryView(
             id = order.id,
             orderDateTime = order.orderDateTime,
+            shopId = order.shopId,
             items = items.set.map { OrderQueryViewItem(id = it.id, name = it.name) }.toMutableList()
         )
     }
@@ -34,6 +36,7 @@ class OrderQueryUsecase(
 data class OrderQueryView(
     val id: OrderId,
     val orderDateTime: LocalDateTime,
+    val shopId: ShopId,
     val items: MutableList<OrderQueryViewItem>,
 )
 
