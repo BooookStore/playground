@@ -7,6 +7,7 @@ import io.ktor.server.routing.*
 import playground.booookstore.query.driver.RdbOrderDriver
 import playground.booookstore.query.gateway.ItemQueryGateway
 import playground.booookstore.query.gateway.OrderQueryGateway
+import playground.booookstore.query.gateway.ShopQueryGateway
 import playground.booookstore.query.usecase.OrderQueryUsecase
 
 fun Route.queryOrderRouting() {
@@ -16,7 +17,8 @@ fun Route.queryOrderRouting() {
                 status = HttpStatusCode.BadRequest,
                 text = "Missing id",
             )
-            OrderQueryUsecase(OrderQueryGateway(RdbOrderDriver()), ItemQueryGateway()).execute(orderId)
+            OrderQueryUsecase(OrderQueryGateway(RdbOrderDriver()), ShopQueryGateway(), ItemQueryGateway())
+                .execute(orderId)
                 .let { call.respond(it) }
         }
     }
