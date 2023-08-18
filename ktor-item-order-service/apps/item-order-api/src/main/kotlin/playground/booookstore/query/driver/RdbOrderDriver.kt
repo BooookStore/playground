@@ -1,16 +1,20 @@
 package playground.booookstore.query.driver
 
-import kotlinx.coroutines.delay
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.selectAll
+import playground.booookstore.query.driver.dao.DatabaseFactory.dbQuery
+import playground.booookstore.query.driver.dao.OrderTable
+import playground.booookstore.query.driver.dao.OrderTableRow
 import playground.booookstore.query.type.OrderId
 
 class RdbOrderDriver {
-    suspend fun find(orderId: OrderId): Map<String, String> {
-        delay(3000L)
-        return mapOf(
-            "id" to orderId,
-            "shopId" to "SA0057",
-            "orderDateTime" to "2023-08-10T21:12:00.00",
-        )
+
+    suspend fun find(orderId: OrderId) = dbQuery {
+        OrderTable.selectAll().map(::mapToOrderTableRow).first()
     }
+
+    private fun mapToOrderTableRow(row: ResultRow) = OrderTableRow(
+        id = row[OrderTable.id]
+    )
 
 }

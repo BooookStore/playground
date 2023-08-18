@@ -8,7 +8,7 @@ import playground.booookstore.query.type.ShopId
 class OrderQueryGateway(private val rdbOrderDriver: RdbOrderDriver) {
 
     suspend fun find(orderId: OrderId): OrderQueryModel = rdbOrderDriver.find(orderId).let {
-        OrderQueryModel(id = it["id"]!!, orderDateTime = LocalDateTime.parse(it["orderDateTime"]!!), shopId = it["shopId"]!!)
+        OrderQueryModel(id = orderId, orderDateTime = LocalDateTime.parse("2023-08-18T14:52:00.00"), shopId = "9870")
     }
 
 }
