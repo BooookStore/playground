@@ -1,11 +1,14 @@
 package playground.booookstore.query.gateway
 
 import kotlinx.coroutines.delay
+import playground.booookstore.query.port.ItemQueryModel
+import playground.booookstore.query.port.ItemQueryPort
+import playground.booookstore.query.port.ItemsQueryModel
 import playground.booookstore.query.type.OrderId
 
-class ItemQueryGateway {
+class ItemQueryGateway : ItemQueryPort {
 
-    suspend fun find(orderId: OrderId): ItemsQueryModel {
+    override suspend fun find(orderId: OrderId): ItemsQueryModel {
         delay(3000L)
         @Suppress("SpellCheckingInspection")
         return ItemsQueryModel(
@@ -18,7 +21,3 @@ class ItemQueryGateway {
     }
 
 }
-
-data class ItemsQueryModel(val set: Set<ItemQueryModel>)
-
-data class ItemQueryModel(val id: String, val name: String)

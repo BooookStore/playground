@@ -4,23 +4,23 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
-import playground.booookstore.query.gateway.ItemQueryGateway
-import playground.booookstore.query.gateway.ShopQueryGateway
+import playground.booookstore.query.port.ItemQueryPort
 import playground.booookstore.query.port.OrderQueryPort
+import playground.booookstore.query.port.ShopQueryPort
 import playground.booookstore.query.type.ItemId
 import playground.booookstore.query.type.OrderId
 import playground.booookstore.query.type.ShopId
 
 class OrderQueryUsecase(
     private val orderQueryPort: OrderQueryPort,
-    private val shopQueryGateway: ShopQueryGateway,
-    private val itemQueryGateway: ItemQueryGateway,
+    private val shopQueryPort: ShopQueryPort,
+    private val itemQueryPort: ItemQueryPort,
 ) {
 
     suspend fun execute(orderId: OrderId) = coroutineScope {
         val orderDeferred = async { orderQueryPort.find(orderId) }
-        val shopDeferred = async { shopQueryGateway.find(orderId) }
-        val itemsDeferred = async { itemQueryGateway.find(orderId) }
+        val shopDeferred = async { shopQueryPort.find(orderId) }
+        val itemsDeferred = async { itemQueryPort.find(orderId) }
 
         val order = orderDeferred.await()
         val shop = shopDeferred.await()
