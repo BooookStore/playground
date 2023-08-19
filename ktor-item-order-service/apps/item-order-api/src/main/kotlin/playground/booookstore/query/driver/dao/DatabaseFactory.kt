@@ -8,8 +8,8 @@ object DatabaseFactory {
 
     fun init() {
         val driverClassName = "org.postgresql.Driver"
-        val jdbcURL = "jdbc:postgresql://host:port/database"
-        Database.connect(jdbcURL, driverClassName)
+        val jdbcURL = "jdbc:postgresql://item-order-postgres:5432"
+        Database.connect(jdbcURL, driverClassName, "postgres", "postgres")
     }
 
     suspend fun <T> dbQuery(block: suspend () -> T): T =
