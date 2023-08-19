@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}-postgres
+  name: {{ .Values.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.name }}-postgres
+      app: {{ .Values.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.name }}-postgres
+        app: {{ .Values.name }}
     spec:
       containers:
         - name: postgres
