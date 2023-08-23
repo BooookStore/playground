@@ -7,3 +7,7 @@ data:
   {{- if eq .Values.favorite.drink "coffee" }}
   mug: "true"
   {{- end }}
+  {{- with .Values.favorite }}
+  drink: {{ .drink | default "tea" | quote }}
+  food: {{ .food | upper | quote }}
+  {{- end }}
