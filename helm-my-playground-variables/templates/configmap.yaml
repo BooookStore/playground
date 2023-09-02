@@ -10,3 +10,7 @@ data:
   food: {{ .food | upper | quote }}
   release: {{ $relname | quote }}
   {{- end }}
+  toppings: |-
+    {{- range $index, $topping := .Values.pizzaToppings }}
+    - {{ $index }}: {{ $topping }}
+    {{- end }}
