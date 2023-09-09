@@ -1,0 +1,10 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: item-order-postgres
+build:
+  artifacts:
+    - image: booookstore/playground/item-order-postgres
+  local:
+    push: false
+    useBuildkit: true
