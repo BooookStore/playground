@@ -3,16 +3,11 @@ apiVersion: skaffold/v4beta6
 kind: Config
 metadata:
   name: item-order-api-deps
+requires:
+  - path: ../item-order-postgres
 deploy:
   helm:
     releases:
-    - name: item-order-postgres
-      chartPath: ../item-order-postgres/helm
-      setValues:
-        name: item-order-postgres
-        postgres_image_tag: 15
-        postgres_password: password
-        port: 8081
     - name: item-search-api
       chartPath: ../wiremock/helm
       setValues:
