@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:{{ .Values.postgres_image_tag }}
+          image: {{ .Values.image }}
           imagePullPolicy: IfNotPresent
           ports:
             - name: postgres

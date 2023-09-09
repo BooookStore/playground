@@ -8,3 +8,14 @@ build:
   local:
     push: false
     useBuildkit: true
+deploy:
+  helm:
+    releases:
+      - name: item-order-postgres
+        chartPath: helm
+        setValues:
+          name: item-order-postgres
+          postgres_password: password
+          port: 8081
+        setValueTemplates:
+          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_playground_item_order_postgres }}"
