@@ -14,7 +14,7 @@ class RdbOrderDriver {
     }
 
     private fun mapToOrderTableRow(row: ResultRow) = OrderTableRow(
-        id = row[OrderTable.id]
+        id = row[OrderTable.id].toString()
     )
 
 }
