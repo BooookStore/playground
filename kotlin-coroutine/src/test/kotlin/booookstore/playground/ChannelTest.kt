@@ -108,6 +108,34 @@ class ChannelTest {
     }
 
     @Test
+    fun runNonCancellableBlock() {
+        runBlocking {
+            var counter = 0
+            val job = launch(Dispatchers.Default) {
+                repeat(1000) { i ->
+                    try {
+                        // print message twice a second
+                        println("job: I'm sleeping $i")
+                        counter++
+                        delay(500L)
+                    } finally {
+                        withContext(NonCancellable) {
+                            println("job: I'm running finally")
+                            delay(1000L)
+                            println("job: And I've just delayed for 1 sec because I'm non-cancellable")
+                        }
+                    }
+                }
+            }
+            delay(1300L)
+            println("main: I'm tired of waiting!")
+            job.cancelAndJoin()
+            println("main: Now I can quit.")
+            assertEquals(2, counter)
+        }
+    }
+
+    @Test
     fun channelTest() = runBlocking {
         val channelA = Channel<Int>(3)
         launch { produce(channelA) }
