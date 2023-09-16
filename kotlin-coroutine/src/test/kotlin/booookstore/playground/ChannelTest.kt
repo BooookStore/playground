@@ -33,6 +33,31 @@ class ChannelTest {
     }
 
     @Test
+    fun coroutineCancellationIsCooperative() {
+        runBlocking {
+            var counter = 0
+            val startTime = System.currentTimeMillis()
+            val job = launch(Dispatchers.Default) {
+                var nextPrintTime = startTime
+                var i = 0
+                while (i < 5) { // computation loop, just wastes CPU
+                    // print a message twice a second
+                    if (System.currentTimeMillis() >= nextPrintTime) {
+                        println("job: I'm sleeping ${i++}")
+                        nextPrintTime += 500L
+                        counter++
+                    }
+                }
+            }
+            delay(1300L)
+            println("main: I'm tired of waiting!")
+            job.cancelAndJoin()
+            println("main: Now I can quit.")
+            assertEquals(5, counter)
+        }
+    }
+
+    @Test
     fun channelTest() = runBlocking {
         val channelA = Channel<Int>(3)
         launch { produce(channelA) }
