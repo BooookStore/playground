@@ -58,6 +58,31 @@ class ChannelTest {
     }
 
     @Test
+    fun catchingCancellationException() {
+        runBlocking {
+            var counter = 0
+            val job = launch(Dispatchers.Default) {
+                repeat(5) { i ->
+                    try {
+                        // print message twice a second
+                        println("job: I'm sleeping $i")
+                        counter++
+                        delay(500L)
+                    } catch (e: Exception) {
+                        // log the exception
+                        println(e)
+                    }
+                }
+            }
+            delay(1300L)
+            println("main: I'm tired of waiting!")
+            job.cancelAndJoin()
+            println("main: Now I can quit.")
+            assertEquals(5, counter)
+        }
+    }
+
+    @Test
     fun channelTest() = runBlocking {
         val channelA = Channel<Int>(3)
         launch { produce(channelA) }
