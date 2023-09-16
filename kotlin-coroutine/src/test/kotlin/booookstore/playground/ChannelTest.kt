@@ -13,6 +13,26 @@ import org.junit.jupiter.api.Test
 class ChannelTest {
 
     @Test
+    fun coroutineCancelable() {
+        runBlocking {
+            var count = 0
+            val job = launch {
+                repeat(1000) { i ->
+                    println("job: I'm sleeping $i")
+                    count++
+                    delay(500L)
+                }
+            }
+            delay(1300L)
+            println("main: I'm tired of waiting!")
+            job.cancel()
+            job.join()
+            println("main: Now I can quit")
+            assertEquals(3, count)
+        }
+    }
+
+    @Test
     fun channelTest() = runBlocking {
         val channelA = Channel<Int>(3)
         launch { produce(channelA) }
