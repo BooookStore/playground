@@ -3,6 +3,7 @@ package booookstore.playground
 import kotlinx.coroutines.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class CancelTest {
 
@@ -127,6 +128,23 @@ class CancelTest {
             println("main: Now I can quit.")
             assertEquals(2, counter)
         }
+    }
+
+    @Test
+    fun timeout() {
+        var counter = 0
+        assertThrows<TimeoutCancellationException> {
+            runBlocking {
+                withTimeout(1300L) {
+                    repeat(1000) { i ->
+                        println("I'm sleeping $i ...")
+                        counter++
+                        delay(500L)
+                    }
+                }
+            }
+        }
+        assertEquals(3, counter)
     }
 
 }
