@@ -147,4 +147,18 @@ class CancelTest {
         assertEquals(3, counter)
     }
 
+    @Test
+    fun timeoutOrResult() {
+        val result: String? = runBlocking {
+            withTimeoutOrNull(1300L) {
+                repeat(1000) { i ->
+                    println("I'm sleeping $i ...")
+                    delay(500L)
+                }
+                "DONE"
+            }
+        }
+        assertEquals(null, result)
+    }
+
 }
