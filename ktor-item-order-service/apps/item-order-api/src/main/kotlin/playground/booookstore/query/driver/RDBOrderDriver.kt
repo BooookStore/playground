@@ -6,18 +6,17 @@ import playground.booookstore.query.driver.dao.DatabaseFactory.dbQuery
 import playground.booookstore.query.driver.dao.OrderTable
 import playground.booookstore.query.driver.dao.OrderTableRow
 import playground.booookstore.query.type.OrderId
-import java.util.*
 
 class RDBOrderDriver {
 
     suspend fun find(orderId: OrderId) = dbQuery {
-        OrderTable.select { OrderTable.id eq UUID.fromString(orderId) }
+        OrderTable.select { OrderTable.id eq orderId }
             .map(::mapToOrderTableRow)
             .singleOrNull()
     }
 
     private fun mapToOrderTableRow(row: ResultRow) = OrderTableRow(
-        id = row[OrderTable.id].toString()
+        id = row[OrderTable.id]
     )
 
 }

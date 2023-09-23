@@ -27,7 +27,7 @@ class OrderQueryUsecase(
         val items = itemsDeferred.await()
 
         OrderQueryView(
-            id = order.id,
+            id = order.id.toString(),
             orderDateTime = order.orderDateTime,
             shop = ShopQueryView(id = shop.id, name = shop.name),
             items = items.set.map { OrderQueryViewItem(id = it.id, name = it.name) }.toMutableList()
@@ -38,7 +38,7 @@ class OrderQueryUsecase(
 
 @Serializable
 data class OrderQueryView(
-    val id: OrderId,
+    val id: String,
     val orderDateTime: LocalDateTime,
     val shop: ShopQueryView,
     val items: MutableList<OrderQueryViewItem>,

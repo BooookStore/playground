@@ -1,6 +1,7 @@
 package playground.booookstore.query.driver.dao
 
 import org.jetbrains.exposed.sql.Table
+import java.util.*
 
 object OrderTable : Table() {
 
@@ -8,4 +9,4 @@ object OrderTable : Table() {
 
 }
 
-data class OrderTableRow(val id: String)
+data class OrderTableRow(val id: UUID)
