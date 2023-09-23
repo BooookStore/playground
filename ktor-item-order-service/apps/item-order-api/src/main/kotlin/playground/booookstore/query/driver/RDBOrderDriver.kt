@@ -7,7 +7,7 @@ import playground.booookstore.query.driver.dao.OrderTable
 import playground.booookstore.query.driver.dao.OrderTableRow
 import playground.booookstore.query.type.OrderId
 
-class RdbOrderDriver {
+class RDBOrderDriver {
 
     suspend fun find(orderId: OrderId) = dbQuery {
         OrderTable.selectAll().map(::mapToOrderTableRow).first()
