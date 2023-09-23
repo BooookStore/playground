@@ -9,8 +9,7 @@ import playground.booookstore.query.type.OrderId
 class RDBOrderDriver {
 
     suspend fun find(orderId: OrderId): ResultRow? = dbQuery {
-        OrderTable.select { OrderTable.id eq orderId }
-            .singleOrNull()
+        OrderTable.select { OrderTable.id eq orderId }.singleOrNull()
     }
 
 }
