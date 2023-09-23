@@ -17,7 +17,8 @@ class RDBOrderDriver {
 
     private fun mapToOrderTableRow(row: ResultRow) = OrderTableRow(
         id = row[OrderTable.id],
-        orderDateTime = row[OrderTable.orderDateTime]
+        orderDateTime = row[OrderTable.orderDateTime],
+        shopId = row[OrderTable.shopId],
     )
 
 }
