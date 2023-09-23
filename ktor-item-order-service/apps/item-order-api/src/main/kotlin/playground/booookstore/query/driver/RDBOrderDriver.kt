@@ -6,6 +6,7 @@ import playground.booookstore.query.driver.dao.DatabaseFactory.dbQuery
 import playground.booookstore.query.driver.dao.OrderTable
 import playground.booookstore.query.driver.dao.OrderTableRow
 import playground.booookstore.query.type.OrderId
+import java.time.ZoneId
 
 class RDBOrderDriver {
 
@@ -16,7 +17,8 @@ class RDBOrderDriver {
     }
 
     private fun mapToOrderTableRow(row: ResultRow) = OrderTableRow(
-        id = row[OrderTable.id]
+        id = row[OrderTable.id],
+        orderDateTime = row[OrderTable.orderDateTime].atZone(ZoneId.of("Asia/Tokyo")).toLocalDateTime()
     )
 
 }

@@ -1,5 +1,5 @@
 create table "order"
 (
     id uuid primary key,
-    orderDateTime timestamp not null
+    order_date_time timestamp not null
 );
