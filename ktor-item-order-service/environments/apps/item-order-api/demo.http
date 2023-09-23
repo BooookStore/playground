@@ -2,3 +2,6 @@ GET http://localhost:8080/order/8890
 
 ###
 GET http://localhost:8080/order/ad86ffdd-d891-4261-b29b-76ee631c28fa
+
+###
+GET http://localhost:8080/order/ad86ffdd-d891-4261-b29b-76ee631c28fb
