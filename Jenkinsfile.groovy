@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+    node {
+        checkout scm
+    }
+
     stages {
         stage('Stage 1') {
             steps {
@@ -12,10 +17,6 @@ pipeline {
             }
         }
         stage('SCM') {
-            node {
-                checkout scm
-            }
-
             steps {
                 echo 'checkout scm'
             }
