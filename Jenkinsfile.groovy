@@ -10,7 +10,9 @@ pipeline {
         }
         stage('Stage 2') {
             steps {
-                echo 'Hello world!'
+                dir('ktor-item-order-service') {
+                    sh 'ls -l'
+                }
             }
         }
     }
