@@ -15,5 +15,16 @@ pipeline {
                 }
             }
         }
+        stage('docker') {
+            agent {
+                docker {
+                    image 'node:18.18.0-alpine3.18'
+                }
+            }
+
+            steps {
+                sh 'node --version'
+            }
+        }
     }
 }
