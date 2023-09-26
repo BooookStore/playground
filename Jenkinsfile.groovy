@@ -15,6 +15,10 @@ pipeline {
             node {
                 checkout scm
             }
+
+            steps {
+                echo 'checkout scm'
+            }
         }
     }
 }
