@@ -11,5 +11,10 @@ pipeline {
                 echo 'Hello world!'
             }
         }
+        stage('SCM') {
+            node {
+                checkout scm
+            }
+        }
     }
 }
