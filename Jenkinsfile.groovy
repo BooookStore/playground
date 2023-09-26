@@ -12,10 +12,5 @@ pipeline {
                 echo 'Hello world!'
             }
         }
-        stage('SCM') {
-            steps {
-                echo 'checkout scm'
-            }
-        }
     }
 }
