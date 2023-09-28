@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/ktor-item-order-service/apps/item-order-api/pom.xml" />
         <option value="$PROJECT_DIR$/kotlin-coroutine/pom.xml" />
         <option value="$PROJECT_DIR$/ktor-item-order-service/e2e/item-order-service-e2e/pom.xml" />
+        <option value="$PROJECT_DIR$/ktor-item-order-service/e2e/item-order-api-e2e/pom.xml" />
       </list>
     </option>
   </component>
