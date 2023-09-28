@@ -20,6 +20,7 @@
         <kotlinx.datetime.version>0.4.0</kotlinx.datetime.version>
         <exposed_version>0.42.0</exposed_version>
         <postgresql_driver_version>42.6.0</postgresql_driver_version>
+        <hikari_cp_version>5.0.1</hikari_cp_version>
     </properties>
     <dependencies>
         <dependency>
@@ -94,6 +95,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql_driver_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hikari_cp_version}</version>
         </dependency>
     </dependencies>
     <build>
