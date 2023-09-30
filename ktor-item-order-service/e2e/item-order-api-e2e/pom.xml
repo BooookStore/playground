@@ -10,6 +10,7 @@
     <properties>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin_version>1.9.0</kotlin_version>
+        <ktor_client_version>2.3.4</ktor_client_version>
         <gauge_java_version>0.10.2</gauge_java_version>
         <gauge_maven_plugin_version>1.4.0</gauge_maven_plugin_version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,9 +30,20 @@
             <artifactId>gauge-java</artifactId>
             <version>${gauge_java_version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-core-jvm</artifactId>
+            <version>${ktor_client_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-cio-jvm</artifactId>
+            <version>${ktor_client_version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <resources>
             <resource>
