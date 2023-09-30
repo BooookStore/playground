@@ -1,11 +1,18 @@
 package playground.booookstore
 
 import com.thoughtworks.gauge.Step
+import io.github.nomisrev.JsonPath
+import io.github.nomisrev.select
+import io.github.nomisrev.string
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
 import kotlin.test.assertEquals
 
 class Steps {
@@ -24,9 +31,12 @@ class Steps {
         assertEquals(200, httpResponse!!.status.value)
     }
 
-    @Step("レスポンスのオーダーIDは<orderId>である")
-    fun assertRespondOrderId(orderId: String) {
-        TODO()
+    @Step("レスポンスのJSONの<jsonPath>は<orderId>である")
+    fun assertRespondOrderId(jsonPath: String, orderId: String) = runBlocking {
+        val body = httpResponse!!.body<String>()
+        val respondJsonElement: JsonElement = Json.decodeFromString<JsonElement>(body)
+        val jsonPathOrderId = JsonPath.select(jsonPath).string
+        assertEquals(orderId, jsonPathOrderId.getOrNull(respondJsonElement), "respond body is $body")
     }
 
 }

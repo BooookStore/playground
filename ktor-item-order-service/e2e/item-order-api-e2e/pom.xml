@@ -42,6 +42,12 @@
             <version>${ktor_client_version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.nomisrev</groupId>
+            <artifactId>kotlinx-serialization-jsonpath</artifactId>
+            <version>0.2.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
