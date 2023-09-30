@@ -13,7 +13,7 @@ object DatabaseFactory {
         val dataSource = HikariConfig().apply {
             jdbcUrl = config.property("database.jdbcURL").getString()
             username = config.property("database.user").getString()
-            password = config.property("database.user").getString()
+            password = config.property("database.password").getString()
         }.let { HikariDataSource(it) }
         return Database.connect(dataSource)
     }

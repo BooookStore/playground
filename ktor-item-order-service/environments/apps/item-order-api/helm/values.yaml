@@ -1,0 +1,4 @@
+itemOrderDb:
+  url: jdbc:postgresql://item-order-postgres.default.svc.cluster.local:8081/
+  user: postgres
+  password: password

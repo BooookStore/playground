@@ -18,3 +18,10 @@ spec:
           ports:
             - containerPort: 8080
               name: http
+          env:
+            - name: ITEM_ORDER_DB_URL
+              value: {{ .Values.itemOrderDb.url }}
+            - name: ITEM_ORDER_DB_USER
+              value: {{ .Values.itemOrderDb.user }}
+            - name: ITEM_ORDER_DB_PASSWORD
+              value: {{ .Values.itemOrderDb.password }}
