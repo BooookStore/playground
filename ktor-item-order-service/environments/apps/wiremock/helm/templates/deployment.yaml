@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: wiremock
-        image: wiremock/wiremock:{{ .Values.wiremock_image_tag }}
+        image: "wiremock/wiremock:{{ .Values.wiremock_image_tag }}"
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
