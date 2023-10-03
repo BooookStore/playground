@@ -2,4 +2,4 @@ deps:
 	skaffold dev -f deps.yaml --port-forward
 
 run:
-	skaffold dev --port-forward
+	skaffold dev --port-forward --status-check

@@ -2,7 +2,7 @@ package playground.booookstore
 
 import com.thoughtworks.gauge.Step
 import io.github.nomisrev.JsonPath
-import io.github.nomisrev.select
+import io.github.nomisrev.path
 import io.github.nomisrev.string
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -35,7 +35,7 @@ class Steps {
     fun assertRespondOrderId(jsonPath: String, orderId: String) = runBlocking {
         val body = httpResponse!!.body<String>()
         val respondJsonElement: JsonElement = Json.decodeFromString<JsonElement>(body)
-        val jsonPathOrderId = JsonPath.select(jsonPath).string
+        val jsonPathOrderId = JsonPath.path(jsonPath).string
         assertEquals(orderId, jsonPathOrderId.getOrNull(respondJsonElement), "respond body is $body")
     }
 
