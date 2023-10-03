@@ -1,9 +1,12 @@
 package playground.booookstore.query.routes
 
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import playground.booookstore.query.driver.HttpClientShopDriver
 import playground.booookstore.query.driver.RDBOrderDriver
 import playground.booookstore.query.gateway.ItemQueryGateway
 import playground.booookstore.query.gateway.OrderQueryGateway
@@ -28,9 +31,11 @@ fun Route.queryOrderRouting() {
                 )
             }
 
-            OrderQueryUsecase(OrderQueryGateway(RDBOrderDriver()), ShopQueryGateway(), ItemQueryGateway())
-                .execute(orderId)
-                .let { call.respond(it) }
+            OrderQueryUsecase(
+                OrderQueryGateway(RDBOrderDriver()),
+                ShopQueryGateway(HttpClientShopDriver(HttpClient(CIO))),
+                ItemQueryGateway()
+            ).execute(orderId).let { call.respond(it) }
         }
     }
 }
