@@ -19,10 +19,12 @@ class OrderQueryUsecase(
 
     suspend fun execute(orderId: OrderId) = coroutineScope {
         val orderDeferred = async { orderQueryPort.find(orderId) }
-        val shopDeferred = async { shopQueryPort.find(orderId) }
         val itemsDeferred = async { itemQueryPort.find(orderId) }
 
         val order = orderDeferred.await()
+
+        val shopDeferred = async { shopQueryPort.find(order.shopId) }
+
         val shop = shopDeferred.await()
         val items = itemsDeferred.await()
 
