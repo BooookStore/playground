@@ -28,7 +28,7 @@ class Steps {
 
     @Step("レスポンスステータスが<httpResponseStatusCode>である")
     fun assertHttpResponseStatusCode(httpResponseStatusCode: String) {
-        assertEquals(200, httpResponse!!.status.value)
+        assertEquals(httpResponseStatusCode, httpResponse!!.status.value.toString())
     }
 
     @Step("レスポンスのJSONの<jsonPath>は<orderId>である")
