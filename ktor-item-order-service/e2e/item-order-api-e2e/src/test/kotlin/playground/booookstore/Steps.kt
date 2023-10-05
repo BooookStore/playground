@@ -1,5 +1,6 @@
 package playground.booookstore
 
+import com.github.tomakehurst.wiremock.client.WireMock
 import com.thoughtworks.gauge.Step
 import io.github.nomisrev.JsonPath
 import io.github.nomisrev.path
@@ -37,6 +38,13 @@ class Steps {
         val respondJsonElement: JsonElement = Json.decodeFromString<JsonElement>(body)
         val jsonPathOrderId = JsonPath.path(jsonPath).string
         assertEquals(orderId, jsonPathOrderId.getOrNull(respondJsonElement), "respond body is $body")
+    }
+
+    @Step("item-shop-apiのwiremockを設定する")
+    fun setupItemShopApiWiremock() {
+        val mock = WireMock("localhost", 8082)
+        val resource = this.javaClass.classLoader.getResource("query_order")!!.path
+        mock.loadMappingsFrom(resource)
     }
 
 }

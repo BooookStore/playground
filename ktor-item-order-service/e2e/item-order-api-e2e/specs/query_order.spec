@@ -1,4 +1,5 @@
 # GET /order/{id}
+* item-shop-apiのwiremockを設定する
 * オーダーIDが"ad86ffdd-d891-4261-b29b-76ee631c28fa"であるオーダーを取得する
 
 ## オーダーIDを指定しオーダーを取得できる
