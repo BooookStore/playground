@@ -8,17 +8,17 @@ requires:
 deploy:
   helm:
     releases:
-    - name: item-search-api
-      chartPath: ../wiremock/helm
-      setValues:
-        name: item-search-api
-        wiremock_image_tag: 2.35.0-1
-        port: 8082
-        namespace: item-order-service
-    - name: item-spec-api
-      chartPath: ../wiremock/helm
-      setValues:
-        name: item-spec-api
-        wiremock_image_tag: 2.35.0-1
-        port: 8083
-        namespace: item-order-service
+      - name: item-shop-api
+        chartPath: ../wiremock/helm
+        setValues:
+          name: item-shop-api
+          wiremock_image_tag: 2.35.0-1
+          port: 8082
+          namespace: item-order-service
+      - name: item-item-api
+        chartPath: ../wiremock/helm
+        setValues:
+          name: item-item-api
+          wiremock_image_tag: 2.35.0-1
+          port: 8083
+          namespace: item-order-service
