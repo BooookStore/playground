@@ -16,6 +16,16 @@ import playground.booookstore.query.gateway.ShopQueryGateway
 import playground.booookstore.query.type.OrderId
 import playground.booookstore.query.usecase.OrderQueryUsecase
 
+val orderQueryUsecase = OrderQueryUsecase(
+    orderQueryPort = OrderQueryGateway(RDBOrderDriver()),
+    shopQueryPort = ShopQueryGateway(HttpClientShopDriver(HttpClient(CIO) {
+        install(ContentNegotiation) {
+            json()
+        }
+    })),
+    itemQueryPort = ItemQueryGateway()
+)
+
 fun Route.queryOrderRouting() {
     route("/order") {
         get("{id}") {
@@ -33,15 +43,7 @@ fun Route.queryOrderRouting() {
                 )
             }
 
-            OrderQueryUsecase(
-                OrderQueryGateway(RDBOrderDriver()),
-                ShopQueryGateway(HttpClientShopDriver(HttpClient(CIO) {
-                    install(ContentNegotiation) {
-                        json()
-                    }
-                })),
-                ItemQueryGateway()
-            ).execute(orderId).let { call.respond(it) }
+            orderQueryUsecase.execute(orderId).let { call.respond(it) }
         }
     }
 }
