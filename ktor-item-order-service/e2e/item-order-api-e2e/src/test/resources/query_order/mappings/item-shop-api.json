@@ -1,17 +1,20 @@
 {
   "request": {
     "method": "GET",
-    "url": "/v1/shop/SA0078",
+    "url": "/v1/shop/9870",
     "headers": {
-      "Content-Type": {
+      "Accept": {
         "equalTo": "application/json"
       }
     }
   },
   "response": {
     "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
     "jsonBody": {
-      "shopId": "SA0078",
+      "shopId": "9870",
       "name": "さいたま川越一号店"
     }
   }

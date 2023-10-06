@@ -2,7 +2,9 @@ package playground.booookstore.query.routes
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -33,7 +35,11 @@ fun Route.queryOrderRouting() {
 
             OrderQueryUsecase(
                 OrderQueryGateway(RDBOrderDriver()),
-                ShopQueryGateway(HttpClientShopDriver(HttpClient(CIO))),
+                ShopQueryGateway(HttpClientShopDriver(HttpClient(CIO) {
+                    install(ContentNegotiation) {
+                        json()
+                    }
+                })),
                 ItemQueryGateway()
             ).execute(orderId).let { call.respond(it) }
         }
