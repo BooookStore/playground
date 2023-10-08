@@ -27,23 +27,25 @@ val orderQueryUsecase = OrderQueryUsecase(
 )
 
 fun Route.queryOrderRouting() {
-    route("/order") {
-        get("{id}") {
-            val orderIdParameter = call.parameters["id"] ?: return@get call.respondText(
-                status = HttpStatusCode.BadRequest,
-                text = "Missing id",
-            )
-
-            val orderId = try {
-                OrderId.fromString(orderIdParameter)
-            } catch (e: IllegalArgumentException) {
-                return@get call.respondText(
+    route("/v1") {
+        route("/order") {
+            get("{id}") {
+                val orderIdParameter = call.parameters["id"] ?: return@get call.respondText(
                     status = HttpStatusCode.BadRequest,
-                    text = "Illegal id"
+                    text = "Missing id",
                 )
-            }
 
-            orderQueryUsecase.execute(orderId).let { call.respond(it) }
+                val orderId = try {
+                    OrderId.fromString(orderIdParameter)
+                } catch (e: IllegalArgumentException) {
+                    return@get call.respondText(
+                        status = HttpStatusCode.BadRequest,
+                        text = "Illegal id"
+                    )
+                }
+
+                orderQueryUsecase.execute(orderId).let { call.respond(it) }
+            }
         }
     }
 }
