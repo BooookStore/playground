@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="item-order-api" />
         <module name="kotlin-coroutine" />
         <module name="item-order-api-e2e" />
+        <module name="item-order-api" />
+        <module name="ktor-client-my-playground" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
