@@ -15,6 +15,7 @@
         <kotlin.version>1.9.10</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.13.1</junit.version>
+        <ktor_version>2.3.4</ktor_version>
     </properties>
 
     <dependencies>
@@ -34,6 +35,16 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-core-jvm</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-client-cio-jvm</artifactId>
+            <version>${ktor_version}</version>
         </dependency>
     </dependencies>
 
