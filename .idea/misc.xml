@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
     <list size="1">
@@ -13,6 +14,7 @@
         <option value="$PROJECT_DIR$/ktor-item-order-service/e2e/item-order-service-e2e/pom.xml" />
         <option value="$PROJECT_DIR$/ktor-item-order-service/e2e/item-order-api-e2e/pom.xml" />
         <option value="$PROJECT_DIR$/ktor-client-my-playground/pom.xml" />
+        <option value="$PROJECT_DIR$/slf4j-logback-my-playground/pom.xml" />
       </list>
     </option>
   </component>
