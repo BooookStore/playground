@@ -40,11 +40,19 @@
             <groupId>io.ktor</groupId>
             <artifactId>ktor-client-core-jvm</artifactId>
             <version>${ktor_version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-client-cio-jvm</artifactId>
             <version>${ktor_version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>3.2.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
