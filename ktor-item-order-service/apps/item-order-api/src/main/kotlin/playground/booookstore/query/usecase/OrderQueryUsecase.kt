@@ -4,6 +4,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
+import org.slf4j.LoggerFactory
 import playground.booookstore.query.port.ItemQueryPort
 import playground.booookstore.query.port.OrderQueryPort
 import playground.booookstore.query.port.ShopQueryPort
@@ -17,7 +18,10 @@ class OrderQueryUsecase(
     private val itemQueryPort: ItemQueryPort,
 ) {
 
+    private val logger = LoggerFactory.getLogger(OrderQueryUsecase::class.java)
+
     suspend fun execute(orderId: OrderId) = coroutineScope {
+        logger.info("execute order query by orderId {}", orderId)
         val orderDeferred = async { orderQueryPort.find(orderId) }
         val itemsDeferred = async { itemQueryPort.find(orderId) }
 
