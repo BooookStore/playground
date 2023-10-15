@@ -23,9 +23,13 @@ class Playground {
 
     /**
      * ログレベルは明示的に指定されない限り、親のロガーから継承される。
-     * com.foo          INFO
-     * com.foo.Bar      INFO (silently)
-     * com.foo.Bar.Foo  TRACE
+     * - com.foo          INFO
+     * - com.foo.Bar      INFO (silently)
+     * - com.foo.Bar.Foo  TRACE
+     *
+     * 参考
+     * - https://logback.qos.ch/manual/architecture.html#effectiveLevel
+     * - https://logback.qos.ch/manual/architecture.html#basic_selection
      */
     @Test
     fun loggerLevel() {
