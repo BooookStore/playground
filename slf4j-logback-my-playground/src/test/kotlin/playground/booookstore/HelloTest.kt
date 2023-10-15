@@ -1,6 +1,7 @@
 package playground.booookstore
 
 import ch.qos.logback.classic.Level.INFO
+import ch.qos.logback.classic.Level.TRACE
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.core.util.StatusPrinter
@@ -20,12 +21,20 @@ class Playground {
         StatusPrinter.print(lc)
     }
 
+    /**
+     * ログレベルは明示的に指定されない限り、親のロガーから継承される。
+     * com.foo          INFO
+     * com.foo.Bar      INFO (silently)
+     * com.foo.Bar.Foo  TRACE
+     */
     @Test
     fun loggerLevel() {
         val logger = LoggerFactory.getLogger("com.foo") as Logger
         logger.level = INFO
 
         val barlogger = LoggerFactory.getLogger("com.foo.Bar")
+        val foologger = LoggerFactory.getLogger("com.foo.Bar.Foo") as Logger
+        foologger.level = TRACE
 
         logger.warn("Low fuel level.")
         // -> 20:28:02.203 [main] WARN com.foo -- Low fuel level.
@@ -33,6 +42,8 @@ class Playground {
         // no output
         barlogger.info("Located nearest gas station.")
         // -> 20:28:02.205 [main] INFO com.foo.Bar -- Located nearest gas station.
+        foologger.trace("Display street address.")
+        // -> 16:19:08.997 [main] TRACE com.foo.Bar.Foo -- Display street address.
         barlogger.debug("Exiting gas station search.")
         // no output
     }
