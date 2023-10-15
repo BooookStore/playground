@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="kotlin-coroutine" />
         <module name="item-order-api-e2e" />
-        <module name="spring-my-playground-coffee-shop" />
         <module name="item-order-api" />
         <module name="slf4j-logback-my-playground" />
         <module name="ktor-client-my-playground" />
@@ -18,6 +17,7 @@
       <module name="com.example.ktor-hello-world" target="11" />
       <module name="com.example.ktor-hello-world.main" target="11" />
       <module name="com.example.ktor-hello-world.test" target="11" />
+      <module name="spring-my-playground-coffee-shop" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
