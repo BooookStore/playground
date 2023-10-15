@@ -21,7 +21,8 @@ class OrderQueryUsecase(
     private val logger = LoggerFactory.getLogger(OrderQueryUsecase::class.java)
 
     suspend fun execute(orderId: OrderId) = coroutineScope {
-        logger.info("execute order query by orderId {}", orderId)
+        logger.info("execute query order by orderId {}", orderId)
+
         val orderDeferred = async { orderQueryPort.find(orderId) }
         val itemsDeferred = async { itemQueryPort.find(orderId) }
 
@@ -31,6 +32,8 @@ class OrderQueryUsecase(
 
         val shop = shopDeferred.await()
         val items = itemsDeferred.await()
+
+        logger.info("complete query order by orderId {}", orderId)
 
         OrderQueryView(
             id = order.id.toString(),
