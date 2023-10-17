@@ -16,6 +16,7 @@
         <option value="$PROJECT_DIR$/ktor-client-my-playground/pom.xml" />
         <option value="$PROJECT_DIR$/slf4j-logback-my-playground/pom.xml" />
         <option value="$PROJECT_DIR$/spring-my-playground-coffee-shop/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-my-playground-security-basics/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
