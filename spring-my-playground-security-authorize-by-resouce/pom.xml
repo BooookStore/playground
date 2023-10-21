@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>booookstore.playground</groupId>
-	<artifactId>spring-my-playground-security-basics</artifactId>
+	<artifactId>spring-my-playground-security-authorize-by-resouce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-my-playground-security-basics</name>
 	<description>spring-my-playground-security-basics</description>

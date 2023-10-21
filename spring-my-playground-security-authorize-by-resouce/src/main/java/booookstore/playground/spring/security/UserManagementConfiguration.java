@@ -19,11 +19,15 @@ public class UserManagementConfiguration {
 
     @Bean
     UserDetailsService userDetailsService() {
-        var user = User.withUsername("bookstore")
+        var user1 = User.withUsername("bookstore1")
                 .password("password")
                 .authorities("read")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+        var user2 = User.withUsername("bookstore2")
+                .password("password")
+                .authorities("read")
+                .build();
+        return new InMemoryUserDetailsManager(user1, user2);
     }
 
 }

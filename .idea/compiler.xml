@@ -8,10 +8,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="kotlin-coroutine" />
         <module name="item-order-api-e2e" />
-        <module name="spring-my-playground-security-basics" />
         <module name="item-order-api" />
         <module name="slf4j-logback-my-playground" />
         <module name="ktor-client-my-playground" />
+        <module name="spring-my-playground-security-authorize-by-resouce" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,7 +24,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="spring-my-playground-coffee-shop" options="-parameters" />
-      <module name="spring-my-playground-security-basics" options="-parameters" />
+      <module name="spring-my-playground-security-authorize-by-resouce" options="-parameters" />
     </option>
   </component>
 </project>
