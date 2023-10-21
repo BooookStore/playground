@@ -12,11 +12,11 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 public class SecurityConfiguration {
 
     @Bean
-    SecurityFilterChain configure(HttpSecurity http, ProtectedResourcePolicy protectedResoucePolicy) throws Exception {
+    SecurityFilterChain configure(HttpSecurity http, ProtectedResourcePolicy protectedResourcePolicy) throws Exception {
         http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(c -> c
                 .requestMatchers(antMatcher("/resource/{id}"))
-                .access(protectedResoucePolicy::isPermitted)
+                .access(protectedResourcePolicy::isPermitted)
                 .anyRequest().authenticated());
         return http.build();
     }
