@@ -18,6 +18,7 @@
         <option value="$PROJECT_DIR$/spring-my-playground-coffee-shop/pom.xml" />
         <option value="$PROJECT_DIR$/spring-my-playground-security-basics/pom.xml" />
         <option value="$PROJECT_DIR$/spring-my-playground-security-authorize-by-resouce/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-my-playground-data-jdbc-template/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

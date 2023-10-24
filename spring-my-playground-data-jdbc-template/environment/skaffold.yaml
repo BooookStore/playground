@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: postgresql
+build:
+  artifacts:
+    - image: booookstore/playground/spring-my-playground-data-jdbc-template-postgresql
+  local:
+    push: false
+    useBuildkit: true
+deploy:
+  helm:
+    releases:
+      - name: postgresql
+        chartPath: helm
+        setValueTemplates:
+          image: "{{ .IMAGE_FULLY_QUALIFIED_booookstore_playground_spring_my_playground_data_jdbc_template_postgresql }}"
