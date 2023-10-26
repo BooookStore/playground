@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="kotlin-coroutine" />
+        <module name="spring-my-playground-data-jdbc" />
         <module name="spring-my-playground-security-basic" />
         <module name="spring-my-playground-security-authorize-by-resouce" />
         <module name="item-order-api-e2e" />
@@ -21,12 +22,15 @@
       <module name="com.example.ktor-hello-world.main" target="11" />
       <module name="com.example.ktor-hello-world.test" target="11" />
       <module name="spring-my-playground-coffee-shop" target="17" />
+      <module name="spring-my-playground-data-jdbc-template (1)" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="spring-my-playground-coffee-shop" options="-parameters" />
+      <module name="spring-my-playground-data-jdbc" options="-parameters" />
       <module name="spring-my-playground-data-jdbc-template" options="-parameters" />
+      <module name="spring-my-playground-data-jdbc-template (1)" options="-parameters" />
       <module name="spring-my-playground-security-authorize-by-resouce" options="-parameters" />
       <module name="spring-my-playground-security-basic" options="-parameters" />
     </option>
