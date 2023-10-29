@@ -16,28 +16,8 @@ class InitializeData : ApplicationRunner {
 
     @Transactional
     override fun run(args: ApplicationArguments?) {
-        logger.info("start initialize data")
-
-        OperationRepository().insert(Operation("OP0001", "DISPLAY_ORDER"))
-        OperationRepository().insert(Operation("OP0002", "CANCEL_ORDER"))
-
-//        PermissionTable.insert {
-//            it[id] = "PE0001"
-//            it[name] = "ORDER_CANCELABLE"
-//        }
-//
-//        PermissionOperationTable.insert {
-//            it[permission] = "PE0001"
-//            it[operation] = "OP0001"
-//        }
-//        PermissionOperationTable.insert {
-//            it[permission] = "PE0001"
-//            it[operation] = "OP0002"
-//        }
-
-        OperationRepository().findByPermissionId("PE0001").let { println(it) }
-
-        logger.info("complete initialize data")
+        val operations = OperationRepository().findByPermissionId("PE_001")
+        logger.info("find permission {}", operations)
     }
 
 }
@@ -56,7 +36,7 @@ class OperationRepository {
 
     fun findByPermissionId(id: String): List<Operation> =
         (PermissionTable innerJoin PermissionOperationTable innerJoin OperationTable)
-            .select { PermissionTable.id eq "PE0001" }
+            .select { PermissionTable.id eq id }
             .map { Operation(it[OperationTable.id], it[OperationTable.name]) }
 
 }
