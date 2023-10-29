@@ -16,8 +16,12 @@ class InitializeData : ApplicationRunner {
 
     @Transactional
     override fun run(args: ApplicationArguments?) {
-        val operations = OperationRepository().findByPermissionId("PE_001")
-        logger.info("find permission {}", operations)
+        OperationRepository().findByPermissionId("PE_001").let {
+            logger.info("find permission {}", it)
+        }
+        OperationRepository().findByPermissionId("PE_002").let {
+            logger.info("find permission {}", it)
+        }
     }
 
 }
@@ -50,10 +54,7 @@ object OperationTable : Table("operation") {
 object PermissionOperationTable : Table("permission_operation") {
     val permission = reference("permission", PermissionTable.id)
     val operation = reference("operation", OperationTable.id)
-
-    init {
-        index(isUnique = true, permission, operation)
-    }
+    override val primaryKey = PrimaryKey(permission, operation)
 }
 
 object PermissionTable : Table("permission") {
