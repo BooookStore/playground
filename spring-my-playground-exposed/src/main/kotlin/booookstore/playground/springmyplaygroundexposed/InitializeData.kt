@@ -1,5 +1,6 @@
 package booookstore.playground.springmyplaygroundexposed
 
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.isNotNull
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -78,7 +79,7 @@ class PermissionRepository {
 
 object OperationTable : Table("operation") {
     val id = varchar("id", 255)
-    val name = varchar("name", 255)
+    val name = varchar("name", 255).isNotNull()
     override val primaryKey = PrimaryKey(id)
 }
 
@@ -90,6 +91,6 @@ object PermissionOperationTable : Table("permission_operation") {
 
 object PermissionTable : Table("permission") {
     val id = varchar("id", 255)
-    val name = varchar("name", 255)
+    val name = varchar("name", 255).isNotNull()
     override val primaryKey = PrimaryKey(id)
 }
