@@ -25,6 +25,7 @@ class InitializeData : ApplicationRunner {
 
         Permission("PE_003", "VIEW_ALL_ORDER", setOf("OP_D001")).let {
             PermissionRepository().insert(it)
+            logger.info("create permission {}", it)
         }
     }
 
