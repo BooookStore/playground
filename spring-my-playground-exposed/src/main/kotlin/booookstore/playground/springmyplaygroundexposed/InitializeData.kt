@@ -22,12 +22,25 @@ class InitializeData : ApplicationRunner {
         OperationRepository().findByPermissionId("PE_002").let {
             logger.info("find permission {}", it)
         }
+
+        Permission("PE_003", "VIEW_ALL_ORDER", setOf("OP_D001")).let {
+            PermissionRepository().insert(it)
+        }
     }
 
 }
 
+typealias PermissionId = String
+typealias OperationId = String
+
+data class Permission(
+    val id: PermissionId,
+    val name: String,
+    val operations: Set<OperationId>
+)
+
 data class Operation(
-    val id: String,
+    val id: OperationId,
     val name: String
 )
 
@@ -42,6 +55,23 @@ class OperationRepository {
         (PermissionTable innerJoin PermissionOperationTable innerJoin OperationTable)
             .select { PermissionTable.id eq id }
             .map { Operation(it[OperationTable.id], it[OperationTable.name]) }
+
+}
+
+class PermissionRepository {
+
+    fun insert(permission: Permission) {
+        PermissionTable.insert {
+            it[id] = permission.id
+            it[name] = permission.name
+        }
+        permission.operations.forEach { operation ->
+            PermissionOperationTable.insert {
+                it[PermissionOperationTable.permission] = permission.id
+                it[PermissionOperationTable.operation] = operation
+            }
+        }
+    }
 
 }
 
