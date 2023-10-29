@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
     <list size="1">
@@ -20,6 +21,7 @@
         <option value="$PROJECT_DIR$/spring-my-playground-data-jdbc-template/pom.xml" />
         <option value="$PROJECT_DIR$/spring-my-playground-security-basic/pom.xml" />
         <option value="$PROJECT_DIR$/spring-my-playground-data-jdbc/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-my-playground-exposed/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

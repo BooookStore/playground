@@ -10,6 +10,7 @@
         <module name="spring-my-playground-data-jdbc" />
         <module name="spring-my-playground-security-basic" />
         <module name="spring-my-playground-security-authorize-by-resouce" />
+        <module name="spring-my-playground-exposed" />
         <module name="item-order-api-e2e" />
         <module name="item-order-api" />
         <module name="slf4j-logback-my-playground" />
@@ -31,6 +32,7 @@
       <module name="spring-my-playground-data-jdbc" options="-parameters" />
       <module name="spring-my-playground-data-jdbc-template" options="-parameters" />
       <module name="spring-my-playground-data-jdbc-template (1)" options="-parameters" />
+      <module name="spring-my-playground-exposed" options="-parameters" />
       <module name="spring-my-playground-security-authorize-by-resouce" options="-parameters" />
       <module name="spring-my-playground-security-basic" options="-parameters" />
     </option>

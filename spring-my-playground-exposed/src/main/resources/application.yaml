@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/playground
+    username: postgres
+    password: password
+  exposed:
+    generate-ddl: true
+    show-sql: true
