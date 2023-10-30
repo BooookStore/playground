@@ -1,6 +1,7 @@
 package booookstore.playground.springmyplaygroundexposed.usecase
 
 import booookstore.playground.springmyplaygroundexposed.adaptor.postgres.OperationRepository
+import booookstore.playground.springmyplaygroundexposed.domain.MailAddress
 import booookstore.playground.springmyplaygroundexposed.domain.Operation
 import booookstore.playground.springmyplaygroundexposed.domain.RoleId
 import org.springframework.stereotype.Service
@@ -12,6 +13,11 @@ class OperationUsecase(private val operationRepository: OperationRepository) {
     @Transactional(readOnly = true)
     fun findOperationByRoleId(roleId: RoleId): List<Operation> {
         return operationRepository.findByRoleId(roleId)
+    }
+
+    @Transactional(readOnly = true)
+    fun findOperationByUserMailAddress(mailAddress: MailAddress): List<Operation> {
+        return operationRepository.findByUserMailAddress(mailAddress)
     }
 
 }

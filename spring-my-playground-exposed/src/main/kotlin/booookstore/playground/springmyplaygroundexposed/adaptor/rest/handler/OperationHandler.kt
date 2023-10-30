@@ -15,4 +15,9 @@ class OperationHandler(private val operationUsecase: OperationUsecase) {
         return ok().contentType(APPLICATION_JSON).body(operations)
     }
 
+    fun findOperationByUserMailAddress(serverRequest: ServerRequest): ServerResponse {
+        val operations = operationUsecase.findOperationByUserMailAddress(serverRequest.param("userMailAddress").get())
+        return ok().contentType(APPLICATION_JSON).body(operations)
+    }
+
 }
