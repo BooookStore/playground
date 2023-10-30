@@ -23,3 +23,11 @@ VALUES ('RO_001', 'MANAGER'),
 INSERT INTO "role_permission" (role, permission)
 VALUES ('RO_001', 'PE_001'),
        ('RO_002', 'PE_002');
+
+INSERT INTO "user" (mail_address)
+VALUES ('bookstore1@playground'),
+       ('bookstore2@playground');
+
+INSERT INTO "subject" (mail_address, role)
+VALUES ('bookstore1@playground', 'RO_001'),
+       ('bookstore2@playground', 'RO_002');
