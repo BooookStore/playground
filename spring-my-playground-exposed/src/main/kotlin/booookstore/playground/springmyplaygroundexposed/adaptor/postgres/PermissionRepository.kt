@@ -7,8 +7,8 @@ class PermissionRepository {
 
     fun insert(permission: Permission) {
         PermissionTable.insert {
-            it[PermissionTable.id] = permission.id
-            it[PermissionTable.name] = permission.name
+            it[id] = permission.id
+            it[name] = permission.name
         }
         permission.operations.forEach { operation ->
             PermissionOperationTable.insert {

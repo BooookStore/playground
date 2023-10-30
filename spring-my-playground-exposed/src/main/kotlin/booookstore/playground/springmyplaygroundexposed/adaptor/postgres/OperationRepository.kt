@@ -8,8 +8,8 @@ import org.jetbrains.exposed.sql.select
 class OperationRepository {
 
     fun insert(operation: Operation) = OperationTable.insert {
-        it[OperationTable.id] = operation.id
-        it[OperationTable.name] = operation.name
+        it[id] = operation.id
+        it[name] = operation.name
     }
 
     fun findByPermissionId(id: PermissionId): List<Operation> =
