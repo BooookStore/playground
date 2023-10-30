@@ -17,7 +17,9 @@ class OperationRepository {
             .map { Operation(it[OperationTable.id], it[OperationTable.name]) }
 
     fun findByPermissionId(id: PermissionId): List<Operation> =
-        (PermissionTable innerJoin PermissionOperationTable innerJoin OperationTable)
+        (PermissionTable
+                innerJoin PermissionOperationTable
+                innerJoin OperationTable)
             .select { PermissionTable.id eq id }
             .map { Operation(it[OperationTable.id], it[OperationTable.name]) }
 
