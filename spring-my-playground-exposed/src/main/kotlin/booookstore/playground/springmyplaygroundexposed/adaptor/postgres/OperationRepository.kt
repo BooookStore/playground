@@ -4,7 +4,9 @@ import booookstore.playground.springmyplaygroundexposed.domain.Operation
 import booookstore.playground.springmyplaygroundexposed.domain.PermissionId
 import booookstore.playground.springmyplaygroundexposed.domain.RoleId
 import org.jetbrains.exposed.sql.select
+import org.springframework.stereotype.Repository
 
+@Repository
 class OperationRepository {
 
     fun findByRoleId(roleId: RoleId): List<Operation> =
