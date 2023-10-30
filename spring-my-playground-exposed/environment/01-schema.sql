@@ -20,6 +20,11 @@ CREATE TABLE "role"
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE "user"
+(
+    mail_address VARCHAR(255) PRIMARY KEY
+);
+
 CREATE TABLE "permission_operation"
 (
     permission VARCHAR(255) NOT NULL,
@@ -32,4 +37,11 @@ CREATE TABLE "role_permission"
     role       VARCHAR(255) NOT NULL,
     permission VARCHAR(255) NOT NULL,
     PRIMARY KEY (role, permission)
+);
+
+CREATE TABLE "subject"
+(
+    mail_address VARCHAR(255) NOT NULL,
+    role         VARCHAR(255) NOT NULL,
+    PRIMARY KEY (mail_address, role)
 );
