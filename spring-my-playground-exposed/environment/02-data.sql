@@ -15,3 +15,11 @@ VALUES ('PE_001', 'OP_D001'),
        ('PE_001', 'OP_C001'),
        ('PE_002', 'OP_D002'),
        ('PE_002', 'OP_C002');
+
+INSERT INTO "role" (id, name)
+VALUES ('RO_001', 'MANAGER'),
+       ('RO_002', 'NORMAL');
+
+INSERT INTO "role_permission" (role, permission)
+VALUES ('RO_001', 'PE_001'),
+       ('RO_002', 'PE_002');
