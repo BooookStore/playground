@@ -45,3 +45,12 @@ CREATE TABLE "subject"
     role         VARCHAR(255) NOT NULL,
     PRIMARY KEY (mail_address, role)
 );
+
+CREATE TABLE "subject_event"
+(
+    mail_address VARCHAR(255) NOT NULL,
+    role         VARCHAR(255) NOT NULL,
+    date_time    TIMESTAMP    NOT NULL,
+    event        VARCHAR(255) NOT NULL,
+    UNIQUE (date_time, event)
+);
