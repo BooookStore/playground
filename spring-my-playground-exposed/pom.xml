@@ -16,6 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <kotlin.version>1.8.22</kotlin.version>
+        <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
     </properties>
     <dependencies>
         <dependency>
