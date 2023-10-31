@@ -4,6 +4,7 @@ import booookstore.playground.springmyplaygroundexposed.domain.MailAddress
 import booookstore.playground.springmyplaygroundexposed.domain.Operation
 import booookstore.playground.springmyplaygroundexposed.domain.PermissionId
 import booookstore.playground.springmyplaygroundexposed.domain.RoleId
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.springframework.stereotype.Repository
 
@@ -36,5 +37,10 @@ class OperationRepository {
                 innerJoin OperationTable)
             .select { PermissionTable.id eq id }
             .map { Operation(it[OperationTable.id], it[OperationTable.name]) }
+
+    fun saveAsNew(operation: Operation) = OperationTable.insert {
+        it[id] = operation.id
+        it[name] = operation.name
+    }
 
 }
