@@ -5,3 +5,6 @@ spring:
     password: password
   exposed:
     show-sql: true
+logging:
+  level:
+    org.springframework.security: TRACE

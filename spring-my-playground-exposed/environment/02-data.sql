@@ -24,9 +24,9 @@ INSERT INTO "role_permission" (role, permission)
 VALUES ('RO_001', 'PE_001'),
        ('RO_002', 'PE_002');
 
-INSERT INTO "user" (mail_address)
-VALUES ('bookstore1@playground'),
-       ('bookstore2@playground');
+INSERT INTO "user" (mail_address, password)
+VALUES ('bookstore1@playground', 'password'),
+       ('bookstore2@playground', 'password');
 
 INSERT INTO "subject" (mail_address, role)
 VALUES ('bookstore1@playground', 'RO_001'),

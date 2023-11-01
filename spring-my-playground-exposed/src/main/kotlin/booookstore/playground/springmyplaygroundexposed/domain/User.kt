@@ -2,5 +2,4 @@ package booookstore.playground.springmyplaygroundexposed.domain
 
 typealias MailAddress = String
 
-class User {
-}
+data class User(val mailAddress: MailAddress, val password: String)

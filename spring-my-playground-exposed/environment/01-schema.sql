@@ -22,7 +22,8 @@ CREATE TABLE "role"
 
 CREATE TABLE "user"
 (
-    mail_address VARCHAR(255) PRIMARY KEY
+    mail_address VARCHAR(255) PRIMARY KEY,
+    password     VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE "permission_operation"
