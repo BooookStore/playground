@@ -13,5 +13,4 @@ class UserRepository {
             .map { User(it[UserTable.mailAddress], it[UserTable.password]) }
             .first()
 
-
 }

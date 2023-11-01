@@ -13,7 +13,7 @@ class Router {
 
     @Bean
     fun routerFunction(handler: OperationHandler): RouterFunction<ServerResponse> = router {
-        "/operation".nest {
+        "operation".nest {
             GET(param("roleId") { true }, handler::findOperationByRoleId)
             GET(param("userMailAddress") { true }, handler::findOperationByUserMailAddress)
             POST(accept(APPLICATION_JSON), handler::createOperation)
