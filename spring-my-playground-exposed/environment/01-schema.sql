@@ -55,3 +55,9 @@ CREATE TABLE "subject_event"
     event        VARCHAR(255) NOT NULL,
     UNIQUE (date_time, event)
 );
+
+CREATE TABLE "order"
+(
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);

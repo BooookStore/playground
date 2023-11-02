@@ -1,20 +1,20 @@
 \connect playground;
 
 INSERT INTO "operation" (id, name)
-VALUES ('OP_D001', 'DISPLAY_ALL_ORDER'),
-       ('OP_D002', 'DISPLAY_CREATED_ORDER'),
-       ('OP_C001', 'CANCEL_ALL_ORDER'),
-       ('OP_C002', 'CANCEL_CREATED_ORDER');
+VALUES ('OP_001', 'DISPLAY_ALL_ORDER'),
+       ('OP_002', 'DISPLAY_CREATED_ORDER'),
+       ('OP_003', 'CANCEL_ALL_ORDER'),
+       ('OP_004', 'CANCEL_CREATED_ORDER');
 
 INSERT INTO "permission" (id, name)
 VALUES ('PE_001', 'CANCELABLABLE_ALL_ORDER'),
        ('PE_002', 'CANCELABLABLE_CREATED_ORDER');
 
 INSERT INTO "permission_operation" (permission, operation)
-VALUES ('PE_001', 'OP_D001'),
-       ('PE_001', 'OP_C001'),
-       ('PE_002', 'OP_D002'),
-       ('PE_002', 'OP_C002');
+VALUES ('PE_001', 'OP_001'),
+       ('PE_001', 'OP_002'),
+       ('PE_002', 'OP_003'),
+       ('PE_002', 'OP_004');
 
 INSERT INTO "role" (id, name)
 VALUES ('RO_001', 'MANAGER'),
@@ -31,3 +31,6 @@ VALUES ('bookstore1@playground', 'password'),
 INSERT INTO "subject" (mail_address, role)
 VALUES ('bookstore1@playground', 'RO_001'),
        ('bookstore2@playground', 'RO_002');
+
+INSERT INTO "order" (id, name)
+VALUES ('1111', '2019 Guatemara');

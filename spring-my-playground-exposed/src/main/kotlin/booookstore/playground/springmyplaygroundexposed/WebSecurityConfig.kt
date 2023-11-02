@@ -2,6 +2,7 @@ package booookstore.playground.springmyplaygroundexposed
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod.GET
 import org.springframework.http.HttpMethod.POST
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -17,7 +18,9 @@ class WebSecurityConfig {
         http.httpBasic(Customizer.withDefaults())
         http.csrf { it.disable() }
         http.authorizeHttpRequests {
-            it.requestMatchers(POST, "/operation").hasAuthority("CREATE_OPERATION")
+            it
+                .requestMatchers(GET, "/order/**").hasAuthority("DISPLAY_ALL_ORDER")
+                .requestMatchers(POST, "/operation").hasAuthority("CREATE_OPERATION")
                 .anyRequest().authenticated()
 
         }
