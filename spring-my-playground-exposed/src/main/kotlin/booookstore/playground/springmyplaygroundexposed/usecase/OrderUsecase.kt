@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class OrderUsecase(val orderRepository: OrderRepository, val userUsecase: UserUsecase) {
+class OrderUsecase(val orderRepository: OrderRepository) {
 
     @Transactional(readOnly = true)
     fun findById(orderId: OrderId): Option<Order> {
