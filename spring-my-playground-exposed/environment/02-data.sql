@@ -29,13 +29,13 @@ VALUES ('RO_001', 'PE_001'),
        ('RO_001', 'PE_003'),
        ('RO_002', 'PE_003');
 
-INSERT INTO "user" (mail_address, password)
-VALUES ('bookstore1@playground', 'password'),
-       ('bookstore2@playground', 'password');
+INSERT INTO "user" (id, mail_address, password)
+VALUES ('fc447159-81df-42ac-91dc-e8a001b44143', 'bookstore1@playground', 'password'),
+       ('8094c979-cad8-4f6e-8255-5b54a62f956c', 'bookstore2@playground', 'password');
 
-INSERT INTO "subject" (mail_address, role)
-VALUES ('bookstore1@playground', 'RO_001'),
-       ('bookstore2@playground', 'RO_002');
+INSERT INTO "subject" ("user", role)
+VALUES ('fc447159-81df-42ac-91dc-e8a001b44143', 'RO_001'),
+       ('8094c979-cad8-4f6e-8255-5b54a62f956c', 'RO_002');
 
 INSERT INTO "order" (id, name)
 VALUES ('1111', '2019 Guatemara');
