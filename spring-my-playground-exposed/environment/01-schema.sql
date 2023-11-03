@@ -22,7 +22,8 @@ CREATE TABLE "role"
 
 CREATE TABLE "user"
 (
-    mail_address VARCHAR(255) PRIMARY KEY,
+    id           UUID PRIMARY KEY,
+    mail_address VARCHAR(255) NOT NULL,
     password     VARCHAR(255) NOT NULL
 );
 
@@ -46,20 +47,11 @@ CREATE TABLE "role_permission"
 
 CREATE TABLE "subject"
 (
-    mail_address VARCHAR(255) NOT NULL,
-    role         VARCHAR(255) NOT NULL,
-    FOREIGN KEY (mail_address) REFERENCES "user" (mail_address),
+    "user" UUID         NOT NULL,
+    role   VARCHAR(255) NOT NULL,
+    FOREIGN KEY ("user") REFERENCES "user" (id),
     FOREIGN KEY (role) REFERENCES "role" (id),
-    PRIMARY KEY (mail_address, role)
-);
-
-CREATE TABLE "subject_event"
-(
-    mail_address VARCHAR(255) NOT NULL,
-    role         VARCHAR(255) NOT NULL,
-    date_time    TIMESTAMP    NOT NULL,
-    event        VARCHAR(255) NOT NULL,
-    UNIQUE (date_time, event)
+    PRIMARY KEY ("user", role)
 );
 
 CREATE TABLE "order"
@@ -73,7 +65,7 @@ CREATE TABLE "order_history"
     "order"  VARCHAR(255) NOT NULL,
     datetime TIMESTAMP    NOT NULL,
     status   VARCHAR(255) NOT NULL,
-    "user"   VARCHAR(255) NOT NULL,
+    "user"   UUID         NOT NULL,
     FOREIGN KEY ("order") REFERENCES "order" (id),
-    FOREIGN KEY ("user") REFERENCES "user" (mail_address)
+    FOREIGN KEY ("user") REFERENCES "user" (id)
 );
