@@ -5,6 +5,7 @@ import arrow.core.Some
 import booookstore.playground.springmyplaygroundexposed.domain.Order
 import booookstore.playground.springmyplaygroundexposed.usecase.OrderUsecase
 import org.springframework.http.MediaType.APPLICATION_JSON
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.function.ServerRequest
 import org.springframework.web.servlet.function.ServerResponse
@@ -26,7 +27,8 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
 
     fun createOrder(request: ServerRequest): ServerResponse {
         val order = request.body<Order>()
-        orderUsecase.createOrder(order)
+        val userMailAddress = SecurityContextHolder.getContext().authentication.name
+        orderUsecase.createOrder(order, userMailAddress)
         return accepted().build()
     }
 
