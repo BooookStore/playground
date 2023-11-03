@@ -17,7 +17,7 @@ class RBACUserDetailsService(
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userUsecase.findUserByMailAddress(username)
         val operations = operationUsecase.findOperationByUserMailAddress(username)
-        return User.withUsername(user.mailAddress)
+        return User.withUsername(user.id.toString())
             .password(user.password)
             .authorities(operations.map { SimpleGrantedAuthority(it.name) })
             .build()

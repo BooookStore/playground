@@ -2,9 +2,9 @@ package booookstore.playground.springmyplaygroundexposed.usecase
 
 import arrow.core.Option
 import booookstore.playground.springmyplaygroundexposed.adaptor.postgres.OrderRepository
-import booookstore.playground.springmyplaygroundexposed.domain.MailAddress
 import booookstore.playground.springmyplaygroundexposed.domain.Order
 import booookstore.playground.springmyplaygroundexposed.domain.OrderId
+import booookstore.playground.springmyplaygroundexposed.domain.UserId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,9 +17,8 @@ class OrderUsecase(val orderRepository: OrderRepository, val userUsecase: UserUs
     }
 
     @Transactional
-    fun createOrder(order: Order, userMailAddress: MailAddress) {
-        val user = userUsecase.findUserByMailAddress(userMailAddress)
-        orderRepository.saveAsNew(order, user)
+    fun createOrder(order: Order, userId: UserId) {
+        orderRepository.saveAsNew(order, userId)
     }
 
 }

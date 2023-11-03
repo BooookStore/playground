@@ -11,6 +11,7 @@ import org.springframework.web.servlet.function.ServerRequest
 import org.springframework.web.servlet.function.ServerResponse
 import org.springframework.web.servlet.function.ServerResponse.*
 import org.springframework.web.servlet.function.body
+import java.util.*
 
 @Component
 class OrderHandler(val orderUsecase: OrderUsecase) {
@@ -27,8 +28,8 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
 
     fun createOrder(request: ServerRequest): ServerResponse {
         val order = request.body<Order>()
-        val userMailAddress = SecurityContextHolder.getContext().authentication.name
-        orderUsecase.createOrder(order, userMailAddress)
+        val id = SecurityContextHolder.getContext().authentication.name.let(UUID::fromString)!!
+        orderUsecase.createOrder(order, id)
         return accepted().build()
     }
 

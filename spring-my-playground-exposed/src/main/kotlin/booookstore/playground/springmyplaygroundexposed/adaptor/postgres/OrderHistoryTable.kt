@@ -7,5 +7,5 @@ object OrderHistoryTable : Table("order_history") {
     val order = reference("order", OrderTable.id)
     val datetime = datetime("datetime")
     val status = varchar("status", 255)
-    val user = reference("user", UserTable.mailAddress)
+    val user = reference("user", UserTable.id)
 }

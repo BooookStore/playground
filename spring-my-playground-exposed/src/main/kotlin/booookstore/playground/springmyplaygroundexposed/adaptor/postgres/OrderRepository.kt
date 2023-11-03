@@ -3,7 +3,7 @@ package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 import arrow.core.firstOrNone
 import booookstore.playground.springmyplaygroundexposed.domain.Order
 import booookstore.playground.springmyplaygroundexposed.domain.OrderId
-import booookstore.playground.springmyplaygroundexposed.domain.User
+import booookstore.playground.springmyplaygroundexposed.domain.UserId
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.springframework.stereotype.Repository
@@ -17,7 +17,7 @@ class OrderRepository {
         .map { Order(it[OrderTable.id], it[OrderTable.name]) }
         .firstOrNone()
 
-    fun saveAsNew(order: Order, user: User) {
+    fun saveAsNew(order: Order, userId: UserId) {
         OrderTable.insert {
             it[id] = order.id
             it[name] = order.name
@@ -26,7 +26,7 @@ class OrderRepository {
             it[this.order] = order.id
             it[datetime] = LocalDateTime.now()
             it[status] = "CREATED"
-            it[this.user] = user.mailAddress
+            it[this.user] = userId
         }
     }
 

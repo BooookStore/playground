@@ -10,7 +10,13 @@ class UserRepository {
 
     fun findByMailAddress(mailAddress: MailAddress) =
         UserTable.select { UserTable.mailAddress eq mailAddress }
-            .map { User(it[UserTable.mailAddress], it[UserTable.password]) }
+            .map {
+                User(
+                    it[UserTable.id],
+                    it[UserTable.mailAddress],
+                    it[UserTable.password]
+                )
+            }
             .first()
 
 }
