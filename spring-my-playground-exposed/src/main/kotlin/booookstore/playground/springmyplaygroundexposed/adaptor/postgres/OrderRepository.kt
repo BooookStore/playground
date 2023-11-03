@@ -14,7 +14,7 @@ class OrderRepository {
 
     fun findById(orderId: OrderId) = OrderTable
         .select { OrderTable.id eq orderId }
-        .map { Order(it[OrderTable.id], it[OrderTable.name]) }
+        .map { Order(it[OrderTable.id], it[OrderTable.name], TODO()) }
         .firstOrNone()
 
     fun saveAsNew(order: Order, userId: UserId) {
@@ -25,7 +25,7 @@ class OrderRepository {
         OrderHistoryTable.insert {
             it[this.order] = order.id
             it[datetime] = LocalDateTime.now()
-            it[status] = "CREATED"
+            it[status] = order.status.toString()
             it[this.user] = userId
         }
     }
