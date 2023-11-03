@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package booookstore.playground.springmyplaygroundexposed
 
 import booookstore.playground.springmyplaygroundexposed.adaptor.security.OrderAccessPolicy
@@ -21,8 +23,8 @@ class WebSecurityConfig {
         http.authorizeHttpRequests {
             it
                 .requestMatchers(GET, "/order/**").access(OrderAccessPolicy)
-                .requestMatchers(POST, "/operation").hasAuthority("CREATE_OPERATION")
-                .anyRequest().authenticated()
+                .requestMatchers(POST, "/order").hasAuthority("CREATE_ORDER")
+                .anyRequest().permitAll()
 
         }
         return http.build()

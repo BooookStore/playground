@@ -15,4 +15,9 @@ class OrderUsecase(val orderRepository: OrderRepository) {
         return orderRepository.findById(orderId)
     }
 
+    @Transactional
+    fun createOrder(order: Order) {
+        orderRepository.saveAsNew(order)
+    }
+
 }

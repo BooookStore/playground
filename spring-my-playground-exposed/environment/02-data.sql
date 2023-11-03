@@ -4,17 +4,20 @@ INSERT INTO "operation" (id, name)
 VALUES ('OP_001', 'DISPLAY_ALL_ORDER'),
        ('OP_002', 'DISPLAY_CREATED_ORDER'),
        ('OP_003', 'CANCEL_ALL_ORDER'),
-       ('OP_004', 'CANCEL_CREATED_ORDER');
+       ('OP_004', 'CANCEL_CREATED_ORDER'),
+       ('OP_005', 'CREATE_ORDER');
 
 INSERT INTO "permission" (id, name)
 VALUES ('PE_001', 'CANCELABLABLE_ALL_ORDER'),
-       ('PE_002', 'CANCELABLABLE_CREATED_ORDER');
+       ('PE_002', 'CANCELABLABLE_CREATED_ORDER'),
+       ('PE_003', 'CREATE_ORDER');
 
 INSERT INTO "permission_operation" (permission, operation)
 VALUES ('PE_001', 'OP_001'),
        ('PE_001', 'OP_002'),
        ('PE_002', 'OP_003'),
-       ('PE_002', 'OP_004');
+       ('PE_002', 'OP_004'),
+       ('PE_003', 'OP_005');
 
 INSERT INTO "role" (id, name)
 VALUES ('RO_001', 'MANAGER'),
@@ -22,7 +25,9 @@ VALUES ('RO_001', 'MANAGER'),
 
 INSERT INTO "role_permission" (role, permission)
 VALUES ('RO_001', 'PE_001'),
-       ('RO_002', 'PE_002');
+       ('RO_002', 'PE_002'),
+       ('RO_001', 'PE_003'),
+       ('RO_002', 'PE_003');
 
 INSERT INTO "user" (mail_address, password)
 VALUES ('bookstore1@playground', 'password'),
