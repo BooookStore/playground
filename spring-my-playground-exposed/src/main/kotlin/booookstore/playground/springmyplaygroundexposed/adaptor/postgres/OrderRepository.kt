@@ -1,10 +1,7 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 
 import arrow.core.firstOrNone
-import booookstore.playground.springmyplaygroundexposed.domain.Order
-import booookstore.playground.springmyplaygroundexposed.domain.OrderId
-import booookstore.playground.springmyplaygroundexposed.domain.OrderStatus
-import booookstore.playground.springmyplaygroundexposed.domain.UserId
+import booookstore.playground.springmyplaygroundexposed.domain.*
 import org.jetbrains.exposed.sql.SortOrder.DESC
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -23,7 +20,11 @@ class OrderRepository {
             Order(
                 it[OrderTable.id],
                 it[OrderTable.name],
-                OrderStatus.valueOf(it[OrderStatusTable.status])
+                when (it[OrderStatusTable.status]) {
+                    Accepted::javaClass.name -> Accepted(it[OrderStatusTable.user], it[OrderStatusTable.datetime])
+                    Canceled::javaClass.name -> Canceled(it[OrderStatusTable.user], it[OrderStatusTable.datetime])
+                    else -> throw IllegalStateException("can't create order status $orderId")
+                }
             )
         }
         .firstOrNone()
@@ -36,7 +37,7 @@ class OrderRepository {
         OrderStatusTable.insert {
             it[this.order] = order.id
             it[datetime] = LocalDateTime.now()
-            it[status] = order.status.toString()
+            it[status] = order.status.javaClass.simpleName
             it[this.user] = userId
         }
     }
@@ -53,7 +54,7 @@ class OrderRepository {
             OrderStatusTable.insert {
                 it[this.order] = updatedOrder.id
                 it[datetime] = LocalDateTime.now()
-                it[status] = updatedOrder.status.toString()
+                it[status] = updatedOrder.status.javaClass.simpleName
                 it[this.user] = userId
             }
         }

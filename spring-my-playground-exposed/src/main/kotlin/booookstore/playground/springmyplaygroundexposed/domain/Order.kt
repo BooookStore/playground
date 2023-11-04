@@ -1,6 +1,6 @@
 package booookstore.playground.springmyplaygroundexposed.domain
 
-import booookstore.playground.springmyplaygroundexposed.domain.OrderStatus.ACCEPTED
+import java.time.LocalDateTime.now
 
 typealias OrderId = String
 
@@ -8,10 +8,14 @@ data class Order(val id: String, val name: String, var status: OrderStatus) {
 
     companion object {
 
-        fun acceptNewOrder(id: String, name: String) = Order(id, name, ACCEPTED)
+        fun acceptNewOrder(id: String, name: String, userId: UserId) =
+            Order(id, name, Accepted(userId, now()))
 
     }
 
-    fun cancel() = status.cancel().also { status = it }
+    fun cancel(userId: UserId): Unit = when (val currentStatus = status) {
+        is Accepted -> currentStatus.cancel(userId, now()).let { status = it }
+        is Canceled -> Unit
+    }
 
 }

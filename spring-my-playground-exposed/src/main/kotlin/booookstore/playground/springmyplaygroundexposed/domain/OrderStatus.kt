@@ -1,11 +1,13 @@
 package booookstore.playground.springmyplaygroundexposed.domain
 
-enum class OrderStatus {
-    ACCEPTED,
-    CANCELED;
+import java.time.LocalDateTime
 
-    fun cancel() = when (this) {
-        ACCEPTED -> CANCELED
-        CANCELED -> throw IllegalStateException("already canceled order")
-    }
+sealed class OrderStatus(val userId: UserId, val occurredOn: LocalDateTime)
+
+class Accepted(userId: UserId, occurredOn: LocalDateTime) : OrderStatus(userId, occurredOn) {
+
+    fun cancel(userId: UserId, occurredOn: LocalDateTime) = Canceled(userId, occurredOn)
+
 }
+
+class Canceled(userId: UserId, occurredOn: LocalDateTime) : OrderStatus(userId, occurredOn)
