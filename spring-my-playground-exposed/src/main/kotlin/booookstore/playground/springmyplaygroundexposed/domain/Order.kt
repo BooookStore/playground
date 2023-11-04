@@ -12,8 +12,7 @@ class Order(val id: OrderId, private var name: String, private var status: Order
 
     companion object {
 
-        fun acceptNewOrder(id: String, name: String, userId: UserId) =
-            Order(id, name, Accepted(userId, now()))
+        fun acceptNewOrder(id: String, name: String, userId: UserId) = Order(id, name, Accepted(userId, now()))
 
     }
 
