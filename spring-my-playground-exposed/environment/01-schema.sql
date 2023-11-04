@@ -62,7 +62,7 @@ CREATE TABLE "order"
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE "order_history"
+CREATE TABLE "order_status"
 (
     "order"  VARCHAR(255) NOT NULL,
     datetime TIMESTAMP    NOT NULL,
