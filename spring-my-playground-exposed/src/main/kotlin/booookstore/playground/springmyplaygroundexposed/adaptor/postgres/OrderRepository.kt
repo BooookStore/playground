@@ -49,7 +49,7 @@ class OrderRepository {
         OrderTable.update(where = { OrderTable.id eq updatedOrder.id }) {
             it[name] = updatedOrder.name
         }
-        if (savedOrder isChangedStatus updatedOrder) {
+        if (savedOrder statusIsChange updatedOrder) {
             OrderStatusTable.insert {
                 it[this.order] = updatedOrder.id
                 it[datetime] = LocalDateTime.now()
@@ -59,6 +59,6 @@ class OrderRepository {
         }
     }
 
-    private infix fun Order.isChangedStatus(other: Order) = status != other.status
+    private infix fun Order.statusIsChange(other: Order) = status != other.status
 
 }
