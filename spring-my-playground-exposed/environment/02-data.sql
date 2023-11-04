@@ -14,8 +14,8 @@ VALUES ('PE_001', 'CANCELABLABLE_ALL_ORDER'),
 
 INSERT INTO "permission_operation" (permission, operation)
 VALUES ('PE_001', 'OP_001'),
-       ('PE_001', 'OP_002'),
-       ('PE_002', 'OP_003'),
+       ('PE_001', 'OP_003'),
+       ('PE_002', 'OP_002'),
        ('PE_002', 'OP_004'),
        ('PE_003', 'OP_005');
 
