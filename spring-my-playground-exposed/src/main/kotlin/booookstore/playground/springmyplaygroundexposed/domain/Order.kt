@@ -4,7 +4,7 @@ import java.time.LocalDateTime.now
 
 typealias OrderId = String
 
-class Order(val id: String, private var name: String, private var status: OrderStatus) {
+class Order(val id: OrderId, private var name: String, private var status: OrderStatus) {
 
     fun name() = name
 
