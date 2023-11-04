@@ -1,6 +1,8 @@
+-- @formatter:off
 create database playground;
 
 \connect playground;
+-- @formatter:on
 
 CREATE TABLE "operation"
 (
