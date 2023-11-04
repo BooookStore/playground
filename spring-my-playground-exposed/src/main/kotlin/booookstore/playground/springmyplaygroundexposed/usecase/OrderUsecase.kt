@@ -17,7 +17,7 @@ class OrderUsecase(val orderRepository: OrderRepository) {
     }
 
     @Transactional
-    fun createOrder(order: Order, userId: UserId) {
+    fun acceptOrder(order: Order, userId: UserId) {
         orderRepository.saveAsNew(order, userId)
     }
 
@@ -25,7 +25,7 @@ class OrderUsecase(val orderRepository: OrderRepository) {
     fun cancelOrder(orderId: OrderId, cancelUserId: UserId) = orderRepository.findById(orderId)
         .onSome { order ->
             order.cancel(cancelUserId)
-            orderRepository.saveAsOverride(order, cancelUserId)
+            orderRepository.saveAsOverride(order)
         }
         .onNone { throw Exception("order can't cancel. order not found $orderId") }
 

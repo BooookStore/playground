@@ -47,13 +47,13 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
     }
 
 
-    fun createOrder(request: ServerRequest): ServerResponse {
+    fun acceptOrder(request: ServerRequest): ServerResponse {
         data class RequestBody(val id: String, val name: String)
 
         val (orderId, name) = request.body<RequestBody>()
         val id = SecurityContextHolder.getContext().authentication.name.let(UUID::fromString)!!
         val order = Order.acceptNewOrder(orderId, name, id)
-        orderUsecase.createOrder(order, id)
+        orderUsecase.acceptOrder(order, id)
         return accepted().build()
     }
 

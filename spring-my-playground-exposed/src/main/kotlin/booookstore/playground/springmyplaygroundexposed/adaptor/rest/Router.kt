@@ -24,7 +24,7 @@ class Router(
         }
         "order".nest {
             GET("{id}", orderHandler::findById)
-            POST(accept(APPLICATION_JSON), orderHandler::createOrder)
+            POST(accept(APPLICATION_JSON), orderHandler::acceptOrder)
             PUT("{id}/cancel", orderHandler::cancelOrder)
         }
     }

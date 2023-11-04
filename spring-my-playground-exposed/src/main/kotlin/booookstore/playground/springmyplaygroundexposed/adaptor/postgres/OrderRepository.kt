@@ -42,7 +42,7 @@ class OrderRepository {
         }
     }
 
-    fun saveAsOverride(updatedOrder: Order, userId: UserId) = findById(updatedOrder.id)
+    fun saveAsOverride(updatedOrder: Order) = findById(updatedOrder.id)
         .onSome { fetchedOrder ->
             OrderTable.update(where = { OrderTable.id eq updatedOrder.id }) {
                 it[name] = updatedOrder.name()
@@ -52,7 +52,7 @@ class OrderRepository {
                     it[order] = updatedOrder.id
                     it[datetime] = LocalDateTime.now()
                     it[status] = updatedOrder.status().toStatusName()
-                    it[user] = userId
+                    it[user] = updatedOrder.status().userId
                 }
             }
         }
