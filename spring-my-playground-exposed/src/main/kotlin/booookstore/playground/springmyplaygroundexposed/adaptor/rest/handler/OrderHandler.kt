@@ -38,7 +38,7 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
 
     fun cancelOrder(request: ServerRequest): ServerResponse {
         val orderId = request.pathVariable("id")
-        val cancelUserId = SecurityContextHolder.getContext().authentication.name(UUID::fromString)!!
+        val cancelUserId = SecurityContextHolder.getContext().authentication.name.let(UUID::fromString)!!
         orderUsecase.cancelOrder(orderId, cancelUserId)
         return accepted().build()
     }
