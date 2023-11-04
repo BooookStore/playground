@@ -4,7 +4,11 @@ import java.time.LocalDateTime.now
 
 typealias OrderId = String
 
-data class Order(val id: String, val name: String, var status: OrderStatus) {
+class Order(val id: String, private var name: String, private var status: OrderStatus) {
+
+    fun name() = name
+
+    fun status() = status
 
     companion object {
 

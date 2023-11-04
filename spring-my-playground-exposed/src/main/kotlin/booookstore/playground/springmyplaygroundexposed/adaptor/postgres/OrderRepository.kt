@@ -32,12 +32,12 @@ class OrderRepository {
     fun saveAsNew(order: Order, userId: UserId) {
         OrderTable.insert {
             it[id] = order.id
-            it[name] = order.name
+            it[name] = order.name()
         }
         OrderStatusTable.insert {
             it[this.order] = order.id
             it[datetime] = LocalDateTime.now()
-            it[status] = order.status.toStatusName()
+            it[status] = order.status().toStatusName()
             it[this.user] = userId
         }
     }
@@ -48,19 +48,19 @@ class OrderRepository {
 
     private fun updateSavedOrder(savedOrder: Order, updatedOrder: Order, userId: UserId) {
         OrderTable.update(where = { OrderTable.id eq updatedOrder.id }) {
-            it[name] = updatedOrder.name
+            it[name] = updatedOrder.name()
         }
         if (savedOrder statusIsChange updatedOrder) {
             OrderStatusTable.insert {
                 it[this.order] = updatedOrder.id
                 it[datetime] = LocalDateTime.now()
-                it[status] = updatedOrder.status.toStatusName()
+                it[status] = updatedOrder.status().toStatusName()
                 it[this.user] = userId
             }
         }
     }
 
-    private infix fun Order.statusIsChange(other: Order) = status != other.status
+    private infix fun Order.statusIsChange(other: Order) = status() != other.status()
 
     private fun OrderStatus.toStatusName() = when (this) {
         is Accepted -> "ACCEPTED"
