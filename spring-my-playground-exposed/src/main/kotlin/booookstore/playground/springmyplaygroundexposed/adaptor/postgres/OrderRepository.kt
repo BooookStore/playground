@@ -1,7 +1,5 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 
-import arrow.core.None
-import arrow.core.Some
 import arrow.core.firstOrNone
 import booookstore.playground.springmyplaygroundexposed.domain.Order
 import booookstore.playground.springmyplaygroundexposed.domain.OrderId
@@ -43,12 +41,9 @@ class OrderRepository {
         }
     }
 
-    fun saveAsOverride(updatedOrder: Order, userId: UserId) {
-        when (val orderOption = findById(updatedOrder.id)) {
-            is None -> throw Exception()
-            is Some -> updateSavedOrder(orderOption.value, updatedOrder, userId)
-        }
-    }
+    fun saveAsOverride(updatedOrder: Order, userId: UserId) = findById(updatedOrder.id)
+        .onSome { updateSavedOrder(it, updatedOrder, userId) }
+        .onNone { throw Exception("order can't save as override. order not found ${updatedOrder.id}") }
 
     private fun updateSavedOrder(savedOrder: Order, updatedOrder: Order, userId: UserId) {
         OrderTable.update(where = { OrderTable.id eq updatedOrder.id }) {
