@@ -43,22 +43,20 @@ class OrderRepository {
     }
 
     fun saveAsOverride(updatedOrder: Order, userId: UserId) = findById(updatedOrder.id)
-        .onSome { updateSavedOrder(it, updatedOrder, userId) }
-        .onNone { throw Exception("order can't save as override. order not found ${updatedOrder.id}") }
-
-    private fun updateSavedOrder(savedOrder: Order, updatedOrder: Order, userId: UserId) {
-        OrderTable.update(where = { OrderTable.id eq updatedOrder.id }) {
-            it[name] = updatedOrder.name()
-        }
-        if (savedOrder statusIsChange updatedOrder) {
-            OrderStatusTable.insert {
-                it[this.order] = updatedOrder.id
-                it[datetime] = LocalDateTime.now()
-                it[status] = updatedOrder.status().toStatusName()
-                it[this.user] = userId
+        .onSome { fetchedOrder ->
+            OrderTable.update(where = { OrderTable.id eq updatedOrder.id }) {
+                it[name] = updatedOrder.name()
+            }
+            if (fetchedOrder statusIsChange updatedOrder) {
+                OrderStatusTable.insert {
+                    it[order] = updatedOrder.id
+                    it[datetime] = LocalDateTime.now()
+                    it[status] = updatedOrder.status().toStatusName()
+                    it[user] = userId
+                }
             }
         }
-    }
+        .onNone { throw Exception("order can't save as override. order not found ${updatedOrder.id}") }
 
     private infix fun Order.statusIsChange(other: Order) = status() != other.status()
 
