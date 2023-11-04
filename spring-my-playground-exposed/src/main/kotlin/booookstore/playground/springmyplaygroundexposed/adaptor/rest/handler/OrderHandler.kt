@@ -2,8 +2,10 @@ package booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler
 
 import arrow.core.None
 import arrow.core.Some
-import booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler.OrderHandler.OrderView.OrderStatusView
-import booookstore.playground.springmyplaygroundexposed.domain.*
+import booookstore.playground.springmyplaygroundexposed.domain.Accepted
+import booookstore.playground.springmyplaygroundexposed.domain.Canceled
+import booookstore.playground.springmyplaygroundexposed.domain.Order
+import booookstore.playground.springmyplaygroundexposed.domain.OrderStatus
 import booookstore.playground.springmyplaygroundexposed.usecase.OrderUsecase
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.security.core.context.SecurityContextHolder
@@ -12,7 +14,6 @@ import org.springframework.web.servlet.function.ServerRequest
 import org.springframework.web.servlet.function.ServerResponse
 import org.springframework.web.servlet.function.ServerResponse.*
 import org.springframework.web.servlet.function.body
-import java.time.LocalDateTime
 import java.util.*
 
 @Component
@@ -28,24 +29,22 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
         }
     }
 
-    data class OrderView(val orderId: OrderId, val orderName: String, val status: OrderStatusView) {
+    fun Order.toView(): Map<String, Any> {
+        fun OrderStatus.toViewName() = when (this) {
+            is Accepted -> "accepted"
+            is Canceled -> "canceled"
+        }
 
-        data class OrderStatusView(val status: String, val occurredOn: LocalDateTime, val userId: UserId)
-
-    }
-
-    fun Order.toView(): OrderView = OrderView(
-        orderId = id,
-        orderName = name(),
-        OrderStatusView(
-            status = when (status()) {
-                is Accepted -> "accepted"
-                is Canceled -> "canceled"
-            },
-            occurredOn = status().occurredOn,
-            userId = status().userId
+        return mapOf(
+            "orderId" to id,
+            "orderName" to name(),
+            "currentStatus" to mapOf(
+                "status" to status().toViewName(),
+                "occurredOn" to status().occurredOn,
+                "operateBy" to status().userId
+            )
         )
-    )
+    }
 
 
     fun createOrder(request: ServerRequest): ServerResponse {
