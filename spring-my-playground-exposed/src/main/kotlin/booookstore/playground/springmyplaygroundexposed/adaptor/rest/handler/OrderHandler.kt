@@ -21,9 +21,7 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
 
     fun findById(request: ServerRequest): ServerResponse {
         val orderId = request.pathVariable("id")
-        val orderOption = orderUsecase.findById(orderId)
-
-        return when (orderOption) {
+        return when (val orderOption = orderUsecase.findById(orderId)) {
             is Some -> ok().contentType(APPLICATION_JSON).body(orderOption.value.toView())
             None -> notFound().build()
         }
