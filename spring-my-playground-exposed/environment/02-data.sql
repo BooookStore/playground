@@ -41,4 +41,4 @@ INSERT INTO "order" (id, name)
 VALUES ('1111', '2019 Guatemara');
 
 INSERT INTO "order_status" ("order", datetime, status, "user")
-VALUES ('1111', '2023-11-4 11:49:00', 'CREATED', 'fc447159-81df-42ac-91dc-e8a001b44143');
+VALUES ('1111', '2023-11-4 11:49:00', 'ACCEPTED', 'fc447159-81df-42ac-91dc-e8a001b44143');
