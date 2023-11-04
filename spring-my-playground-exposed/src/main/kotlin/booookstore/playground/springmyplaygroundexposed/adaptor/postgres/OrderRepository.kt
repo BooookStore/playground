@@ -22,7 +22,7 @@ class OrderRepository {
             it[id] = order.id
             it[name] = order.name
         }
-        OrderHistoryTable.insert {
+        OrderStatusTable.insert {
             it[this.order] = order.id
             it[datetime] = LocalDateTime.now()
             it[status] = order.status.toString()
