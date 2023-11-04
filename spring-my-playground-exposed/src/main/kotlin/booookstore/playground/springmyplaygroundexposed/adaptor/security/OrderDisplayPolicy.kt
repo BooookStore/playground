@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext
 import java.util.function.Supplier
 
-object OrderAccessPolicy : AuthorizationManager<RequestAuthorizationContext> {
+object OrderDisplayPolicy : AuthorizationManager<RequestAuthorizationContext> {
 
     override fun check(
         supplier: Supplier<Authentication>,

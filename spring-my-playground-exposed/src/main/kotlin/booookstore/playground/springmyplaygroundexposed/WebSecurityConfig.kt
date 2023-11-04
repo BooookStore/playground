@@ -2,7 +2,7 @@
 
 package booookstore.playground.springmyplaygroundexposed
 
-import booookstore.playground.springmyplaygroundexposed.adaptor.security.OrderAccessPolicy
+import booookstore.playground.springmyplaygroundexposed.adaptor.security.OrderDisplayPolicy
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod.*
@@ -21,7 +21,7 @@ class WebSecurityConfig {
         http.csrf { it.disable() }
         http.authorizeHttpRequests {
             it
-                .requestMatchers(GET, "/order/**").access(OrderAccessPolicy)
+                .requestMatchers(GET, "/order/**").access(OrderDisplayPolicy)
                 .requestMatchers(POST, "/order").hasAuthority("CREATE_ORDER")
                 .requestMatchers(PUT, "/order/*/cancel").hasAuthority("CANCEL_ALL_ORDER")
                 .anyRequest().permitAll()
