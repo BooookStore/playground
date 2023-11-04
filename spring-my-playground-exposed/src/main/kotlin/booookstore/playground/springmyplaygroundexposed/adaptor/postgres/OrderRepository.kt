@@ -20,11 +20,11 @@ class OrderRepository {
             Order(
                 it[OrderTable.id],
                 it[OrderTable.name],
-                when (it[OrderStatusTable.status]) {
-                    Accepted::javaClass.name -> Accepted(it[OrderStatusTable.user], it[OrderStatusTable.datetime])
-                    Canceled::javaClass.name -> Canceled(it[OrderStatusTable.user], it[OrderStatusTable.datetime])
-                    else -> throw IllegalStateException("can't create order status $orderId")
-                }
+                orderStatusFrom(
+                    it[OrderStatusTable.status],
+                    it[OrderStatusTable.user],
+                    it[OrderStatusTable.datetime]
+                )
             )
         }
         .firstOrNone()
@@ -37,7 +37,7 @@ class OrderRepository {
         OrderStatusTable.insert {
             it[this.order] = order.id
             it[datetime] = LocalDateTime.now()
-            it[status] = order.status.javaClass.simpleName
+            it[status] = order.status.toStatusName()
             it[this.user] = userId
         }
     }
@@ -54,12 +54,23 @@ class OrderRepository {
             OrderStatusTable.insert {
                 it[this.order] = updatedOrder.id
                 it[datetime] = LocalDateTime.now()
-                it[status] = updatedOrder.status.javaClass.simpleName
+                it[status] = updatedOrder.status.toStatusName()
                 it[this.user] = userId
             }
         }
     }
 
     private infix fun Order.statusIsChange(other: Order) = status != other.status
+
+    private fun OrderStatus.toStatusName() = when (this) {
+        is Accepted -> "ACCEPTED"
+        is Canceled -> "CANCELED"
+    }
+
+    private fun orderStatusFrom(statusName: String, userId: UserId, occurredOn: LocalDateTime) = when (statusName) {
+        "ACCEPTED" -> Accepted(userId, occurredOn)
+        "CANCELED" -> Canceled(userId, occurredOn)
+        else -> throw IllegalArgumentException("can't create order status from status name $statusName")
+    }
 
 }
