@@ -26,7 +26,7 @@ class WebSecurityConfig(
                 .requestMatchers(GET, "/order/{id}").access(orderDisplayPolicy)
                 .requestMatchers(POST, "/order").hasAuthority("CREATE_ORDER")
                 .requestMatchers(PUT, "/order/*/cancel").hasAuthority("CANCEL_ALL_ORDER")
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
 
         }
         return http.build()
