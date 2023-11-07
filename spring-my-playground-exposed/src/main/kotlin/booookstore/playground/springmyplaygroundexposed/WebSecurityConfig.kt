@@ -13,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
-class WebSecurityConfig {
+class WebSecurityConfig(
+    private val orderDisplayPolicy: OrderDisplayPolicy
+) {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -21,7 +23,7 @@ class WebSecurityConfig {
         http.csrf { it.disable() }
         http.authorizeHttpRequests {
             it
-                .requestMatchers(GET, "/order/**").access(OrderDisplayPolicy)
+                .requestMatchers(GET, "/order/{id}").access(orderDisplayPolicy)
                 .requestMatchers(POST, "/order").hasAuthority("CREATE_ORDER")
                 .requestMatchers(PUT, "/order/*/cancel").hasAuthority("CANCEL_ALL_ORDER")
                 .anyRequest().permitAll()

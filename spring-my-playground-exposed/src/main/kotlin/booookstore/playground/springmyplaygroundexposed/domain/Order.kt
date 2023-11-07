@@ -4,7 +4,7 @@ import java.time.LocalDateTime.now
 
 typealias OrderId = String
 
-class Order(val id: OrderId, private var name: String, private var status: OrderStatus) {
+class Order(val id: OrderId, val createUser: UserId, private var name: String, private var status: OrderStatus) {
 
     fun name() = name
 
@@ -12,7 +12,8 @@ class Order(val id: OrderId, private var name: String, private var status: Order
 
     companion object {
 
-        fun acceptNewOrder(id: String, name: String, userId: UserId) = Order(id, name, Accepted(userId, now()))
+        fun acceptNewOrder(id: String, createUserId: UserId, name: String) =
+            Order(id, createUserId, name, Accepted(createUserId, now()))
 
     }
 

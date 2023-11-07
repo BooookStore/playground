@@ -36,6 +36,7 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
         return mapOf(
             "orderId" to id,
             "orderName" to name(),
+            "createUser" to createUser,
             "currentStatus" to mapOf(
                 "status" to status().toViewName(),
                 "occurredOn" to status().occurredOn,
@@ -50,7 +51,7 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
 
         val (orderId, name) = request.body<RequestBody>()
         val id = SecurityContextHolder.getContext().authentication.name.let(UUID::fromString)!!
-        val order = Order.acceptNewOrder(orderId, name, id)
+        val order = Order.acceptNewOrder(orderId, id, name)
         orderUsecase.acceptOrder(order, id)
         return accepted().build()
     }

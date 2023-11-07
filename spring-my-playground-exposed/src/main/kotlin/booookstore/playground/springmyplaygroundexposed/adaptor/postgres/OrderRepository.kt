@@ -19,6 +19,7 @@ class OrderRepository {
         .map {
             Order(
                 it[OrderTable.id],
+                it[OrderTable.create_user],
                 it[OrderTable.name],
                 orderStatusFrom(
                     it[OrderStatusTable.status],
@@ -32,6 +33,7 @@ class OrderRepository {
     fun saveAsNew(order: Order, userId: UserId) {
         OrderTable.insert {
             it[id] = order.id
+            it[create_user] = userId
             it[name] = order.name()
         }
         OrderStatusTable.insert {

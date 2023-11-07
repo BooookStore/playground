@@ -58,8 +58,9 @@ CREATE TABLE "subject"
 
 CREATE TABLE "order"
 (
-    id   VARCHAR(255) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    id          VARCHAR(255) PRIMARY KEY,
+    create_user VARCHAR(255) NOT NULL,
+    name        VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE "order_status"
