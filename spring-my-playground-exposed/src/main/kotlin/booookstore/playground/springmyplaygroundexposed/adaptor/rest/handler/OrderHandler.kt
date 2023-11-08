@@ -2,10 +2,7 @@ package booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler
 
 import arrow.core.None
 import arrow.core.Some
-import booookstore.playground.springmyplaygroundexposed.domain.Accepted
-import booookstore.playground.springmyplaygroundexposed.domain.Canceled
 import booookstore.playground.springmyplaygroundexposed.domain.Order
-import booookstore.playground.springmyplaygroundexposed.domain.OrderStatus
 import booookstore.playground.springmyplaygroundexposed.usecase.OrderUsecase
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.security.core.context.SecurityContextHolder
@@ -21,30 +18,11 @@ class OrderHandler(val orderUsecase: OrderUsecase) {
 
     fun findById(request: ServerRequest): ServerResponse {
         val orderId = request.pathVariable("id")
-        return when (val orderOption = orderUsecase.findById(orderId)) {
-            is Some -> ok().contentType(APPLICATION_JSON).body(orderOption.value.toView())
+        return when (val orderOption = orderUsecase.findOrderDetailsViewById(orderId)) {
+            is Some -> ok().contentType(APPLICATION_JSON).body(orderOption.value)
             None -> notFound().build()
         }
     }
-
-    fun Order.toView(): Map<String, Any> {
-        fun OrderStatus.toViewName() = when (this) {
-            is Accepted -> "accepted"
-            is Canceled -> "canceled"
-        }
-
-        return mapOf(
-            "orderId" to id,
-            "orderName" to name(),
-            "createUser" to createUser,
-            "currentStatus" to mapOf(
-                "status" to status().toViewName(),
-                "occurredOn" to status().occurredOn,
-                "operateBy" to status().userId
-            )
-        )
-    }
-
 
     fun acceptOrder(request: ServerRequest): ServerResponse {
         data class RequestBody(val id: String, val name: String)

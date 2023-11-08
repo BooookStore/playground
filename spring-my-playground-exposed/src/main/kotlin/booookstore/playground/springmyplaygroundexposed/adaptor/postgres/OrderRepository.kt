@@ -1,7 +1,10 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 
+import arrow.core.Option
 import arrow.core.firstOrNone
 import booookstore.playground.springmyplaygroundexposed.domain.*
+import booookstore.playground.springmyplaygroundexposed.query.OrderDetailsView
+import org.jetbrains.exposed.sql.SortOrder.ASC
 import org.jetbrains.exposed.sql.SortOrder.DESC
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -11,6 +14,32 @@ import java.time.LocalDateTime
 
 @Repository
 class OrderRepository {
+
+    fun findOrderDetailsViewById(orderId: OrderId): Option<OrderDetailsView> {
+        val orderStatusViews = OrderStatusTable
+            .select { OrderStatusTable.order eq orderId }
+            .orderBy(OrderStatusTable.datetime, ASC)
+            .map {
+                OrderDetailsView.OrderStatusView(
+                    status = it[OrderStatusTable.status],
+                    occurredOn = it[OrderStatusTable.datetime],
+                    user = it[OrderStatusTable.user].toString()
+                )
+            }
+
+        return OrderTable
+            .select { OrderTable.id eq orderId }
+            .limit(1)
+            .map {
+                OrderDetailsView(
+                    orderId = it[OrderTable.id],
+                    createUser = it[OrderTable.create_user].toString(),
+                    name = it[OrderTable.name],
+                    statusHistory = orderStatusViews
+                )
+            }
+            .firstOrNone()
+    }
 
     fun findById(orderId: OrderId) = (OrderTable innerJoin OrderStatusTable)
         .select { OrderTable.id eq orderId }
