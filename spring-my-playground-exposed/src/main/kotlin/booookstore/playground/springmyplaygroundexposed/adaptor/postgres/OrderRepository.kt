@@ -1,7 +1,8 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 
 import arrow.core.firstOrNone
-import booookstore.playground.springmyplaygroundexposed.domain.*
+import booookstore.playground.springmyplaygroundexposed.command.domain.*
+import booookstore.playground.springmyplaygroundexposed.command.domain.user.UserId
 import org.jetbrains.exposed.sql.SortOrder.DESC
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select

@@ -2,13 +2,12 @@ package booookstore.playground.springmyplaygroundexposed.adaptor.security
 
 import arrow.core.None
 import arrow.core.Some
-import booookstore.playground.springmyplaygroundexposed.usecase.OrderUsecase
+import booookstore.playground.springmyplaygroundexposed.command.usecase.OrderUsecase
 import org.springframework.security.authorization.AuthorizationDecision
 import org.springframework.security.authorization.AuthorizationManager
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext
 import org.springframework.stereotype.Component
-import java.util.*
 import java.util.function.Supplier
 
 @Component
@@ -43,7 +42,7 @@ class OrderDisplayPolicy(
     private fun Authentication.ifHasAuthority(authority: String): SatisfyRule = if (hasAuthority(authority)) {
         MustSatisfyRule(this)
     } else {
-        NoNeedSatisfyRule(this)
+        NoNeedSatisfyRule()
     }
 
     interface SatisfyRule {
@@ -58,7 +57,7 @@ class OrderDisplayPolicy(
 
     }
 
-    class NoNeedSatisfyRule(private val authentication: Authentication) : SatisfyRule {
+    class NoNeedSatisfyRule : SatisfyRule {
 
         override fun satisfy(condition: (Authentication) -> Boolean): Boolean = true
 

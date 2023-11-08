@@ -1,10 +1,10 @@
-package booookstore.playground.springmyplaygroundexposed.usecase
+package booookstore.playground.springmyplaygroundexposed.command.usecase
 
 import arrow.core.Option
 import booookstore.playground.springmyplaygroundexposed.adaptor.postgres.OrderRepository
-import booookstore.playground.springmyplaygroundexposed.domain.Order
-import booookstore.playground.springmyplaygroundexposed.domain.OrderId
-import booookstore.playground.springmyplaygroundexposed.domain.UserId
+import booookstore.playground.springmyplaygroundexposed.command.domain.Order
+import booookstore.playground.springmyplaygroundexposed.command.domain.OrderId
+import booookstore.playground.springmyplaygroundexposed.command.domain.user.UserId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

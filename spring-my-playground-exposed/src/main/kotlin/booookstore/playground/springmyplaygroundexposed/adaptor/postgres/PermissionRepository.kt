@@ -1,6 +1,6 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 
-import booookstore.playground.springmyplaygroundexposed.domain.Permission
+import booookstore.playground.springmyplaygroundexposed.command.domain.user.Permission
 import org.jetbrains.exposed.sql.insert
 
 class PermissionRepository {

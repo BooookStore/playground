@@ -1,7 +1,7 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler
 
-import booookstore.playground.springmyplaygroundexposed.domain.Operation
-import booookstore.playground.springmyplaygroundexposed.usecase.OperationUsecase
+import booookstore.playground.springmyplaygroundexposed.command.domain.user.Operation
+import booookstore.playground.springmyplaygroundexposed.command.usecase.OperationUsecase
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.function.ServerRequest

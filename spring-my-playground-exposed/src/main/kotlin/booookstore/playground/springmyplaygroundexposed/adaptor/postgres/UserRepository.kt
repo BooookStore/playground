@@ -1,7 +1,7 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 
-import booookstore.playground.springmyplaygroundexposed.domain.MailAddress
-import booookstore.playground.springmyplaygroundexposed.domain.User
+import booookstore.playground.springmyplaygroundexposed.command.domain.user.MailAddress
+import booookstore.playground.springmyplaygroundexposed.command.domain.user.User
 import org.jetbrains.exposed.sql.select
 import org.springframework.stereotype.Repository
 

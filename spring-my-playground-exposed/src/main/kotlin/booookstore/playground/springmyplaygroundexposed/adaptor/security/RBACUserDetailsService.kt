@@ -1,7 +1,7 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.security
 
-import booookstore.playground.springmyplaygroundexposed.usecase.UserUsecase
-import booookstore.playground.springmyplaygroundexposed.usecase.OperationUsecase
+import booookstore.playground.springmyplaygroundexposed.command.usecase.UserUsecase
+import booookstore.playground.springmyplaygroundexposed.command.usecase.OperationUsecase
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails

@@ -1,4 +1,4 @@
-package booookstore.playground.springmyplaygroundexposed.domain
+package booookstore.playground.springmyplaygroundexposed.command.domain.user
 
 typealias PermissionId = String
 

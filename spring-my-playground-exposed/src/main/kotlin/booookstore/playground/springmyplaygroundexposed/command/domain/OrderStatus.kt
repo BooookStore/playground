@@ -1,5 +1,6 @@
-package booookstore.playground.springmyplaygroundexposed.domain
+package booookstore.playground.springmyplaygroundexposed.command.domain
 
+import booookstore.playground.springmyplaygroundexposed.command.domain.user.UserId
 import java.time.LocalDateTime
 
 sealed class OrderStatus(val userId: UserId, val occurredOn: LocalDateTime)
