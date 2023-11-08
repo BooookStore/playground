@@ -3,6 +3,7 @@ package booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler
 import arrow.core.None
 import arrow.core.Some
 import booookstore.playground.springmyplaygroundexposed.domain.Order
+import booookstore.playground.springmyplaygroundexposed.query.OrderDetailsViewQuery
 import booookstore.playground.springmyplaygroundexposed.usecase.OrderUsecase
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.security.core.context.SecurityContextHolder
@@ -14,11 +15,11 @@ import org.springframework.web.servlet.function.body
 import java.util.*
 
 @Component
-class OrderHandler(val orderUsecase: OrderUsecase) {
+class OrderHandler(val orderUsecase: OrderUsecase, val orderDetailsViewQuery: OrderDetailsViewQuery) {
 
     fun findById(request: ServerRequest): ServerResponse {
         val orderId = request.pathVariable("id")
-        return when (val orderOption = orderUsecase.findOrderDetailsViewById(orderId)) {
+        return when (val orderOption = orderDetailsViewQuery.searchById(orderId)) {
             is Some -> ok().contentType(APPLICATION_JSON).body(orderOption.value)
             None -> notFound().build()
         }

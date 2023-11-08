@@ -5,17 +5,11 @@ import booookstore.playground.springmyplaygroundexposed.adaptor.postgres.OrderRe
 import booookstore.playground.springmyplaygroundexposed.domain.Order
 import booookstore.playground.springmyplaygroundexposed.domain.OrderId
 import booookstore.playground.springmyplaygroundexposed.domain.UserId
-import booookstore.playground.springmyplaygroundexposed.query.OrderDetailsView
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OrderUsecase(val orderRepository: OrderRepository) {
-
-    @Transactional(readOnly = true)
-    fun findOrderDetailsViewById(orderId: OrderId): Option<OrderDetailsView> {
-        return orderRepository.findOrderDetailsViewById(orderId)
-    }
 
     @Transactional(readOnly = true)
     fun findById(orderId: OrderId): Option<Order> {
