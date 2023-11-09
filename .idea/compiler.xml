@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="kotlin-coroutine" />
         <module name="spring-my-playground-data-jdbc" />
+        <module name="spring-my-playground-security-login-json" />
         <module name="spring-my-playground-security-basic" />
         <module name="spring-my-playground-security-authorize-by-resouce" />
         <module name="spring-my-playground-exposed" />
@@ -35,6 +36,7 @@
       <module name="spring-my-playground-exposed" options="-parameters" />
       <module name="spring-my-playground-security-authorize-by-resouce" options="-parameters" />
       <module name="spring-my-playground-security-basic" options="-parameters" />
+      <module name="spring-my-playground-security-login-json" options="-parameters" />
     </option>
   </component>
 </project>

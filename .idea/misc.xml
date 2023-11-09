@@ -22,6 +22,7 @@
         <option value="$PROJECT_DIR$/spring-my-playground-security-basic/pom.xml" />
         <option value="$PROJECT_DIR$/spring-my-playground-data-jdbc/pom.xml" />
         <option value="$PROJECT_DIR$/spring-my-playground-exposed/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-my-playground-security-login-json/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
