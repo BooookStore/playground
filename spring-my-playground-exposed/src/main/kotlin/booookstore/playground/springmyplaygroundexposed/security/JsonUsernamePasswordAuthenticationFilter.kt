@@ -27,8 +27,6 @@ class JsonUsernamePasswordAuthenticationFilter(authenticationManager: Authentica
             username,
             password
         )
-        // Allow subclasses to set the "details" property
-        // Allow subclasses to set the "details" property
         setDetails(request, authRequest)
         return authenticationManager.authenticate(authRequest)
     }
