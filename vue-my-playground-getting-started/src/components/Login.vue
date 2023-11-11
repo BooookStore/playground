@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const username = ref("");
 const password = ref("");
@@ -54,12 +54,16 @@ async function login() {
     if (response.status === 401) {
       loginFailedMessage.value = "incorrect username or password";
     } else {
-      loginFailedMessage.value = "error"
+      loginFailedMessage.value = "error";
     }
     return;
   }
   loginFailedMessage.value = "";
 
+  await updateMe();
+}
+
+async function updateMe() {
   await fetch("http://localhost:8080/me", {
     credentials: "include",
   }).then(async (response) => {
@@ -74,4 +78,8 @@ async function logout() {
     me.value = null;
   });
 }
+
+onMounted(() => {
+  updateMe();
+});
 </script>
