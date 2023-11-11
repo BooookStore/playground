@@ -1,4 +1,4 @@
-package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
+package booookstore.playground.springmyplaygroundexposed.adaptor.postgres.table
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime

@@ -1,5 +1,6 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 
+import booookstore.playground.springmyplaygroundexposed.adaptor.postgres.table.UserTable
 import booookstore.playground.springmyplaygroundexposed.command.domain.user.MailAddress
 import booookstore.playground.springmyplaygroundexposed.command.domain.user.User
 import org.jetbrains.exposed.sql.select
