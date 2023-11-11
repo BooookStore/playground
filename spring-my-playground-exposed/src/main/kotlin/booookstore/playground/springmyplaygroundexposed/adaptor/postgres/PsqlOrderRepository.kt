@@ -13,9 +13,9 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
 @Repository
-class OrderRepository {
+class PsqlOrderRepository : OrderRepository {
 
-    fun findById(orderId: OrderId) = (OrderTable innerJoin OrderStatusTable)
+    override fun findById(orderId: OrderId) = (OrderTable innerJoin OrderStatusTable)
         .select { OrderTable.id eq orderId }
         .orderBy(OrderStatusTable.datetime, DESC)
         .limit(1)
@@ -33,7 +33,7 @@ class OrderRepository {
         }
         .firstOrNone()
 
-    fun saveAsNew(order: Order, userId: UserId) {
+    override fun saveAsNew(order: Order, userId: UserId) {
         OrderTable.insert {
             it[id] = order.id
             it[create_user] = userId
@@ -47,7 +47,7 @@ class OrderRepository {
         }
     }
 
-    fun saveAsOverride(updatedOrder: Order) = findById(updatedOrder.id)
+    override fun saveAsOverride(updatedOrder: Order) = findById(updatedOrder.id)
         .onSome { fetchedOrder ->
             OrderTable.update(where = { OrderTable.id eq updatedOrder.id }) {
                 it[name] = updatedOrder.name()
@@ -63,14 +63,14 @@ class OrderRepository {
         }
         .onNone { throw Exception("order can't save as override. order not found ${updatedOrder.id}") }
 
-    private infix fun Order.statusIsChange(other: Order) = status() != other.status()
+    override infix fun Order.statusIsChange(other: Order) = status() != other.status()
 
-    private fun OrderStatus.toStatusName() = when (this) {
+    override fun OrderStatus.toStatusName() = when (this) {
         is Accepted -> "ACCEPTED"
         is Canceled -> "CANCELED"
     }
 
-    private fun orderStatusFrom(statusName: String, userId: UserId, occurredOn: LocalDateTime) = when (statusName) {
+    override fun orderStatusFrom(statusName: String, userId: UserId, occurredOn: LocalDateTime) = when (statusName) {
         "ACCEPTED" -> Accepted(userId, occurredOn)
         "CANCELED" -> Canceled(userId, occurredOn)
         else -> throw IllegalArgumentException("can't create order status from status name $statusName")

@@ -1,7 +1,7 @@
 package booookstore.playground.springmyplaygroundexposed.command.usecase
 
 import arrow.core.Option
-import booookstore.playground.springmyplaygroundexposed.adaptor.postgres.OrderRepository
+import booookstore.playground.springmyplaygroundexposed.command.domain.OrderRepository
 import booookstore.playground.springmyplaygroundexposed.command.domain.Order
 import booookstore.playground.springmyplaygroundexposed.command.domain.OrderId
 import booookstore.playground.springmyplaygroundexposed.command.domain.user.UserId
