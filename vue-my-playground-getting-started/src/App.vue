@@ -1,5 +1,5 @@
 <script setup>
-import Login from "./components/Login.vue"
+import Login from "./components/Login.vue";
 import { ref } from "vue";
 
 const operations = ref([]);
@@ -40,7 +40,7 @@ async function fetchOrders() {
 
 <template>
   <h1>Vue Playground</h1>
-  <Login/>
+  <Login id="login"/>
   <div id="content">
     <div id="content-search-form">
       <input type="text" v-model="orderId" />
@@ -66,6 +66,10 @@ async function fetchOrders() {
 </template>
 
 <style scoped>
+#login {
+  margin-bottom: 20px;
+}
+
 #content {
   display: flex;
   flex-direction: column;

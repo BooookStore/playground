@@ -20,7 +20,7 @@ class PsqlMeViewQuery : MeViewQuery {
                     it[UserTable.mailAddress],
                     searchRoleNames(userId),
                     searchPermissionNames(userId),
-                    emptySet()
+                    searchOperationNames(userId)
                 )
             }
             .firstOrNone()
@@ -42,5 +42,24 @@ class PsqlMeViewQuery : MeViewQuery {
                 innerJoin PermissionTable)
             .select { SubjectTable.user eq userId }
             .map { it[PermissionTable.name] }
+            .toSet()
+
+    private fun searchOperationNames(userId: UUID): Set<String> =
+        (SubjectTable
+            .join(
+                RolePermissionTable,
+                JoinType.INNER,
+                onColumn = SubjectTable.role,
+                otherColumn = RolePermissionTable.role
+            )
+            .join(
+                PermissionOperationTable,
+                JoinType.INNER,
+                onColumn = RolePermissionTable.permission,
+                otherColumn = PermissionOperationTable.permission
+            )
+                innerJoin OperationTable)
+            .select { SubjectTable.user eq userId }
+            .map { it[OperationTable.name] }
             .toSet()
 }

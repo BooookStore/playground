@@ -1,21 +1,29 @@
 <template>
-  <div v-if="!me">
-    <label for="login-username">username</label>
-    <input id="login-username" type="text" v-model="username" />
-    <label for="login-password">password</label>
-    <input id="login-password" type="text" v-model="password" />
-    <button @click.prevent="login">Login</button>
-  </div>
-  <div>
-    <div v-if="!me">you are not login.</div>
-    <div v-else>
-      <p>login success. hello {{ me.mailAddress }}</p>
-      <ul>
-        <li>role: {{ me.roleNames }}</li>
-        <li>permission: {{ me.permissionNames }}</li>
-      </ul>
-      <button @click.prevent="logout">Logout</button>
-    </div>
+  <div v-bind="$attrs">
+    <template v-if="!me">
+      <div>
+        <label for="login-username">username</label>
+        <input id="login-username" type="text" v-model="username" />
+        <label for="login-password">password</label>
+        <input id="login-password" type="text" v-model="password" />
+        <button @click.prevent="login">Login</button>
+      </div>
+      <div>you are not login.</div>
+    </template>
+
+    <template v-else>
+      <div>
+        <button @click.prevent="logout">Logout</button>
+      </div>
+      <div>
+        <p>login success. hello {{ me.mailAddress }}</p>
+        <ul>
+          <li>role: {{ me.roleNames }}</li>
+          <li>permission: {{ me.permissionNames }}</li>
+          <li>operation: {{ me.operationNames }}</li>
+        </ul>
+      </div>
+    </template>
   </div>
 </template>
 
