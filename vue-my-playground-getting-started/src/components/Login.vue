@@ -9,6 +9,7 @@
         <button @click.prevent="login">Login</button>
       </div>
       <div>you are not login.</div>
+      <div v-if="unauthorized">incorrect username or password</div>
     </template>
 
     <template v-else>
@@ -32,10 +33,11 @@ import { ref } from "vue";
 
 const username = ref("");
 const password = ref("");
+const unauthorized = ref(false);
 const me = ref(null);
 
 async function login() {
-  await fetch("http://localhost:8080/login", {
+  const response = await fetch("http://localhost:8080/login", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -45,13 +47,16 @@ async function login() {
       password: password.value,
     }),
     credentials: "include",
-  })
-    .then((response) => {
-      console.log(response.status);
-    })
-    .catch((reason) => {
-      console.log(reason);
-    });
+  });
+
+  if (!response.ok) {
+    console.log(`authorization failed ${response.status}`);
+    if (response.status === 401) {
+      unauthorized.value = true;
+    }
+    return;
+  }
+  unauthorized.value = false;
 
   await fetch("http://localhost:8080/me", {
     credentials: "include",
