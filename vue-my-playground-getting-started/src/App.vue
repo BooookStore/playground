@@ -15,7 +15,7 @@ async function fetch_operations() {
 
 const orderId = ref("");
 const order = ref(null);
-async function fetchOrders() {
+async function searchOrder() {
   try {
     const response = await fetch(
       `http://localhost:8080/order/${orderId.value}`,
@@ -44,7 +44,7 @@ async function fetchOrders() {
   <div id="content">
     <div id="content-search-form">
       <input type="text" v-model="orderId" />
-      <button @click.prevent="fetchOrders">fetch orders</button>
+      <button @click.prevent="searchOrder">search order</button>
     </div>
     <div v-if="order">
       <ul>
@@ -53,15 +53,6 @@ async function fetchOrders() {
         <li>Status: {{ order.statusHistory[0].status }}</li>
       </ul>
     </div>
-  </div>
-  <div id="content">
-    <div id="content-search-form">
-      <input type="text" v-model="roleId" />
-      <button @click.prevent="fetch_operations">fetch operations</button>
-    </div>
-    <ul>
-      <li v-for="op in operations">{{ op.id }} : {{ op.name }}</li>
-    </ul>
   </div>
 </template>
 
