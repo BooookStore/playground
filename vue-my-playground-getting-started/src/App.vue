@@ -38,8 +38,9 @@ async function fetchOrders() {
 
 const username = ref("");
 const password = ref("");
+const me = ref(null);
 async function login() {
-  fetch("http://localhost:8080/login", {
+  await fetch("http://localhost:8080/login", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -56,6 +57,12 @@ async function login() {
     .catch((reason) => {
       console.log(reason);
     });
+
+  await fetch("http://localhost:8080/me", {
+    credentials: "include",
+  }).then(async (response) => {
+    me.value = await response.json();
+  });
 }
 </script>
 

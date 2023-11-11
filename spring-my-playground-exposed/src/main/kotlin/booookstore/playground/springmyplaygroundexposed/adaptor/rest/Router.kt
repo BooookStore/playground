@@ -1,5 +1,6 @@
 package booookstore.playground.springmyplaygroundexposed.adaptor.rest
 
+import booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler.MeViewHandler
 import booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler.OperationHandler
 import booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler.OrderHandler
 import org.springframework.context.annotation.Bean
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.function.router
 class Router(
     val operationHandler: OperationHandler,
     val orderHandler: OrderHandler,
+    val meViewHandler: MeViewHandler,
 ) {
 
     @Bean
@@ -27,6 +29,7 @@ class Router(
             POST(accept(APPLICATION_JSON), orderHandler::acceptOrder)
             PUT("{id}/cancel", orderHandler::cancelOrder)
         }
+        GET("me", meViewHandler::meView)
     }
 
 }

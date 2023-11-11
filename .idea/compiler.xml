@@ -36,7 +36,7 @@
       <module name="spring-my-playground-exposed" options="-parameters" />
       <module name="spring-my-playground-security-authorize-by-resouce" options="-parameters" />
       <module name="spring-my-playground-security-basic" options="-parameters" />
-      <module name="spring-my-playground-security-login-json" options="" />
+      <module name="spring-my-playground-security-login-json" options="-parameters" />
     </option>
   </component>
 </project>
