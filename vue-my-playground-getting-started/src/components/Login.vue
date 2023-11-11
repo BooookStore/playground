@@ -10,6 +10,9 @@
     <div v-if="!me">you are not login.</div>
     <div v-else>
       <p>login success. hello {{ me.mailAddress }}</p>
+      <ul>
+        <li>role: {{ me.roleNames }}</li>
+      </ul>
       <button @click.prevent="logout">Logout</button>
     </div>
   </div>
