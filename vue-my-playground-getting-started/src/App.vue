@@ -75,6 +75,10 @@ async function login() {
     <input id="login-password" type="text" v-model="password" />
     <button @click.prevent="login">Login</button>
   </div>
+  <div>
+    <div v-if="!me">you are not login.</div>
+    <div v-else>login success. hello {{ me.mailAddress }}</div>
+  </div>
   <div id="content">
     <div id="content-search-form">
       <input type="text" v-model="orderId" />
