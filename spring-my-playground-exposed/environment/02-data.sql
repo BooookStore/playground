@@ -41,8 +41,8 @@ VALUES ('fc447159-81df-42ac-91dc-e8a001b44143', 'RO_001'),
 
 INSERT INTO "order" (id, create_user, name)
 VALUES ('1111', 'fc447159-81df-42ac-91dc-e8a001b44143', '2019 Guatemara'),
-       ('1112', '0f2e1115-6064-4903-9bcf-5c9e4e5f2d24', '2020 Guatemara');
+       ('1112', '8094c979-cad8-4f6e-8255-5b54a62f956c', '2020 Guatemara');
 
 INSERT INTO "order_status" ("order", datetime, status, "user")
 VALUES ('1111', '2023-11-4 11:49:00', 'ACCEPTED', 'fc447159-81df-42ac-91dc-e8a001b44143'),
-       ('1112', '2023-11-7 21:11:00', 'ACCEPTED', '0f2e1115-6064-4903-9bcf-5c9e4e5f2d24');
+       ('1112', '2023-11-7 21:11:00', 'ACCEPTED', '8094c979-cad8-4f6e-8255-5b54a62f956c');

@@ -1,4 +1,4 @@
-package booookstore.playground.springmyplaygroundexposed
+package booookstore.playground.springmyplaygroundsecurityloginjson
 
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.config.annotation.CorsRegistry
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebMvcConfig : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**").allowedOrigins("http://localhost:5173/").allowCredentials(true)
+        registry.addMapping("/**").allowedOrigins("https://ktor.io").allowCredentials(true)
     }
 
 }

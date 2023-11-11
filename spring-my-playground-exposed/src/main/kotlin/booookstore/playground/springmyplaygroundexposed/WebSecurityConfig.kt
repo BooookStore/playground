@@ -31,6 +31,7 @@ class WebSecurityConfig(
         http.addFilterAt(jsonUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         http.csrf { it.disable() }
+        http.cors {  }
         http.authorizeHttpRequests {
             it
                 .requestMatchers(GET, "/order/{id}").access(orderDisplayPolicy)
