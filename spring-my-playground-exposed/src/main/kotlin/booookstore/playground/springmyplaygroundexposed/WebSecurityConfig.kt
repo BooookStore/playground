@@ -6,6 +6,7 @@ import booookstore.playground.springmyplaygroundexposed.adaptor.security.OrderDi
 import booookstore.playground.springmyplaygroundexposed.security.JsonUsernamePasswordAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod.*
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
@@ -36,9 +37,10 @@ class WebSecurityConfig(
             cors { }
 
             authorizeHttpRequests {
-                authorize("/order/{id}", access = orderDisplayPolicy)
-                authorize("/order", hasAuthority("CREATE_ORDER"))
-                authorize("/oder/*/cancel", hasAuthority("CANCEL_ALL_ORDER"))
+                authorize(GET, "/order", hasAnyAuthority("DISPLAY_ALL_ORDER", "DISPLAY_CREATED_ORDER"))
+                authorize(GET, "/order/{id}", access = orderDisplayPolicy)
+                authorize(POST, "/order", hasAuthority("CREATE_ORDER"))
+                authorize(PUT, "/oder/*/cancel", hasAuthority("CANCEL_ALL_ORDER"))
                 authorize(anyRequest, authenticated)
             }
 
