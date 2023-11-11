@@ -19,7 +19,6 @@ class OrderDisplayPolicy(
         supplier: Supplier<Authentication>,
         context: RequestAuthorizationContext
     ): AuthorizationDecision = supplier.get().satisfy(
-        { isAuthenticated },
         {
             hasAuthority("DISPLAY_ALL_ORDER") or
                     (ifHasAuthority("DISPLAY_CREATED_ORDER") satisfy { isCreatedOrder(context.variables["id"]) })
@@ -59,7 +58,7 @@ class OrderDisplayPolicy(
 
     class NoNeedSatisfyRule : SatisfyRule {
 
-        override fun satisfy(condition: (Authentication) -> Boolean): Boolean = true
+        override fun satisfy(condition: (Authentication) -> Boolean): Boolean = false
 
     }
 
