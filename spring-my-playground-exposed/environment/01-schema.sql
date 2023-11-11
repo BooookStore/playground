@@ -59,7 +59,7 @@ CREATE TABLE "subject"
 CREATE TABLE "order"
 (
     id          VARCHAR(255) PRIMARY KEY,
-    create_user VARCHAR(255) NOT NULL,
+    create_user UUID         NOT NULL,
     name        VARCHAR(255) NOT NULL
 );
 

@@ -2,15 +2,17 @@
 import Login from "./components/Login.vue";
 import { ref } from "vue";
 
-const operations = ref([]);
-const roleId = ref("");
+const orderList = ref([]);
+async function fetchCreatedOrders() {
+  const response = await fetch("http://localhost:8080/order", {
+    credentials: "include",
+  });
 
-async function fetch_operations() {
-  const response = await fetch(
-    `http://localhost:8080/operation?roleId=${roleId.value}`
-  );
-  const json = await response.json();
-  operations.value = json;
+  if (!response.ok) {
+    return;
+  }
+
+  orderList.value = await response.json();
 }
 
 const orderId = ref("");
@@ -40,7 +42,19 @@ async function searchOrder() {
 
 <template>
   <h1>Vue Playground</h1>
-  <Login id="login"/>
+  <Login id="login" />
+  <div id="content">
+    <div>
+      <button @click.prevent="fetchCreatedOrders">fetch created order</button>
+    </div>
+    <div v-for="order in orderList">
+      <p>{{ order.name }}</p>
+      <ul>
+        <li>CreatedAt: {{ order.createdDate }}</li>
+        <li>Status: {{ order.currentStatus }}</li>
+      </ul>
+    </div>
+  </div>
   <div id="content">
     <div id="content-search-form">
       <input type="text" v-model="orderId" />
@@ -64,7 +78,8 @@ async function searchOrder() {
 #content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
+  margin-bottom: 20px;
 }
 
 #content-search-form {

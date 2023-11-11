@@ -67,7 +67,7 @@ async function updateMe() {
   await fetch("http://localhost:8080/me", {
     credentials: "include",
   }).then(async (response) => {
-    me.value = await response.json();
+    if (response.ok) me.value = await response.json();
   });
 }
 
