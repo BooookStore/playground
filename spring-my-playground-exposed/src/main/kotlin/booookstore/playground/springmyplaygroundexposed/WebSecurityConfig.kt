@@ -6,16 +6,17 @@ import booookstore.playground.springmyplaygroundexposed.adaptor.security.OrderDi
 import booookstore.playground.springmyplaygroundexposed.security.JsonUsernamePasswordAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpMethod.*
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository
 
 @Configuration
@@ -28,19 +29,23 @@ class WebSecurityConfig(
         http: HttpSecurity,
         jsonUsernamePasswordAuthenticationFilter: JsonUsernamePasswordAuthenticationFilter,
     ): SecurityFilterChain {
-        http.addFilterAt(jsonUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+        http {
+            addFilterAt(jsonUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
-        http.csrf { it.disable() }
-        http.cors {  }
-        http.authorizeHttpRequests {
-            it
-                .requestMatchers(GET, "/order/{id}").access(orderDisplayPolicy)
-                .requestMatchers(POST, "/order").hasAuthority("CREATE_ORDER")
-                .requestMatchers(PUT, "/order/*/cancel").hasAuthority("CANCEL_ALL_ORDER")
-                .anyRequest().authenticated()
-        }
-        http.logout {
-            it.logoutSuccessHandler { _, response, _ -> response.status = HttpStatus.OK.value() }
+            csrf { disable() }
+            cors { }
+
+            authorizeHttpRequests {
+                authorize("/order/{id}", access = orderDisplayPolicy)
+                authorize("/order", hasAuthority("CREATE_ORDER"))
+                authorize("/oder/*/cancel", hasAuthority("CANCEL_ALL_ORDER"))
+                authorize(anyRequest, authenticated)
+            }
+
+            logout {
+                logoutSuccessHandler =
+                    LogoutSuccessHandler { _, response, _ -> response.status = HttpStatus.OK.value() }
+            }
         }
         return http.build()
     }
