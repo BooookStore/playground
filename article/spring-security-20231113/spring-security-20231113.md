@@ -68,4 +68,55 @@ public void setAuthenticated(boolean authenticated) {
 }
 ```
 
+https://github.com/spring-projects/spring-security/blob/15d9b7824c4def1d8962709534ea105335e34077/core/src/main/java/org/springframework/security/authentication/AbstractAuthenticationToken.java#L88C1-L91
+
 想像に難しくないと思いますが未認証の場合は `false` で認証済みの場合は `true` になります。ここでセットされた値は `Authentication#isAuthenticated` の戻り値として使用されます。
+
+## UsernamePasswordAuthenticationToken インスタンス化するのは誰なのか？
+
+インスタンス化するタイミング場所とタイミングはそれぞれ異なっています。
+
+未認証のインスタンスを生成するタイミングはユーザ名/パスワードが送信されてきたタイミングであり、 `UsernamePasswordAuthenticationFilter` クラスが生成を行います。
+
+実際のコードを見てみましょう。
+
+``` java
+@Override
+public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+        throws AuthenticationException {
+    if (this.postOnly && !request.getMethod().equals("POST")) {
+        throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+    }
+    String username = obtainUsername(request);
+    username = (username != null) ? username.trim() : "";
+    String password = obtainPassword(request);
+    password = (password != null) ? password : "";
+    // ↓ここで未認証のインスタンスを生成している
+    UsernamePasswordAuthenticationToken authRequest = UsernamePasswordAuthenticationToken.unauthenticated(username,
+            password);
+    setDetails(request, authRequest);
+    return this.getAuthenticationManager().authenticate(authRequest);
+}
+```
+
+https://github.com/spring-projects/spring-security/blob/15d9b7824c4def1d8962709534ea105335e34077/web/src/main/java/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.java#L71-L86
+
+このフィルターは生成したインスタンスをもとに認証処理を起動します。
+
+認証済みのインスタンスを生成するのは `AbstractUserDetailsAuthenticationProvider` になります。このクラスは冒頭で説明した `AuthenticationProvider` を実装しています。
+
+このProviderクラスは認証を実施し成功した場合に認証済みのインスタンスを生成します。
+
+``` java
+protected Authentication createSuccessAuthentication(Object principal, Authentication authentication,
+        UserDetails user) {
+    // ↓ここで認証済みのインスタンスを生成している
+    UsernamePasswordAuthenticationToken result = UsernamePasswordAuthenticationToken.authenticated(principal,
+            authentication.getCredentials(), this.authoritiesMapper.mapAuthorities(user.getAuthorities()));
+    result.setDetails(authentication.getDetails());
+    this.logger.debug("Authenticated user");
+    return result;
+}
+```
+
+https://github.com/spring-projects/spring-security/blob/15d9b7824c4def1d8962709534ea105335e34077/core/src/main/java/org/springframework/security/authentication/dao/AbstractUserDetailsAuthenticationProvider.java#L190-L201
