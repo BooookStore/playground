@@ -42,3 +42,30 @@ https://github.com/spring-projects/spring-security/blob/040b87911946b40d290141b9
 ![](spring-security-authentication-3.png)
 
 https://github.com/spring-projects/spring-security/blob/040b87911946b40d290141b93bdee20a54391c34/core/src/main/java/org/springframework/security/authentication/UsernamePasswordAuthenticationToken.java
+
+このクラスをよく見てみると未認証のインスタンスを生成するファクトリメソッド、認証済みのインスタンスを生成するファクトリメソッドがそれぞれ定義されていることが分かります。
+
+``` java
+// 未認証を表すインスタンスを生成する
+public static UsernamePasswordAuthenticationToken unauthenticated(Object principal, Object credentials) {
+    return new UsernamePasswordAuthenticationToken(principal, credentials);
+}
+```
+
+``` java
+// 認証済みを表すインスタンスを生成する
+public static UsernamePasswordAuthenticationToken authenticated(Object principal, Object credentials,
+        Collection<? extends GrantedAuthority> authorities) {
+    return new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
+}
+```
+
+それぞれのファクトリメソッドで呼び出すコンストラクタは異なっており、親の `AbstractAuthenticationToken#setAuthenticated` を適切な値で呼び出します。
+
+``` java
+public void setAuthenticated(boolean authenticated) {
+    this.authenticated = authenticated;
+}
+```
+
+想像に難しくないと思いますが未認証の場合は `false` で認証済みの場合は `true` になります。ここでセットされた値は `Authentication#isAuthenticated` の戻り値として使用されます。
