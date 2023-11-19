@@ -15,7 +15,9 @@ import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository
@@ -47,6 +49,13 @@ class WebSecurityConfig(
             logout {
                 logoutSuccessHandler =
                     LogoutSuccessHandler { _, response, _ -> response.status = HttpStatus.OK.value() }
+            }
+
+            exceptionHandling {
+                accessDeniedHandler =
+                    AccessDeniedHandler { _, response, _ -> response.status = HttpStatus.FORBIDDEN.value() }
+                authenticationEntryPoint =
+                    AuthenticationEntryPoint { _, response, _ -> response.status = HttpStatus.FORBIDDEN.value() }
             }
         }
         return http.build()
