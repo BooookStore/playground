@@ -10,8 +10,8 @@
         <module name="spring-my-playground-data-jdbc" />
         <module name="spring-my-playground-security-login-json" />
         <module name="spring-my-playground-security-basic" />
-        <module name="spring-my-playground-security-authorize-by-resouce" />
         <module name="spring-my-playground-exposed" />
+        <module name="spring-my-playground-security-authorize-by-resouce" />
         <module name="item-order-api-e2e" />
         <module name="item-order-api" />
         <module name="slf4j-logback-my-playground" />

@@ -37,7 +37,7 @@ https://github.com/spring-projects/spring-security/blob/040b87911946b40d290141b9
 
 インターフェイスだけを眺めていてもあまりイメージがわかないので、その実装クラスにフォーカスを移してみましょう。
 
-例えば、デフォルトのフォームログインにおいて、ユーザ名/パスワード認証をする時に使われるAuthenticationの実装は `UsernamePasswordAuthenticationToken` です。このクラスは `AbstractAuthenticationToken` クラスを継承し、間接的に `Authentication` を実装しています。
+例えば、デフォルトのフォームログインにおいて、ユーザ名/パスワード認証をする時に使われるAuthenticationの実装は `UsernamePasswordAuthenticationToken` です。このクラスは `AbstractAuthenticationToken` クラスを継承することで間接的に `Authentication` を実装しています。
 
 ![](spring-security-authentication-3.png)
 
@@ -120,3 +120,13 @@ protected Authentication createSuccessAuthentication(Object principal, Authentic
 ```
 
 https://github.com/spring-projects/spring-security/blob/15d9b7824c4def1d8962709534ea105335e34077/core/src/main/java/org/springframework/security/authentication/dao/AbstractUserDetailsAuthenticationProvider.java#L190-L201
+
+## 全体の流れを整理する
+
+認証処理の開始から終了までのAuthenticationの動きを整理しておきましょう。
+
+図に起こすとこのようになります。
+
+![](spring-security-authentication-4.png)
+
+必ずこの処理通りにしなければいけないわけではありませんが、基本的には上記の図の処理フローとなると思います。
