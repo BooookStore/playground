@@ -1,4 +1,4 @@
-package booookstore.playground.springmyplaygroundexposed.command.domain
+package booookstore.playground.springmyplaygroundexposed.command.domain.order
 
 import booookstore.playground.springmyplaygroundexposed.command.domain.user.UserId
 import java.time.LocalDateTime.now
@@ -19,7 +19,7 @@ class Order(val id: OrderId, val createUser: UserId, private var name: String, p
     }
 
     fun cancel(userId: UserId): Unit = when (val currentStatus = status) {
-        is Accepted -> currentStatus.cancel(userId, now()).let { status = it }
+        is Accepted -> status = currentStatus.cancel(userId, now())
         is Canceled -> Unit
     }
 

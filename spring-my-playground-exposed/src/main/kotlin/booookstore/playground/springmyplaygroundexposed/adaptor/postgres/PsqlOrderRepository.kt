@@ -3,7 +3,7 @@ package booookstore.playground.springmyplaygroundexposed.adaptor.postgres
 import arrow.core.firstOrNone
 import booookstore.playground.springmyplaygroundexposed.adaptor.postgres.table.OrderStatusTable
 import booookstore.playground.springmyplaygroundexposed.adaptor.postgres.table.OrderTable
-import booookstore.playground.springmyplaygroundexposed.command.domain.*
+import booookstore.playground.springmyplaygroundexposed.command.domain.order.*
 import booookstore.playground.springmyplaygroundexposed.command.domain.user.UserId
 import org.jetbrains.exposed.sql.SortOrder.DESC
 import org.jetbrains.exposed.sql.insert
@@ -41,7 +41,7 @@ class PsqlOrderRepository : OrderRepository {
         }
         OrderStatusTable.insert {
             it[this.order] = order.id
-            it[datetime] = LocalDateTime.now()
+            it[datetime] = order.status().occurredOn
             it[status] = order.status().toStatusName()
             it[this.user] = userId
         }
@@ -55,7 +55,7 @@ class PsqlOrderRepository : OrderRepository {
             if (fetchedOrder statusIsChange updatedOrder) {
                 OrderStatusTable.insert {
                     it[order] = updatedOrder.id
-                    it[datetime] = LocalDateTime.now()
+                    it[datetime] = updatedOrder.status().occurredOn
                     it[status] = updatedOrder.status().toStatusName()
                     it[user] = updatedOrder.status().userId
                 }

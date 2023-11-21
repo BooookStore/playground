@@ -2,7 +2,7 @@ package booookstore.playground.springmyplaygroundexposed.adaptor.rest.handler
 
 import arrow.core.None
 import arrow.core.Some
-import booookstore.playground.springmyplaygroundexposed.command.domain.Order
+import booookstore.playground.springmyplaygroundexposed.command.domain.order.Order
 import booookstore.playground.springmyplaygroundexposed.command.usecase.OrderUsecase
 import booookstore.playground.springmyplaygroundexposed.query.OrderDetailsViewQuery
 import org.springframework.http.MediaType.APPLICATION_JSON

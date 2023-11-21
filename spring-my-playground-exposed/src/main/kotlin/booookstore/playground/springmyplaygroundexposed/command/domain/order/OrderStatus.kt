@@ -1,4 +1,4 @@
-package booookstore.playground.springmyplaygroundexposed.command.domain
+package booookstore.playground.springmyplaygroundexposed.command.domain.order
 
 import booookstore.playground.springmyplaygroundexposed.command.domain.user.UserId
 import java.time.LocalDateTime

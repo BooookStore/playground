@@ -1,9 +1,9 @@
 package booookstore.playground.springmyplaygroundexposed.command.usecase
 
 import arrow.core.Option
-import booookstore.playground.springmyplaygroundexposed.command.domain.OrderRepository
-import booookstore.playground.springmyplaygroundexposed.command.domain.Order
-import booookstore.playground.springmyplaygroundexposed.command.domain.OrderId
+import booookstore.playground.springmyplaygroundexposed.command.domain.order.OrderRepository
+import booookstore.playground.springmyplaygroundexposed.command.domain.order.Order
+import booookstore.playground.springmyplaygroundexposed.command.domain.order.OrderId
 import booookstore.playground.springmyplaygroundexposed.command.domain.user.UserId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
