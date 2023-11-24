@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/playground
+    username: postgres
+    password: password
+  exposed:
+    show-sql: true
+logging:
+  level:
+    org.springframework.security: TRACE

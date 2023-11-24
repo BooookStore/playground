@@ -10,12 +10,12 @@
         <module name="spring-my-playground-data-jdbc" />
         <module name="spring-my-playground-security-login-json" />
         <module name="spring-my-playground-security-basic" />
-        <module name="spring-my-playground-exposed" />
         <module name="spring-my-playground-security-authorize-by-resouce" />
         <module name="item-order-api-e2e" />
         <module name="item-order-api" />
         <module name="slf4j-logback-my-playground" />
         <module name="spring-my-playground-data-jdbc-template" />
+        <module name="spring-my-playground-order-api" />
         <module name="ktor-client-my-playground" />
       </profile>
     </annotationProcessing>
@@ -34,6 +34,7 @@
       <module name="spring-my-playground-data-jdbc-template" options="-parameters" />
       <module name="spring-my-playground-data-jdbc-template (1)" options="-parameters" />
       <module name="spring-my-playground-exposed" options="-parameters" />
+      <module name="spring-my-playground-order-api" options="-parameters" />
       <module name="spring-my-playground-security-authorize-by-resouce" options="-parameters" />
       <module name="spring-my-playground-security-basic" options="-parameters" />
       <module name="spring-my-playground-security-login-json" options="-parameters" />
