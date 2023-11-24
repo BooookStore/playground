@@ -21,6 +21,7 @@ class PsqlOrderListViewQuery : OrderListViewQuery {
             .select { OrderTable.create_user eq userId }
             .map {
                 OrderListView(
+                    it[OrderTable.id],
                     it[OrderTable.name],
                     findAcceptedDate(it[OrderTable.id]),
                     fetchCurrentStatus(it[OrderTable.id])
