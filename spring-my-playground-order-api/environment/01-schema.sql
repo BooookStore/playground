@@ -20,8 +20,8 @@ CREATE TABLE "received_order"
 
 CREATE TABLE "accepted_order"
 (
-    id       UUID      PRIMARY KEY,
-    order_id UUID      NOT NULL,
-    datetime TIMESTAMP NOT NULL,
-    FOREIGN KEY ("order_id") REFERENCES "order" (id)
+    id                UUID      PRIMARY KEY,
+    received_order_id UUID      NOT NULL,
+    datetime          TIMESTAMP NOT NULL,
+    FOREIGN KEY ("received_order_id") REFERENCES "received_order_id" (id)
 );
