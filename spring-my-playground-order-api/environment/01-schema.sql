@@ -6,16 +6,22 @@ create database playground;
 
 CREATE TABLE "order"
 (
-    id          VARCHAR(255) PRIMARY KEY,
-    create_user UUID         NOT NULL,
-    name        VARCHAR(255) NOT NULL
+    id          UUID PRIMARY KEY,
+    create_user UUID NOT NULL
 );
 
-CREATE TABLE "order_status"
+CREATE TABLE "received_order"
 (
-    "order"  VARCHAR(255) NOT NULL,
-    datetime TIMESTAMP    NOT NULL,
-    status   VARCHAR(255) NOT NULL,
-    "user"   UUID         NOT NULL,
-    FOREIGN KEY ("order") REFERENCES "order" (id)
+    id       UUID      PRIMARY KEY,
+    order_id UUID      NOT NULL,
+    datetime TIMESTAMP NOT NULL,
+    FOREIGN KEY ("order_id") REFERENCES "order" (id)
+);
+
+CREATE TABLE "accepted_order"
+(
+    id       UUID      PRIMARY KEY,
+    order_id UUID      NOT NULL,
+    datetime TIMESTAMP NOT NULL,
+    FOREIGN KEY ("order_id") REFERENCES "order" (id)
 );
