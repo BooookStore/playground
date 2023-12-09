@@ -1,27 +1,27 @@
--- @formatter:off
 create database playground;
 
 \connect playground;
--- @formatter:on
 
-CREATE TABLE "order"
+create table customer
 (
-    id          UUID PRIMARY KEY,
-    create_user UUID NOT NULL
+    id uuid primary key
 );
 
-CREATE TABLE "received_order"
+create table product
 (
-    id       UUID      PRIMARY KEY,
-    order_id UUID      NOT NULL,
-    datetime TIMESTAMP NOT NULL,
-    FOREIGN KEY ("order_id") REFERENCES "order" (id)
+    id uuid primary key
 );
 
-CREATE TABLE "accepted_order"
+create table order_requested
 (
-    id                UUID      PRIMARY KEY,
-    received_order_id UUID      NOT NULL,
-    datetime          TIMESTAMP NOT NULL,
-    FOREIGN KEY ("received_order_id") REFERENCES "received_order_id" (id)
+    id uuid primary key,
+    datetime timestamp not null
+);
+
+create table order_detail
+(
+    order_requested_id uuid references order_requested,
+    product_id uuid references product,
+    amount int not null check (amount > 0),
+    primary key (order_requested_id, product_id)
 );
