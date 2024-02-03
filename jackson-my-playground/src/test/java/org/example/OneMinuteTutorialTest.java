@@ -20,7 +20,24 @@ public class OneMinuteTutorialTest {
         assertEquals("firstName: book, lastName: store", person.toString());
     }
 
+    @Test
+    void writeValue() throws JsonProcessingException {
+        var objectMapper = new ObjectMapper();
+        var output = objectMapper.writeValueAsString(new Person("book", "store"));
+        assertEquals("{\"firstName\":\"book\",\"lastName\":\"store\"}", output);
+    }
+
     public static class Person {
+
+        @SuppressWarnings("unused") // jackson use
+        public Person() {
+
+        }
+
+        public Person(String firstName, String lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
 
         public String firstName;
 
