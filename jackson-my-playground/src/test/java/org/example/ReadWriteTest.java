@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OneMinuteTutorialTest {
+public class ReadWriteTest {
 
     @Test
     void readValue() throws JsonProcessingException {
