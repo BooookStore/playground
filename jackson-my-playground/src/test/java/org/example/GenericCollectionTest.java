@@ -12,7 +12,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class GenericCollectionTreeModelTest {
+public class GenericCollectionTest {
 
     final ObjectMapper objectMapper = new ObjectMapper();
 
