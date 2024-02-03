@@ -6,17 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="kotlin-coroutine" />
-        <module name="spring-my-playground-data-jdbc" />
-        <module name="spring-my-playground-security-login-json" />
         <module name="spring-my-playground-security-basic" />
         <module name="spring-my-playground-security-authorize-by-resouce" />
         <module name="item-order-api-e2e" />
         <module name="item-order-api" />
         <module name="slf4j-logback-my-playground" />
-        <module name="spring-my-playground-data-jdbc-template" />
         <module name="spring-my-playground-order-api" />
         <module name="ktor-client-my-playground" />
+        <module name="jackson-my-playground" />
+        <module name="kotlin-coroutine" />
+        <module name="spring-my-playground-data-jdbc" />
+        <module name="spring-my-playground-security-login-json" />
+        <module name="spring-my-playground-exposed" />
+        <module name="spring-my-playground-data-jdbc-template" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
