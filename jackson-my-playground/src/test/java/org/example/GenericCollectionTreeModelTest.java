@@ -1,6 +1,7 @@
 package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,26 @@ public class GenericCollectionTreeModelTest {
                  "lastName": "store"
                 }
                 """, List.class));
+    }
+
+    @Test
+    void readAsMapPersonRecord() throws JsonProcessingException {
+        var people = objectMapper.readValue("""
+                {
+                 "NB001": {
+                  "firstName": "book",
+                  "lastName": "store"
+                 }
+                }
+                """, new TypeReference<Map<Id, Person>>() {
+        });
+        assertEquals(Map.of(new Id("NB001"), new Person("book", "store")), people);
+    }
+
+    public record Id(String value) {
+    }
+
+    public record Person(String firstName, String lastName) {
     }
 
 }
