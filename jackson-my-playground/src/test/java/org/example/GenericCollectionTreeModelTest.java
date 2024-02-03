@@ -28,6 +28,15 @@ public class GenericCollectionTreeModelTest {
     }
 
     @Test
+    void readAsList() throws JsonProcessingException {
+        @SuppressWarnings("unchecked")
+        List<Integer> result = objectMapper.readValue("""
+                [1, 2, 3]
+                """, List.class);
+        assertEquals(List.of(1, 2, 3), result);
+    }
+
+    @Test
     void cantReadObjectToList() {
         assertThrows(MismatchedInputException.class, () -> objectMapper.readValue("""
                 {
