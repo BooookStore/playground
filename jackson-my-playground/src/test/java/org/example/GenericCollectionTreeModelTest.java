@@ -29,19 +29,12 @@ public class GenericCollectionTreeModelTest {
 
     @Test
     void cantReadObjectToList() {
-        assertThrows(MismatchedInputException.class, () -> {
-            @SuppressWarnings("unchecked")
-            List<String> result = objectMapper.readValue("""
-                    {
-                     "firstName": "book",
-                     "lastName": "store"
-                    }
-                    """, List.class);
-        });
-    }
-
-    public record Person(String firstName, String lastName) {
-
+        assertThrows(MismatchedInputException.class, () -> objectMapper.readValue("""
+                {
+                 "firstName": "book",
+                 "lastName": "store"
+                }
+                """, List.class));
     }
 
 }
