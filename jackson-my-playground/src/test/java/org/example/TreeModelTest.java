@@ -68,6 +68,12 @@ public class TreeModelTest {
         assertEquals(List.of("software engineer"), type);
     }
 
+    @Test
+    void find() {
+        var firstName = root.findValue("firstName").asText();
+        assertEquals("book", firstName);
+    }
+
     public record Profile(String firstName, String lastName, int age) {
     }
 
