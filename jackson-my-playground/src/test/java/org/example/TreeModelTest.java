@@ -1,10 +1,13 @@
 package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -59,6 +62,10 @@ public class TreeModelTest {
     void treeToValue() throws JsonProcessingException {
         Profile profile = objectMapper.treeToValue(root.get("NB001").get("profile"), Profile.class);
         assertEquals(new Profile("book", "store", 25), profile);
+
+        List<String> type = objectMapper.treeToValue(root.at("/NB001/type"), new TypeReference<>() {
+        });
+        assertEquals(List.of("software engineer"), type);
     }
 
     public record Profile(String firstName, String lastName, int age) {
