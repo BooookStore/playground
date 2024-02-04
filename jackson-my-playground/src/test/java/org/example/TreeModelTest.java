@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -72,6 +73,13 @@ public class TreeModelTest {
     void find() {
         var firstName = root.findValue("firstName").asText();
         assertEquals("book", firstName);
+    }
+
+    @Test
+    void createObjectModel() throws JsonProcessingException {
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode.putPOJO("NB002", new Profile("book", "store2", 26));
+        assertEquals("{\"NB002\":{\"firstName\":\"book\",\"lastName\":\"store2\",\"age\":26}}", objectMapper.writeValueAsString(objectNode));
     }
 
     public record Profile(String firstName, String lastName, int age) {
