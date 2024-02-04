@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TreeModelTest {
 
@@ -46,6 +47,12 @@ public class TreeModelTest {
         root.withObject("NB001").put("address", "123456");
         String address = root.get("NB001").get("address").asText();
         assertEquals("123456", address);
+    }
+
+    @Test
+    void readTreeNotExist() {
+        JsonNode notExist = root.get("notExist");
+        assertNull(notExist);
     }
 
 }
