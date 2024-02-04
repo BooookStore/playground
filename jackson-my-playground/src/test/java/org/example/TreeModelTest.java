@@ -55,4 +55,13 @@ public class TreeModelTest {
         assertNull(notExist);
     }
 
+    @Test
+    void treeToValue() throws JsonProcessingException {
+        Profile profile = objectMapper.treeToValue(root.get("NB001").get("profile"), Profile.class);
+        assertEquals(new Profile("book", "store", 25), profile);
+    }
+
+    public record Profile(String firstName, String lastName, int age) {
+    }
+
 }
