@@ -47,6 +47,15 @@ public class TreeModelTest {
     }
 
     @Test
+    void readTreeIllegalType() {
+        int firstName = root.get("NB001").get("profile").get("firstName").asInt();
+        assertEquals(0, firstName);
+
+        String age = root.get("NB001").get("profile").get("age").asText();
+        assertEquals("25", age);
+    }
+
+    @Test
     void put() {
         root.withObject("NB001").put("address", "123456");
         String address = root.get("NB001").get("address").asText();
