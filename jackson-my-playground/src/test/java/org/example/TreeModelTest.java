@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TreeModelTest {
 
@@ -53,6 +52,17 @@ public class TreeModelTest {
 
         String age = root.get("NB001").get("profile").get("age").asText();
         assertEquals("25", age);
+    }
+
+    @Test
+    void checkType() {
+        JsonNode firstNameNode = root.get("NB001").get("profile").get("firstName");
+        assertTrue(firstNameNode.isTextual());
+        assertFalse(firstNameNode.isInt());
+
+        JsonNode ageNode = root.get("NB001").get("profile").get("age");
+        assertTrue(ageNode.isInt());
+        assertFalse(ageNode.isTextual());
     }
 
     @Test
