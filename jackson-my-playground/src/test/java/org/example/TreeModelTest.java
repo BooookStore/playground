@@ -1,5 +1,6 @@
 package org.example;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -137,6 +138,43 @@ public class TreeModelTest {
         }
 
         record ProfileNestedJsonAddress(String country, String countryCode) {
+        }
+
+        @Test
+        void treeToValueNestedJsonAdditionalProperties() throws JsonProcessingException {
+            JsonNode root = objectMapper.readTree("""
+                    {
+                        "NB001": {
+                            "profile": {
+                                "firstName": "book",
+                                "lastName": "store",
+                                "age": 25,
+                                "address": {
+                                    "country": "Japan",
+                                    "countryCode": "JPN",
+                                    "postalCode": "000-000"
+                                }
+                            },
+                            "type": [
+                                "software engineer"
+                            ]
+                        }
+                    }
+                    """);
+            var profileNestedJson = objectMapper.treeToValue(root.get("NB001").get("profile"), ProfileNestedJsonAdditionalProperties.class);
+
+            assertEquals(new ProfileNestedJsonAdditionalProperties("book", "store", 25,
+                    new ProfileNestedJsonAdditionalPropertiesAddress("Japan", "JPN")), profileNestedJson);
+        }
+
+        record ProfileNestedJsonAdditionalProperties(String firstName,
+                                                     String lastName,
+                                                     int age,
+                                                     ProfileNestedJsonAdditionalPropertiesAddress address) {
+        }
+
+        @JsonIgnoreProperties("postalCode")
+        record ProfileNestedJsonAdditionalPropertiesAddress(String country, String countryCode) {
         }
     }
 }
