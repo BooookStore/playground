@@ -110,37 +110,6 @@ public class TreeModelTest {
         }
 
         @Test
-        void treeToValueNestedJson() throws JsonProcessingException {
-            JsonNode root = objectMapper.readTree("""
-                    {
-                        "NB001": {
-                            "profile": {
-                                "firstName": "book",
-                                "lastName": "store",
-                                "age": 25,
-                                "address": {
-                                    "country": "Japan",
-                                    "countryCode": "JPN"
-                                }
-                            },
-                            "type": [
-                                "software engineer"
-                            ]
-                        }
-                    }
-                    """);
-            var profileNestedJson = objectMapper.treeToValue(root.get("NB001").get("profile"), ProfileNestedJson.class);
-
-            assertEquals(new ProfileNestedJson("book", "store", 25, new ProfileNestedJsonAddress("Japan", "JPN")), profileNestedJson);
-        }
-
-        record ProfileNestedJson(String firstName, String lastName, int age, ProfileNestedJsonAddress address) {
-        }
-
-        record ProfileNestedJsonAddress(String country, String countryCode) {
-        }
-
-        @Test
         void treeToValueNestedJsonAdditionalProperties() throws JsonProcessingException {
             JsonNode root = objectMapper.readTree("""
                     {
@@ -176,5 +145,41 @@ public class TreeModelTest {
         @JsonIgnoreProperties("postalCode")
         record ProfileNestedJsonAdditionalPropertiesAddress(String country, String countryCode) {
         }
+    }
+
+    @Nested
+    class TreeToValueNestedJsonTest {
+
+        @Test
+        void treeToValueNestedJson() throws JsonProcessingException {
+            JsonNode root = objectMapper.readTree("""
+                    {
+                        "NB001": {
+                            "profile": {
+                                "firstName": "book",
+                                "lastName": "store",
+                                "age": 25,
+                                "address": {
+                                    "country": "Japan",
+                                    "countryCode": "JPN"
+                                }
+                            },
+                            "type": [
+                                "software engineer"
+                            ]
+                        }
+                    }
+                    """);
+            var profileNestedJson = objectMapper.treeToValue(root.get("NB001").get("profile"), Profile.class);
+
+            assertEquals(new Profile("book", "store", 25, new Address("Japan", "JPN")), profileNestedJson);
+        }
+
+        record Profile(String firstName, String lastName, int age, Address address) {
+        }
+
+        record Address(String country, String countryCode) {
+        }
+
     }
 }
