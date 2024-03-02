@@ -1,11 +1,13 @@
 package org.example;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -79,16 +81,6 @@ public class TreeModelTest {
     }
 
     @Test
-    void treeToValue() throws JsonProcessingException {
-        Profile profile = objectMapper.treeToValue(root.get("NB001").get("profile"), Profile.class);
-        assertEquals(new Profile("book", "store", 25), profile);
-
-        List<String> type = objectMapper.treeToValue(root.at("/NB001/type"), new TypeReference<>() {
-        });
-        assertEquals(List.of("software engineer"), type);
-    }
-
-    @Test
     void find() {
         var firstName = root.findValue("firstName").asText();
         assertEquals("book", firstName);
@@ -104,4 +96,86 @@ public class TreeModelTest {
     public record Profile(String firstName, String lastName, int age) {
     }
 
+    @Test
+    void treeToValue() throws JsonProcessingException {
+        Profile profile = objectMapper.treeToValue(root.get("NB001").get("profile"), Profile.class);
+        assertEquals(new Profile("book", "store", 25), profile);
+
+        List<String> type = objectMapper.treeToValue(root.at("/NB001/type"), new TypeReference<>() {
+        });
+        assertEquals(List.of("software engineer"), type);
+    }
+
+    @Nested
+    class TreeToValueNestedJsonTest {
+
+        @Test
+        void treeToValueNestedJson() throws JsonProcessingException {
+            JsonNode root = objectMapper.readTree("""
+                    {
+                        "NB001": {
+                            "profile": {
+                                "firstName": "book",
+                                "lastName": "store",
+                                "age": 25,
+                                "address": {
+                                    "country": "Japan",
+                                    "countryCode": "JPN"
+                                }
+                            },
+                            "type": [
+                                "software engineer"
+                            ]
+                        }
+                    }
+                    """);
+            var profileNestedJson = objectMapper.treeToValue(root.get("NB001").get("profile"), Profile.class);
+
+            assertEquals(new Profile("book", "store", 25, new Address("Japan", "JPN")), profileNestedJson);
+        }
+
+        record Profile(String firstName, String lastName, int age, Address address) {
+        }
+
+        record Address(String country, String countryCode) {
+        }
+
+    }
+
+    @Nested
+    class TreeToValueAdditionalPropertiesJsonTest {
+
+        @Test
+        void treeToValueNestedJsonAdditionalProperties() throws JsonProcessingException {
+            JsonNode root = objectMapper.readTree("""
+                    {
+                        "NB001": {
+                            "profile": {
+                                "firstName": "book",
+                                "lastName": "store",
+                                "age": 25,
+                                "address": {
+                                    "country": "Japan",
+                                    "countryCode": "JPN",
+                                    "postalCode": "000-000"
+                                }
+                            },
+                            "type": [
+                                "software engineer"
+                            ]
+                        }
+                    }
+                    """);
+            var profileNestedJson = objectMapper.treeToValue(root.get("NB001").get("profile"), Profile.class);
+
+            assertEquals(new Profile("book", "store", 25, new Address("Japan", "JPN")), profileNestedJson);
+        }
+
+        record Profile(String firstName, String lastName, int age, Address address) {
+        }
+
+        @JsonIgnoreProperties("postalCode")
+        record Address(String country, String countryCode) {
+        }
+    }
 }
