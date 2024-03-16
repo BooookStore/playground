@@ -1,3 +1,3 @@
-export default function Message({ message = "Hello" }) {
-  return <p>{message}</p>
+export default function Message({ message = "Hello" }: { message?: string }) {
+  return <p>{message}</p>;
 }
