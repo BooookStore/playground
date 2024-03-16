@@ -14,9 +14,12 @@ test("Message has 'hello' message", () => {
   const component = renderer.create(<Message />);
   const tree = toJson(component);
   expect(tree).toMatchInlineSnapshot(`
-    <p>
-      Hello
-    </p>
+    <div>
+      <p>
+        Hello
+      </p>
+      <input />
+    </div>
   `);
 });
 
@@ -24,8 +27,11 @@ test("Message render test specified from props message", () => {
   const component = renderer.create(<Message message="Hello, World!" />);
   const tree = toJson(component);
   expect(tree).toMatchInlineSnapshot(`
-    <p>
-      Hello, World!
-    </p>
+    <div>
+      <p>
+        Hello, World!
+      </p>
+      <input />
+    </div>
   `);
 })

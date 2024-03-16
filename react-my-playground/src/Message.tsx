@@ -1,3 +1,8 @@
 export default function Message({ message = "Hello" }: { message?: string }) {
-  return <p>{message}</p>;
+  return (
+    <div>
+      <p>{message}</p>
+      <input />
+    </div>
+  );
 }
