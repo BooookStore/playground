@@ -25,3 +25,29 @@ exports[`Accordion > render 1`] = `
   </div>
 </div>
 `;
+
+exports[`Accordion > render 2`] = `
+<div>
+  <div>
+    <section>
+      <h2>
+        Coffee
+      </h2>
+      <button>
+        show
+      </button>
+    </section>
+    <section>
+      <h2>
+        Tea
+      </h2>
+      <button>
+        hide
+      </button>
+      <p>
+        紅茶は、茶葉から抽出される飲み物であり、世界中で人気があります。茶葉をお湯で浸し、適切な時間で淹れることで、豊かな風味とアロマが楽しめます。
+      </p>
+    </section>
+  </div>
+</div>
+`;
