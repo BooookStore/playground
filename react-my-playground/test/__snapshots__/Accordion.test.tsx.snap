@@ -51,3 +51,29 @@ exports[`Accordion > render 2`] = `
   </div>
 </div>
 `;
+
+exports[`Accordion > render 3`] = `
+<div>
+  <div>
+    <section>
+      <h2>
+        Coffee
+      </h2>
+      <button>
+        hide
+      </button>
+      <p>
+        コーヒーは、コーヒー豆から抽出される飲み物であり、世界中で広く愛されています。豆を挽いてお湯で淹れることで、香り高く濃厚な味わいが楽しめます。
+      </p>
+    </section>
+    <section>
+      <h2>
+        Tea
+      </h2>
+      <button>
+        show
+      </button>
+    </section>
+  </div>
+</div>
+`;

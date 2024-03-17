@@ -12,7 +12,12 @@ describe("Accordion", () => {
     expect(container).toMatchSnapshot();
 
     // toggle coffee section to tea section
-    const button = screen.getByText("show");
+    let button = screen.getByText("show");
+    fireEvent.click(button);
+    expect(container).toMatchSnapshot();
+
+    // toggle tea section to coffee section
+    button = screen.getByText("show")
     fireEvent.click(button);
     expect(container).toMatchSnapshot();
   });
