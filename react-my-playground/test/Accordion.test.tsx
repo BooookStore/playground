@@ -8,7 +8,7 @@ describe("Accordion", () => {
   test("render", () => {
     const { container } = render(<Accordion />);
 
-    // initial render
+    // show coffee section when initial
     expect(container).toMatchSnapshot();
 
     // toggle coffee section to tea section
