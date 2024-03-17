@@ -8,6 +8,8 @@ import { describe, expect, test } from "vitest";
 describe("Message", () => {
   test("render Message component", () => {
     render(<Message />);
+
     expect(screen.getByText("Hello")).exist;
+    expect(screen.queryByText("Hello!")).not.exist;
   });
 });
