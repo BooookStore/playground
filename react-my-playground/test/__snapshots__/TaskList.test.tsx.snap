@@ -1,0 +1,56 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TaskList > render 1`] = `
+<div>
+  <div>
+    <h2>
+      Task List
+    </h2>
+    <ul
+      style="list-style-type: none; padding: 0px;"
+    >
+      <li>
+        <input
+          style="display: inline;"
+          type="checkbox"
+        />
+        <p
+          style="display: inline;"
+        >
+          first task
+        </p>
+      </li>
+      <li>
+        <input
+          style="display: inline;"
+          type="checkbox"
+        />
+        <p
+          style="display: inline;"
+        >
+          second task
+        </p>
+      </li>
+      <li>
+        <input
+          style="display: inline;"
+          type="checkbox"
+        />
+        <p
+          style="display: inline;"
+        >
+          third task
+        </p>
+      </li>
+    </ul>
+    <input
+      style="margin-right: 10px;"
+      type="text"
+      value=""
+    />
+    <button>
+      add
+    </button>
+  </div>
+</div>
+`;
