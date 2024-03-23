@@ -5,7 +5,7 @@ export default function Accordion() {
   const [coffeePanelShow, setCoffeePanelShow] = useState(true);
 
   return (
-    <div>
+    <div className="flex gap-5">
       <Panel
         content={accordionContents[0]}
         show={coffeePanelShow}
@@ -35,9 +35,14 @@ function Panel({
   const buttonText = show ? "hide" : "show";
 
   return (
-    <section>
+    <section className="w-1/2">
       <h2>{content.title}</h2>
-      <button onClick={onToggleButtonClick}>{buttonText}</button>
+      <button
+        className="bg-indigo-700 hover:bg-indigo-400 py-1 px-2 text-slate-50 rounded drop-shadow"
+        onClick={onToggleButtonClick}
+      >
+        {buttonText}
+      </button>
       {show && <p>{content.description}</p>}
     </section>
   );

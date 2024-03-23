@@ -16,7 +16,7 @@ export default function TaskList() {
 
   return (
     <div>
-      <h2>Task List</h2>
+      <h2 className="underline">Task List</h2>
       <ul style={{ listStyleType: "none", padding: "0px" }}>
         {tasks.map((task) => (
           <li key={task.id}>
