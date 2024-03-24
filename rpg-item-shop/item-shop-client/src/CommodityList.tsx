@@ -1,6 +1,6 @@
 import Commodity from "./Commodity";
 
-const comodities = [
+const commodities = [
   {
     id: "6e860ddc-305a-4532-8a49-d2f3be19f9bf",
     name: "ハーモニー・ハーブ",
@@ -18,7 +18,7 @@ const comodities = [
 ];
 
 export default function CommodityList() {
-  const list = comodities.map((c) => (
+  const list = commodities.map((c) => (
     <Commodity key={c.id} name={c.name} description={c.description} price={c.price} />
   ));
 
