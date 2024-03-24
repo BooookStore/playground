@@ -4,6 +4,7 @@ import Commodity from "../Commodity";
 const meta = {
   title: "Commodity",
   component: Commodity,
+  tags: ["autodocs"],
 } satisfies Meta<typeof Commodity>;
 
 export default meta;

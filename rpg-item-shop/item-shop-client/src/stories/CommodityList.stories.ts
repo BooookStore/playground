@@ -2,8 +2,9 @@ import { Meta, StoryObj } from "@storybook/react";
 import CommodityList from "../CommodityList";
 
 const meta = {
-  title: "ComodityList",
+  title: "CommodityList",
   component: CommodityList,
+  tags: ["autodocs"],
 } satisfies Meta<typeof CommodityList>;
 
 export default meta;
