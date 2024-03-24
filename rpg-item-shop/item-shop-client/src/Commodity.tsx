@@ -6,7 +6,7 @@ export type Props = {
 
 export default function Commodity({ name, description, price }: Props) {
   return (
-    <div className="p-3 flex flex-col w-96 border-2 border-solid rounded-md shadow bg-slate-50 text-slate-700">
+    <div className="p-3 flex flex-col w-96 border-2 border-solid rounded-md shadow-md hover:bg-slate-100 text-slate-700">
       <div>
         <p className="font-medium mb-2">{name}</p>
       </div>
