@@ -1,9 +1,7 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-
-import Message from "../src/Message";
-
 import { describe, expect, test } from "vitest";
+import { render, screen } from "@testing-library/react";
+import Message from "../src/Message";
 
 describe("Message", () => {
   test("render Message component", () => {
