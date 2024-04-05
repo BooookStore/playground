@@ -3,7 +3,9 @@
 exports[`TaskList > render 1`] = `
 <div>
   <div>
-    <h2>
+    <h2
+      class="underline"
+    >
       Task List
     </h2>
     <ul

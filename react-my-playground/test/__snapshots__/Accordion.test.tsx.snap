@@ -2,23 +2,33 @@
 
 exports[`Accordion > render 1`] = `
 <div>
-  <div>
-    <section>
+  <div
+    class="flex gap-5"
+  >
+    <section
+      class="w-1/2"
+    >
       <h2>
         Coffee
       </h2>
-      <button>
+      <button
+        class="bg-indigo-700 hover:bg-indigo-400 py-1 px-2 text-slate-50 rounded drop-shadow"
+      >
         hide
       </button>
       <p>
         コーヒーは、コーヒー豆から抽出される飲み物であり、世界中で広く愛されています。豆を挽いてお湯で淹れることで、香り高く濃厚な味わいが楽しめます。
       </p>
     </section>
-    <section>
+    <section
+      class="w-1/2"
+    >
       <h2>
         Tea
       </h2>
-      <button>
+      <button
+        class="bg-indigo-700 hover:bg-indigo-400 py-1 px-2 text-slate-50 rounded drop-shadow"
+      >
         show
       </button>
     </section>
@@ -28,20 +38,30 @@ exports[`Accordion > render 1`] = `
 
 exports[`Accordion > render 2`] = `
 <div>
-  <div>
-    <section>
+  <div
+    class="flex gap-5"
+  >
+    <section
+      class="w-1/2"
+    >
       <h2>
         Coffee
       </h2>
-      <button>
+      <button
+        class="bg-indigo-700 hover:bg-indigo-400 py-1 px-2 text-slate-50 rounded drop-shadow"
+      >
         show
       </button>
     </section>
-    <section>
+    <section
+      class="w-1/2"
+    >
       <h2>
         Tea
       </h2>
-      <button>
+      <button
+        class="bg-indigo-700 hover:bg-indigo-400 py-1 px-2 text-slate-50 rounded drop-shadow"
+      >
         hide
       </button>
       <p>
@@ -54,23 +74,33 @@ exports[`Accordion > render 2`] = `
 
 exports[`Accordion > render 3`] = `
 <div>
-  <div>
-    <section>
+  <div
+    class="flex gap-5"
+  >
+    <section
+      class="w-1/2"
+    >
       <h2>
         Coffee
       </h2>
-      <button>
+      <button
+        class="bg-indigo-700 hover:bg-indigo-400 py-1 px-2 text-slate-50 rounded drop-shadow"
+      >
         hide
       </button>
       <p>
         コーヒーは、コーヒー豆から抽出される飲み物であり、世界中で広く愛されています。豆を挽いてお湯で淹れることで、香り高く濃厚な味わいが楽しめます。
       </p>
     </section>
-    <section>
+    <section
+      class="w-1/2"
+    >
       <h2>
         Tea
       </h2>
-      <button>
+      <button
+        class="bg-indigo-700 hover:bg-indigo-400 py-1 px-2 text-slate-50 rounded drop-shadow"
+      >
         show
       </button>
     </section>
