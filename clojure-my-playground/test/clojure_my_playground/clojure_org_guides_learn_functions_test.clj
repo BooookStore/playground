@@ -27,6 +27,7 @@
 (defn opposite [f]
   (fn [& args] (not (apply f args))))
 
+#_{:clj-kondo/ignore [:unused-binding]}
 (deftest functions-knowledge
   (testing "1"
     (is (= "Hello"
