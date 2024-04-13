@@ -1,4 +1,5 @@
 (ns clojure-my-playground.core-test
+  #_{:clj-kondo/ignore [:refer-all]}
   (:require [clojure.test :refer :all]
             [clojure-my-playground.core :refer :all]))
 

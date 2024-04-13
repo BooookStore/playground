@@ -15,6 +15,8 @@
 
 (defn do-nothing [x] x)
 
+
+#_{:clj-kondo/ignore [:unused-binding]}
 (defn always-things [n & m] 100)
 
 (deftest functions-knowledge
