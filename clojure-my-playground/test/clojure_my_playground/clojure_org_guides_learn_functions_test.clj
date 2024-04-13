@@ -21,6 +21,12 @@
 #_{:clj-kondo/ignore [:unused-binding]}
 (defn make-thingy [x] (fn [a & b] x))
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+(defn triplicate [f] (f) (f) (f))
+
+(defn opposite [f]
+  (fn [& args] (not (apply f args))))
+
 (deftest functions-knowledge
   (testing "1"
     (is (= "Hello"
@@ -48,4 +54,7 @@
            (always-things 1 2 3 4 5))))
   (testing "6"
     (is (= 10
-           ((make-thingy 10) 100 110 120)))))
+           ((make-thingy 10) 100 110 120))))
+  (testing "8"
+    (is (= false
+           ((opposite (fn [& args] true)) 0 1 2 3)))))
