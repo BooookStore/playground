@@ -15,9 +15,11 @@
 
 (defn do-nothing [x] x)
 
-
 #_{:clj-kondo/ignore [:unused-binding]}
 (defn always-things [n & m] 100)
+
+#_{:clj-kondo/ignore [:unused-binding]}
+(defn make-thingy [x] (fn [a & b] x))
 
 (deftest functions-knowledge
   (testing "1"
@@ -43,4 +45,7 @@
            (do-nothing "NOTHING"))))
   (testing "5 always-things"
     (is (= 100
-           (always-things 1 2 3 4 5)))))
+           (always-things 1 2 3 4 5))))
+  (testing "6"
+    (is (= 10
+           ((make-thingy 10) 100 110 120)))))
