@@ -4,8 +4,8 @@
 
 (with-test
   (def not-empty? (complement empty?))
-  (is (= false
-         (not-empty? (list))))
+  (is (= true
+         (not-empty? (list 0))))
   (is (= true
          (not-empty? (list 0 1 2 3))))
   (is (= false
