@@ -57,4 +57,5 @@
            ((make-thingy 10) 100 110 120))))
   (testing "8"
     (is (= false
-           ((opposite (fn [& args] true)) 0 1 2 3)))))
+           (let [sut (opposite (fn [& args] true))]
+             (sut 0 1 2 3))))))
