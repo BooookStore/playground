@@ -9,4 +9,10 @@
   (is (= true
          (not-empty? (list 0 1 2 3))))
   (is (= false
-         (not-empty? (list)))))
+         (not-empty? (list))))
+  (is (= true
+         (not-empty? "a")))
+  (is (= true
+         (not-empty? "abc")))
+  (is (= false
+         (not-empty? ""))))
