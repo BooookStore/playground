@@ -27,6 +27,10 @@
 (defn opposite [f]
   (fn [& args] (not (apply f args))))
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+(defn triplicate2 [f & args]
+  (triplicate (fn [] (apply f args))))
+
 #_{:clj-kondo/ignore [:unused-binding]}
 (deftest functions-knowledge
   (testing "1"
