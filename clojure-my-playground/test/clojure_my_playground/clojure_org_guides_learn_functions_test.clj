@@ -63,4 +63,12 @@
   (testing "8"
     (is (= false
            (let [sut (opposite (fn [& args] true))]
-             (sut 0 1 2 3))))))
+             (sut 0 1 2 3)))))
+  (testing "10-1"
+    (is (= -1.0
+           (Math/cos Math/PI))))
+  (testing "10-2"
+    (is (= 1.0
+           (let [a (Math/pow (Math/sin 10) 2)
+                 b (Math/pow (Math/cos 10) 2)]
+             (+ a b))))))
