@@ -3,7 +3,7 @@
   (:require [clojure.test :refer :all]
             [clojure.string :as str]))
 
-(defn formatter
+(defn head-upper-formatter
   ([head last] (str head ". " last))
   ([head] (str head "."))
   ([] ""))
@@ -13,16 +13,20 @@
         [head] first]
     [head last]))
 
-(defn abbreviate-name [name]
-  (apply formatter (remove nil? (destruct name))))
+(defn abbreviator [destructor formatter]
+  (fn [name] (apply formatter (remove nil? (destructor name)))))
+
+(defn abbreviate-head-upper [name]
+  (let [f (abbreviator destruct head-upper-formatter)]
+    (f name)))
 
 (deftest abbreviate-name-test
   (testing "abbreviate-name"
     (is (= "B. Store"
-           (abbreviate-name "Book Store")))
+           (abbreviate-head-upper "Book Store")))
     (is (= "S."
-           (abbreviate-name "Store")))
+           (abbreviate-head-upper "Store")))
     (is (= ""
-           (abbreviate-name "")))
+           (abbreviate-head-upper "")))
     (is (= "B. Store"
-           (abbreviate-name "Book Store !!!")))))
+           (abbreviate-head-upper "Book Store !!!")))))
