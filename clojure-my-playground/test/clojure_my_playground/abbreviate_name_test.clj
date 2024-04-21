@@ -16,10 +16,13 @@
 (defn abbreviate-name [name]
   (apply formatter (remove nil? (destruct name))))
 
-(testing "abbreviate-name"
-  (is (= "B. Store"
-         (abbreviate-name "Book Store")))
-  (is (= "S."
-         (abbreviate-name "Store")))
-  (is (= ""
-         (abbreviate-name ""))))
+(deftest abbreviate-name-test
+  (testing "abbreviate-name"
+    (is (= "B. Store"
+           (abbreviate-name "Book Store")))
+    (is (= "S."
+           (abbreviate-name "Store")))
+    (is (= ""
+           (abbreviate-name "")))
+    (is (= "B. Store"
+           (abbreviate-name "Book Store !!!")))))
