@@ -16,9 +16,7 @@
 (defn abbreviator [destructor formatter]
   (fn [name] (apply formatter (destructor name))))
 
-(defn abbreviate-head-upper [name]
-  (let [f (abbreviator destruct head-upper-formatter)]
-    (f name)))
+(def abbreviate-head-upper (fn [name] ((abbreviator destruct head-upper-formatter) name)))
 
 (deftest abbreviate-name-test
   (testing "abbreviate-name"
