@@ -11,10 +11,10 @@
 (defn destruct [name]
   (let [[first last] (str/split name #" ")
         [head] first]
-    [head last]))
+    (remove nil? [head last])))
 
 (defn abbreviator [destructor formatter]
-  (fn [name] (apply formatter (remove nil? (destructor name)))))
+  (fn [name] (apply formatter (destructor name))))
 
 (defn abbreviate-head-upper [name]
   (let [f (abbreviator destruct head-upper-formatter)]
