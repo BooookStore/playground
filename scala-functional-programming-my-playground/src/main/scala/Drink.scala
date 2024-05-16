@@ -1,3 +1,5 @@
+import Size.*
+
 import scala.util.Try
 
 case class Drink(name: Name, size: Size)
@@ -20,17 +22,21 @@ object Name {
 
 def extractDrinks(rawDrinks: String): Either[String, List[Drink]] = {
   val initializer: Either[String, List[Drink]] = Right(List.empty)
-  rawDrinks.split(',').map(_.trim).map(extractDrink).foldLeft(initializer)((acc, mayDrink) =>
-    for {
-      drinks <- acc
-      drink <- mayDrink
-    } yield drinks.appended(drink)
-  )
+  rawDrinks
+    .split(',')
+    .map(_.trim)
+    .map(extractDrink)
+    .foldLeft(initializer)((acc, mayDrink) =>
+      for {
+        drinks <- acc
+        drink <- mayDrink
+      } yield drinks.appended(drink)
+    )
 }
 
 def extractDrink(rawDrink: String): Either[String, Drink] = for {
   name <- extractDrinkNameWithSize(rawDrink).orElse(extractDrinkNameWithoutSize(rawDrink))
-  size <- extractDrinkSize(rawDrink)
+  size <- extractDrinkSize(rawDrink).orElse(Right(Medium))
 } yield Drink(name, size)
 
 private def extractDrinkSize(rawDrink: String): Either[String, Size] = {

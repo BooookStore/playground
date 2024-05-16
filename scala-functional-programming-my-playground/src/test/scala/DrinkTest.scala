@@ -25,7 +25,7 @@ class DrinkTest extends AnyFunSuite:
   }
   test("extractable drink") {
     assert(extractDrink("coffee (Large)") === Right(Drink(Name("coffee"), Large)))
-    assert(extractDrink("coffee") === Left("can't extract drink size from coffee"))
+    assert(extractDrink("coffee") === Right(Drink(Name("coffee"), Medium)))
     assert(extractDrink("") === Left("can't extract drink name from "))
   }
   test("extractable drinks") {
