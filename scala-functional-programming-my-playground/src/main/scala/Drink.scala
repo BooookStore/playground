@@ -29,13 +29,9 @@ def extractDrinks(rawDrinks: String): Either[String, List[Drink]] = {
 }
 
 def extractDrink(rawDrink: String): Either[String, Drink] = for {
-  name <- extractDrinkName(rawDrink)
+  name <- extractDrinkNameWithSize(rawDrink).orElse(extractDrinkNameWithoutSize(rawDrink))
   size <- extractDrinkSize(rawDrink)
 } yield Drink(name, size)
-
-private def extractDrinkName(rawDrink: String): Either[String, Name] = {
-  extractDrinkNameWithSize(rawDrink).orElse(extractDrinkNameWithoutSize(rawDrink))
-}
 
 private def extractDrinkSize(rawDrink: String): Either[String, Size] = {
   val bracketOpen = rawDrink.indexOf('(')
