@@ -18,6 +18,16 @@ object Name {
 
 }
 
+def extractDrinks(rawDrinks: String): Either[String, List[Drink]] = {
+  val initializer: Either[String, List[Drink]] = Right(List.empty)
+  rawDrinks.split(',').map(_.trim).map(extractDrink).foldLeft(initializer)((acc, mayDrink) =>
+    for {
+      drinks <- acc
+      drink <- mayDrink
+    } yield drinks.appended(drink)
+  )
+}
+
 def extractDrink(rawDrink: String): Either[String, Drink] = for {
   name <- extractDrinkName(rawDrink)
   size <- extractDrinkSize(rawDrink)
