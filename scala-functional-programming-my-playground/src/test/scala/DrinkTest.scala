@@ -23,6 +23,13 @@ class DrinkTest extends AnyFunSuite:
     assert(extractDrinkSize("(S)") === Left("can't extract drink size from (S)"))
     assert(extractDrinkSize("") === Left("can't extract drink size from "))
   }
+  test("extractable medium drink size when size not specified") {
+    assert(extractDrinkSizeWithoutSize("") === Right(Medium))
+    assert(extractDrinkSizeWithoutSize("coffee") === Right(Medium))
+    assert(extractDrinkSizeWithoutSize("coffee (") === Left("drink size specified or incorrect is coffee ("))
+    assert(extractDrinkSizeWithoutSize("coffee ()") === Left("drink size specified or incorrect is coffee ()"))
+    assert(extractDrinkSizeWithoutSize("coffee (Large)") === Left("drink size specified or incorrect is coffee (Large)"))
+  }
   test("extractable drink") {
     assert(extractDrink("coffee (Large)") === Right(Drink(Name("coffee"), Large)))
     assert(extractDrink("coffee") === Right(Drink(Name("coffee"), Medium)))
@@ -30,9 +37,7 @@ class DrinkTest extends AnyFunSuite:
   }
   test("extractable drinks") {
     assert(extractDrinks("coffee (Large)") === Right(List(Drink(Name("coffee"), Large))))
-    assert(extractDrinks("coffee (Large), apple juice (Small)") === Right(List(
-      Drink(Name("coffee"), Large),
-      Drink(Name("apple juice"), Small))))
+    assert(extractDrinks("coffee (Large), apple juice (Small)") === Right(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Small))))
     assert(extractDrinks("") === Left("can't extract drink name from "))
-    assert(extractDrinks("coffee (Large), apple juice (") === Left("can't extract drink size from apple juice ("))
+    assert(extractDrinks("coffee (Large), apple juice (") === Left("drink size specified or incorrect is apple juice ("))
   }

@@ -36,7 +36,7 @@ def extractDrinks(rawDrinks: String): Either[String, List[Drink]] = {
 
 def extractDrink(rawDrink: String): Either[String, Drink] = for {
   name <- extractDrinkNameWithSize(rawDrink).orElse(extractDrinkNameWithoutSize(rawDrink))
-  size <- extractDrinkSize(rawDrink).orElse(Right(Medium))
+  size <- extractDrinkSize(rawDrink).orElse(extractDrinkSizeWithoutSize(rawDrink))
 } yield Drink(name, size)
 
 private def extractDrinkSize(rawDrink: String): Either[String, Size] = {
@@ -49,6 +49,15 @@ private def extractDrinkSize(rawDrink: String): Either[String, Size] = {
       Left(s"can't extract drink size from $rawDrink")
     size <- Try(Size.valueOf(rawSize)).toEither.left.map(_ => s"can't extract drink size from $rawDrink")
   } yield size
+}
+
+private def extractDrinkSizeWithoutSize(rawDrink: String): Either[String, Size] = {
+  val bracketOpen = rawDrink.indexOf('(')
+  val bracketClose = rawDrink.indexOf(')')
+  if (bracketOpen == -1 && bracketClose == -1)
+    Right(Medium)
+  else
+    Left(s"drink size specified or incorrect is $rawDrink")
 }
 
 private def extractDrinkNameWithSize(rawDrink: String): Either[String, Name] = {
