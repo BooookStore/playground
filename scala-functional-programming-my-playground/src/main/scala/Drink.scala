@@ -4,6 +4,8 @@ import scala.util.Try
 
 case class Drink(name: Name, size: Size)
 
+case class Food(name: Name)
+
 enum Size {
   case Large
   case Medium
@@ -42,6 +44,13 @@ def extractDrink(rawDrink: String): Either[String, Drink] = {
     name <- extractDrinkNameWithSize(removeOrderType(rawDrink)).orElse(extractDrinkNameWithoutSize(removeOrderType(rawDrink)))
     size <- extractDrinkSize(removeOrderType(rawDrink)).orElse(extractDrinkSizeWithoutSize(removeOrderType(rawDrink)))
   } yield Drink(name, size)
+}
+
+def extractFood(rawFood: String): Either[String, Food] = {
+  for {
+    _ <- isOrderType(rawFood, "F").filterOrElse(identity, "not food order type")
+    name = Name(rawFood.replace("[F]", "").trim)
+  } yield Food(name)
 }
 
 private def isOrderType(rawOrder: String, expectedOrderType: String): Either[String, Boolean] = {
