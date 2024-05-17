@@ -24,6 +24,17 @@ object Name {
 
 }
 
+def calculateFee(orders: List[Order]): Int = orders.map {
+  case Drink(_, size) => calculateDrinkFee(size)
+  case Food(_) => 1000
+}.sum
+
+def calculateDrinkFee(size: Size): Int = 500 + (size match {
+  case Small => 0
+  case Medium => 100
+  case Large => 200
+})
+
 def extractOrders(rawOrders: String): Either[String, List[Order]] = {
   val initializer: Either[String, List[Order]] = Right(List.empty)
   rawOrders

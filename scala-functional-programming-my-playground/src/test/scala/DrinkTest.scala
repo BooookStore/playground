@@ -56,3 +56,7 @@ class DrinkTest extends AnyFunSuite:
     assert(extractOrders("[F] banana") === Right(List(Food(Name("banana")))))
     assert(extractOrders("[D] coffee (Large), [F] banana ") === Right(List(Drink(Name("coffee"), Large), Food(Name("banana")))))
   }
+  test("calculate fee") {
+    assert(calculateFee(List(Drink(Name("coffee"), Medium), Food(Name("banana")))) === 1600)
+    assert(calculateFee(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Medium))) === 1300)
+  }
