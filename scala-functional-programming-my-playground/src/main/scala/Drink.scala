@@ -36,11 +36,11 @@ def extractDrinks(rawDrinks: String): Either[String, List[Drink]] = {
 
 def extractDrink(rawDrink: String): Either[String, Drink] = {
   val isDrinkOrderType = (d: String) => isOrderType(rawDrink, "D").filterOrElse(identity, "not drink order type")
+  val removeOrderType = (d: String) => d.replace("[D]", "").trim
   for {
     _ <- isDrinkOrderType(rawDrink)
-    orderTypeRemovedRawDrink = rawDrink.replace("[D]", "").trim
-    name <- extractDrinkNameWithSize(orderTypeRemovedRawDrink).orElse(extractDrinkNameWithoutSize(orderTypeRemovedRawDrink))
-    size <- extractDrinkSize(orderTypeRemovedRawDrink).orElse(extractDrinkSizeWithoutSize(orderTypeRemovedRawDrink))
+    name <- extractDrinkNameWithSize(removeOrderType(rawDrink)).orElse(extractDrinkNameWithoutSize(removeOrderType(rawDrink)))
+    size <- extractDrinkSize(removeOrderType(rawDrink)).orElse(extractDrinkSizeWithoutSize(removeOrderType(rawDrink)))
   } yield Drink(name, size)
 }
 
