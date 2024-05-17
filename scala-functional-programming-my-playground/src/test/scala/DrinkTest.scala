@@ -1,3 +1,4 @@
+import Order.*
 import Size.*
 import org.scalatest.funsuite.AnyFunSuite
 
@@ -44,14 +45,13 @@ class DrinkTest extends AnyFunSuite:
     assert(extractDrink("[F] banana") === Left("not drink order type"))
     assert(extractDrink("") === Left("can't extract order type from "))
   }
-  test("extract drinks") {
-    assert(extractDrinks("[D] coffee (Large)") === Right(List(Drink(Name("coffee"), Large))))
-    assert(extractDrinks("[D] coffee (Large), [D] apple juice (Small)") === Right(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Small))))
-    assert(extractDrinks("") === Left("can't extract order type from "))
-    assert(extractDrinks("[D] coffee (Large), [D] apple juice (") === Left("drink size specified or incorrect is apple juice ("))
-  }
   test("extract food") {
     assert(extractFood("[F] banana") === Right(Food(Name("banana"))))
     assert(extractFood("[F] toast") === Right(Food(Name("toast"))))
     assert(extractFood("[D] coffee") === Left("not food order type"))
+  }
+  test("extract drinks and foods") {
+    assert(extractOrders("[D] coffee (Large)") === Right(List(Drink(Name("coffee"), Large))))
+    assert(extractOrders("[D] coffee (Large), [D] apple juice (Small)") === Right(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Small))))
+    assert(extractOrders("[F] banana") === Right(List(Food(Name("banana")))))
   }

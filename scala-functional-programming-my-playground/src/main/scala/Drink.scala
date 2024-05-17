@@ -1,10 +1,12 @@
+import Order.*
 import Size.*
 
 import scala.util.Try
 
-case class Drink(name: Name, size: Size)
-
-case class Food(name: Name)
+enum Order {
+  case Drink(name: Name, size: Size)
+  case Food(name: Name)
+}
 
 enum Size {
   case Large
@@ -22,18 +24,13 @@ object Name {
 
 }
 
-def extractDrinks(rawDrinks: String): Either[String, List[Drink]] = {
-  val initializer: Either[String, List[Drink]] = Right(List.empty)
-  rawDrinks
+def extractOrders(rawOrders: String): Either[String, List[Order]] = {
+  val initializer: Either[String, List[Order]] = Right(List.empty)
+  rawOrders
     .split(',')
     .map(_.trim)
-    .map(extractDrink)
-    .foldLeft(initializer)((acc, mayDrink) =>
-      for {
-        drinks <- acc
-        drink <- mayDrink
-      } yield drinks.appended(drink)
-    )
+    .map(rawOrder => extractDrink(rawOrder).orElse(extractFood(rawOrder)))
+    .foldLeft(initializer)(for (foods <- _; food <- _) yield foods.appended(food))
 }
 
 def extractDrink(rawDrink: String): Either[String, Drink] = {
