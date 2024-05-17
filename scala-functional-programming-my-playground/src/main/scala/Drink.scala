@@ -58,8 +58,7 @@ private def isOrderType(rawOrder: String, expectedOrderType: String): Either[Str
       Right(rawOrder.substring(squareBracketOpen + 1, squareBracketClose).trim)
     else
       Left(s"can't extract order type from $rawOrder")
-    isMatchExpectedOrderType = rawOrderType.equals(expectedOrderType)
-  } yield isMatchExpectedOrderType
+  } yield rawOrderType.equals(expectedOrderType)
 }
 
 private def extractDrinkSize(rawDrink: String): Either[String, Size] = {
