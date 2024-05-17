@@ -30,14 +30,23 @@ class DrinkTest extends AnyFunSuite:
     assert(extractDrinkSizeWithoutSize("coffee ()") === Left("drink size specified or incorrect is coffee ()"))
     assert(extractDrinkSizeWithoutSize("coffee (Large)") === Left("drink size specified or incorrect is coffee (Large)"))
   }
+  test("know order type") {
+    assert(isOrderType("[D]", "D") === Right(true))
+    assert(isOrderType("[F]", "F") === Right(true))
+    assert(isOrderType("[D]", "F") === Right(false))
+    assert(isOrderType("[]", "") === Left("can't extract order type from []"))
+    assert(isOrderType("<D>", "D") === Left("can't extract order type from <D>"))
+    assert(isOrderType("", "") === Left("can't extract order type from "))
+  }
   test("extract drink") {
-    assert(extractDrink("coffee (Large)") === Right(Drink(Name("coffee"), Large)))
-    assert(extractDrink("coffee") === Right(Drink(Name("coffee"), Medium)))
-    assert(extractDrink("") === Left("can't extract drink name from "))
+    assert(extractDrink("[D] coffee (Large)") === Right(Drink(Name("coffee"), Large)))
+    assert(extractDrink("[D] coffee") === Right(Drink(Name("coffee"), Medium)))
+    assert(extractDrink("[F] banana") === Left("not drink order type"))
+    assert(extractDrink("") === Left("can't extract order type from "))
   }
   test("extract drinks") {
-    assert(extractDrinks("coffee (Large)") === Right(List(Drink(Name("coffee"), Large))))
-    assert(extractDrinks("coffee (Large), apple juice (Small)") === Right(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Small))))
-    assert(extractDrinks("") === Left("can't extract drink name from "))
-    assert(extractDrinks("coffee (Large), apple juice (") === Left("drink size specified or incorrect is apple juice ("))
+    assert(extractDrinks("[D] coffee (Large)") === Right(List(Drink(Name("coffee"), Large))))
+    assert(extractDrinks("[D] coffee (Large), [D] apple juice (Small)") === Right(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Small))))
+    assert(extractDrinks("") === Left("can't extract order type from "))
+    assert(extractDrinks("[D] coffee (Large), [D] apple juice (") === Left("drink size specified or incorrect is apple juice ("))
   }

@@ -34,10 +34,27 @@ def extractDrinks(rawDrinks: String): Either[String, List[Drink]] = {
     )
 }
 
-def extractDrink(rawDrink: String): Either[String, Drink] = for {
-  name <- extractDrinkNameWithSize(rawDrink).orElse(extractDrinkNameWithoutSize(rawDrink))
-  size <- extractDrinkSize(rawDrink).orElse(extractDrinkSizeWithoutSize(rawDrink))
-} yield Drink(name, size)
+def extractDrink(rawDrink: String): Either[String, Drink] = {
+  val isDrinkOrderType = (d: String) => isOrderType(rawDrink, "D").filterOrElse(identity, "not drink order type")
+  for {
+    _ <- isDrinkOrderType(rawDrink)
+    orderTypeRemovedRawDrink = rawDrink.replace("[D]", "").trim
+    name <- extractDrinkNameWithSize(orderTypeRemovedRawDrink).orElse(extractDrinkNameWithoutSize(orderTypeRemovedRawDrink))
+    size <- extractDrinkSize(orderTypeRemovedRawDrink).orElse(extractDrinkSizeWithoutSize(orderTypeRemovedRawDrink))
+  } yield Drink(name, size)
+}
+
+private def isOrderType(rawOrder: String, expectedOrderType: String): Either[String, Boolean] = {
+  val squareBracketOpen = rawOrder.indexOf('[')
+  val squareBracketClose = rawOrder.indexOf(']')
+  for {
+    rawOrderType <- if (squareBracketOpen != -1 && squareBracketClose > squareBracketOpen + 1)
+      Right(rawOrder.substring(squareBracketOpen + 1, squareBracketClose).trim)
+    else
+      Left(s"can't extract order type from $rawOrder")
+    isMatchExpectedOrderType = rawOrderType.equals(expectedOrderType)
+  } yield isMatchExpectedOrderType
+}
 
 private def extractDrinkSize(rawDrink: String): Either[String, Size] = {
   val bracketOpen = rawDrink.indexOf('(')
