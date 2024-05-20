@@ -1,5 +1,6 @@
 import Order.*
 import Size.*
+import cats.effect.IO
 
 import scala.util.Try
 
@@ -23,6 +24,8 @@ object Name {
   extension (name: Name) def rawString: String = name
 
 }
+
+def calculateFee(rawOrders: IO[String]): IO[Either[String, Int]] = ???
 
 def calculateFee(orders: List[Order]): Int = orders.map {
   case Drink(_, size) => calculateDrinkFee(size)
