@@ -2,7 +2,7 @@ import Order.*
 import Size.*
 import org.scalatest.funsuite.AnyFunSuite
 
-class DrinkTest extends AnyFunSuite:
+class OrderTest extends AnyFunSuite:
   test("extract drink name from string with size") {
     assert(extractDrinkNameWithSize("coffee (Large)") === Right(Name("coffee")))
     assert(extractDrinkNameWithSize("coffee ()") === Right(Name("coffee")))
