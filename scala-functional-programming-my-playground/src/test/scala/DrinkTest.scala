@@ -54,7 +54,7 @@ class DrinkTest extends AnyFunSuite:
     assert(extractOrders("[D] coffee (Large)") === Right(List(Drink(Name("coffee"), Large))))
     assert(extractOrders("[D] coffee (Large), [D] apple juice (Small)") === Right(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Small))))
     assert(extractOrders("[F] banana") === Right(List(Food(Name("banana")))))
-    assert(extractOrders("[D] coffee (Large), [F] banana ") === Right(List(Drink(Name("coffee"), Large), Food(Name("banana")))))
+    assert(extractOrders("[D] coffee, [F] banana ") === Right(List(Drink(Name("coffee"), Medium), Food(Name("banana")))))
   }
   test("calculate fee") {
     assert(calculateFee(List(Drink(Name("coffee"), Medium), Food(Name("banana")))) === 1600)
