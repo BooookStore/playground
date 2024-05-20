@@ -1,6 +1,7 @@
 import Order.*
 import Size.*
 import cats.effect.IO
+import cats.implicits.*
 
 import scala.util.Try
 
@@ -50,8 +51,8 @@ def extractOrders(rawOrders: String): Either[String, List[Order]] = {
   rawOrders
     .split(',')
     .map(_.trim)
-    .map(rawOrder => extractDrink(rawOrder).orElse(extractFood(rawOrder)))
-    .foldLeft(initializer)(for (foods <- _; food <- _) yield foods.appended(food))
+    .toList
+    .traverse(rawOrder => extractDrink(rawOrder) orElse extractFood(rawOrder))
 }
 
 def extractDrink(rawDrink: String): Either[String, Drink] = {
