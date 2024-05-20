@@ -26,11 +26,13 @@ object Name {
 }
 
 def calculateFee(rawOrders: IO[String]): IO[Either[String, Int]] = {
-  for {
-    orders <- rawOrders.map(extractOrders)
-    fee = orders.map(calculateFee)
-  } yield fee
+  rawOrders.map(calculateFeeFromOneLine)
 }
+
+def calculateFeeFromOneLine(rawOrders: String): Either[String, Int] = for {
+  orders <- extractOrders(rawOrders)
+  fee = calculateFee(orders)
+} yield fee
 
 def calculateFee(orders: List[Order]): Int = orders.map {
   case Drink(_, size) => calculateDrinkFee(size)
