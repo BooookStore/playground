@@ -60,3 +60,6 @@ class OrderTest extends AnyFunSuite:
     assert(calculateFee(List(Drink(Name("coffee"), Medium), Food(Name("banana")))) === 1600)
     assert(calculateFee(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Medium))) === 1300)
   }
+  test("calculate fee using IO") {
+
+  }
