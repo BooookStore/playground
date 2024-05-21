@@ -26,8 +26,9 @@ object Name {
 
 }
 
-def calculateFee(rawOrders: IO[String], writer: String => IO[Unit]): IO[Unit] = for {
-  fee <- rawOrders.map(calculateFeeFromOneLine)
+def calculateFee(rawOrdersInput: IO[String], writer: String => IO[Unit]): IO[Unit] = for {
+  rawOrders <- rawOrdersInput
+  fee = calculateFeeFromOneLine(rawOrders)
   result <- fee match {
     case Right(fee) => writer(fee.toString)
     case Left(msg) => writer(msg)
