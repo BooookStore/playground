@@ -62,6 +62,17 @@ class OrderTest extends AnyFunSuite:
     assert(calculateFee(List(Drink(Name("coffee"), Medium), Food(Name("banana")))) === 1600)
     assert(calculateFee(List(Drink(Name("coffee"), Large), Drink(Name("apple juice"), Medium))) === 1300)
   }
-  test("calculate fee using IO") {
-    assert(calculateFee(IO.pure("[D] coffee (Medium)")).unsafeRunSync() === Right(600))
+  test("calculate fee from input one line string and output using IO") {
+    // setup
+    var resultOutput: String = null
+
+    // execute
+    calculateFee(
+      IO.delay("[D] coffee (Medium), [F] banana"),
+      fee => IO.delay {
+        resultOutput = fee
+      }
+    ).unsafeRunSync()
+
+    assert(resultOutput === "1600")
   }

@@ -26,9 +26,13 @@ object Name {
 
 }
 
-def calculateFee(rawOrders: IO[String]): IO[Either[String, Int]] = {
-  rawOrders.map(calculateFeeFromOneLine)
-}
+def calculateFee(rawOrders: IO[String], writer: String => IO[Unit]): IO[Unit] = for {
+  fee <- rawOrders.map(calculateFeeFromOneLine)
+  result <- fee match {
+    case Right(fee) => writer(fee.toString)
+    case Left(msg) => writer(msg)
+  }
+} yield result
 
 def calculateFeeFromOneLine(rawOrders: String): Either[String, Int] = for {
   orders <- extractOrders(rawOrders)
