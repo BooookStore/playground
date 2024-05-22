@@ -26,15 +26,6 @@ object Name {
 
 }
 
-def calculateFee(rawOrdersInput: IO[String], writer: String => IO[Unit]): IO[Unit] = for {
-  rawOrders <- rawOrdersInput
-  fee = calculateFeeFromOneLine(rawOrders)
-  result <- fee match {
-    case Right(fee) => writer(fee.toString)
-    case Left(msg) => writer(msg)
-  }
-} yield result
-
 def calculateFeeFromOneLine(rawOrders: String): Either[String, Int] = for {
   orders <- extractOrders(rawOrders)
   fee = calculateFee(orders)

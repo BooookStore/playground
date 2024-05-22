@@ -67,7 +67,7 @@ class OrderTest extends AnyFunSuite:
     var resultOutput: String = null
 
     // execute
-    calculateFee(
+    calculateFeeApplicationService(
       IO.delay("[D] coffee (Medium), [F] banana"),
       fee => IO.delay {
         resultOutput = fee
