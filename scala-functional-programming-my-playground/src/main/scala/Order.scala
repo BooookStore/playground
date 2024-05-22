@@ -1,6 +1,5 @@
 import Order.*
 import Size.*
-import cats.effect.IO
 import cats.implicits.*
 
 import scala.util.Try
