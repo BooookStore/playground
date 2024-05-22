@@ -35,7 +35,7 @@ def calculateFee(orders: List[Order]): Int = orders.map {
   case Food(_) => 1000
 }.sum
 
-def calculateDrinkFee(size: Size): Int = 500 + (size match {
+private def calculateDrinkFee(size: Size): Int = 500 + (size match {
   case Small => 0
   case Medium => 100
   case Large => 200
@@ -50,7 +50,7 @@ def extractOrders(rawOrders: String): Either[String, List[Order]] = {
     .traverse(rawOrder => extractDrink(rawOrder) orElse extractFood(rawOrder))
 }
 
-def extractDrink(rawDrink: String): Either[String, Drink] = {
+private def extractDrink(rawDrink: String): Either[String, Drink] = {
   val isDrinkOrderType = isOrderType(rawDrink, "D").filterOrElse(identity, "not drink order type")
   val removedOrderTypeRawDrink = rawDrink.replace("[D]", "").trim
   for {
@@ -60,7 +60,7 @@ def extractDrink(rawDrink: String): Either[String, Drink] = {
   } yield Drink(name, size)
 }
 
-def extractFood(rawFood: String): Either[String, Food] = {
+private def extractFood(rawFood: String): Either[String, Food] = {
   for {
     _ <- isOrderType(rawFood, "F").filterOrElse(identity, "not food order type")
     name = Name(rawFood.replace("[F]", "").trim)
