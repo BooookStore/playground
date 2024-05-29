@@ -25,7 +25,7 @@ object Name {
 
 }
 
-def calculateFeeFromOneLine(rawOrders: String): Either[String, Int] = for {
+private def calculateFeeFromOneLine(rawOrders: String): Either[String, Int] = for {
   orders <- extractOrders(rawOrders)
   fee = calculateFee(orders)
 } yield fee

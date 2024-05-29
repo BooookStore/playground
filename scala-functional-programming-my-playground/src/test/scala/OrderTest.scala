@@ -1,7 +1,5 @@
 import Order.*
 import Size.*
-import cats.effect.IO
-import cats.effect.unsafe.implicits.global
 import org.scalatest.funsuite.AnyFunSuite
 
 class OrderTest extends AnyFunSuite:
