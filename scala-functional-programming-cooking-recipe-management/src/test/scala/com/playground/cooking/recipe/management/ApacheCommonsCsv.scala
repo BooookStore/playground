@@ -15,7 +15,7 @@ class ApacheCommonsCsv extends AnyFlatSpec:
 
     val values = parser.getRecords.asScala.toList.map(_.values().toList)
 
-    //noinspection HeadOrLastOption
+    // noinspection HeadOrLastOption
     assert(values.lift(0) === Some(List("value1", "value2", "value3")))
     assert(values.lift(1) === Some(List("value4", "value5")))
     assert(values.lift(2) === None)
