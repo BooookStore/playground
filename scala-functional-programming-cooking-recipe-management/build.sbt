@@ -6,7 +6,8 @@ lazy val root = (project in file("."))
   .settings(
     name := "scala-functional-programming-cooking-recipe-management",
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-effect" % "3.5.4",
-      "org.scalatest" %% "scalatest"   % "3.2.18" % Test
+      "org.typelevel"     %% "cats-effect" % "3.5.4",
+      "org.apache.commons" % "commons-csv" % "1.11.0",
+      "org.scalatest"     %% "scalatest"   % "3.2.18" % Test
     )
   )
