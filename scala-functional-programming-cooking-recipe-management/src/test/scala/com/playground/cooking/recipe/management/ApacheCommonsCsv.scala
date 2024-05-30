@@ -20,3 +20,22 @@ class ApacheCommonsCsv extends AnyFlatSpec:
     assert(values.lift(1) === Some(List("value4", "value5")))
     assert(values.lift(2) === None)
   }
+  it should "read csv file with header" in {
+    val csvFilePath = Paths.get("src/test/resources/sample2.csv")
+    val csvFormat   = CSVFormat.DEFAULT
+      .builder()
+      .setDelimiter(",")
+      .setSkipHeaderRecord(true)
+      .setHeader("name", "description")
+      .build()
+    val parser      = CSVParser.parse(csvFilePath.toFile, UTF_8, csvFormat)
+
+    val records = parser.getRecords.asScala
+
+    // noinspection HeadOrLastOption
+    assert(records.lift(0).map(_.get("name")) === Some("name1"))
+    // noinspection HeadOrLastOption
+    assert(records.lift(0).map(_.get("description")) === Some("description1"))
+    assert(records.lift(1).map(_.get("name")) === Some("name2"))
+    assert(records.lift(1).map(_.get("description")) === Some("description2"))
+  }
