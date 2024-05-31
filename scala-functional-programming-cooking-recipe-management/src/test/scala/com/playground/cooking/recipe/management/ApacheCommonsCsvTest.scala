@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Paths
 import scala.jdk.CollectionConverters.*
 
-class ApacheCommonsCsv extends AnyFlatSpec:
+class ApacheCommonsCsvTest extends AnyFlatSpec:
   it should "read csv file" in {
     val csvFilePath = Paths.get("src/test/resources/sample1.csv")
     val csvFormat   = CSVFormat.DEFAULT.builder().setDelimiter(",").build()
