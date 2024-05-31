@@ -4,24 +4,32 @@ import cats.effect.unsafe.implicits.global
 import org.scalatest.funspec.AnyFunSpec
 
 class CSVRecipeReaderTest extends AnyFunSpec:
-  it("create one Recipe from csv file") {
-    val recipe = readRecipeFromCsvFile("src/test/resources/one_recipe.csv")
+  describe("readRecipeFromCsvFile") {
+    it("create one Recipe from csv file") {
+      val recipe = readRecipeFromCsvFile("src/test/resources/one_recipe.csv")
 
-    assert(
-      recipe.unsafeRunSync() === List(
-        Recipe(
-          "lettuce salad",
-          "A simple lettuce salad is a refreshing dish that’s perfect as a side or a light meal"
+      assert(
+        recipe.unsafeRunSync() === Right(
+          List(
+            Recipe(
+              "lettuce salad",
+              "A simple lettuce salad is a refreshing dish that’s perfect as a side or a light meal"
+            )
+          )
         )
       )
-    )
+    }
+
+    it("failed to create Recipe because name is empty string") {
+      val recipe = readRecipeFromCsvFile("src/test/resources/one_recipe_with_empty_name.csv")
+
+      assert(recipe.unsafeRunSync() === Left("name should min length 1"))
+    }
   }
 
   describe("readRecipeRecordsFromCsvFile") {
     it("create one RecipeRecord from csv file") {
-      val recipeRecords =
-        readRecipeRecordsFromCsvFile("src/test/resources/one_recipe.csv")
-          .unsafeRunSync()
+      val recipeRecords = readRecipeRecordsFromCsvFile("src/test/resources/one_recipe.csv").unsafeRunSync()
 
       assert(
         recipeRecords === List(
@@ -34,9 +42,7 @@ class CSVRecipeReaderTest extends AnyFunSpec:
     }
 
     it("create multi RecipeRecord from csv file") {
-      val recipeRecords =
-        readRecipeRecordsFromCsvFile("src/test/resources/three_recipe.csv")
-          .unsafeRunSync()
+      val recipeRecords = readRecipeRecordsFromCsvFile("src/test/resources/three_recipe.csv").unsafeRunSync()
 
       assert(
         recipeRecords === List(
@@ -54,5 +60,12 @@ class CSVRecipeReaderTest extends AnyFunSpec:
           )
         )
       )
+    }
+  }
+
+  describe("RecipeRecord") {
+    it("name should min length 1") {
+      assert(validateRecipeName("curry") === Right(()))
+      assert(validateRecipeName("") === Left("name should min length 1"))
     }
   }
