@@ -1,6 +1,7 @@
 import { RecoilRoot } from "recoil";
 import "./App.css";
 import { HelloTypography } from "./component/HelloTypography";
+import { ButtonChangeHelloTypography } from "./component/ButtonChangeHelloTypography";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <RecoilRoot>
         <div>
           <HelloTypography />
+          <ButtonChangeHelloTypography />
         </div>
       </RecoilRoot>
     </>
