@@ -1,6 +1,8 @@
 use futures::executor::block_on;
+use log::info;
 
 fn main() {
+    env_logger::init();
     block_on(async_main());
 }
 
@@ -18,14 +20,14 @@ async fn learn_and_sing() {
 }
 
 async fn learn_song() -> Song {
-    println!("learn song: SONG");
+    info!("learn song: SONG");
     String::from("SONG")
 }
 
 async fn sing_song(song: Song) {
-    println!("sing song: {song}");
+    info!("sing song: {song}");
 }
 
 async fn dance() {
-    println!("dance");
+    info!("dance");
 }
