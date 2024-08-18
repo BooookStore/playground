@@ -121,4 +121,8 @@ fn main() {
         TimerFuture::new(Duration::new(2, 0)).await;
         println!("done");
     });
+
+    drop(spawner);
+
+    executor.run();
 }
