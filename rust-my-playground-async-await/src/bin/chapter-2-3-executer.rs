@@ -26,16 +26,21 @@ struct SharedState {
 
 impl TimerFuture {
     pub fn new(duration: Duration) -> Self {
+        println!("TimerFuture created.");
         let shared_state = Arc::new(Mutex::new(SharedState {
             completed: false,
             waker: None,
         }));
         let thread_shared_state = shared_state.clone();
         thread::spawn(move || {
+            println!("Thread spawned.");
+            println!("Thread start sleep.");
             thread::sleep(duration);
+            println!("Thread end sleep.");
             let mut shared_state = thread_shared_state.lock().unwrap();
             shared_state.completed = true;
             if let Some(waker) = shared_state.waker.take() {
+                println!("Thread waker wake.");
                 waker.wake();
             }
         });
@@ -49,9 +54,11 @@ impl Future for TimerFuture {
     fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         let mut shared_state = self.shared_state.lock().unwrap();
         if shared_state.completed {
+            println!("TimerFuture::poll called. return ready.");
             Poll::Ready(())
         } else {
             shared_state.waker = Some(cx.waker().clone());
+            println!("TimerFuture::poll called. return pending.");
             Poll::Pending
         }
     }
@@ -66,11 +73,15 @@ impl Executer {
         while let Ok(task) = self.ready_queue.recv() {
             let mut future_slot = task.future.lock().unwrap();
             if let Some(mut future) = future_slot.take() {
+                println!("Executer call start future poll.");
+                println!("Executer create new waker and context.");
                 let waker = waker_ref(&task);
                 let context = &mut Context::from_waker(&waker);
+                println!("Executer call future poll with created context.");
                 if future.as_mut().poll(context).is_pending() {
                     *future_slot = Some(future);
                 }
+                println!("Executer call end future poll.");
             }
         }
     }
@@ -99,6 +110,7 @@ struct Task {
 
 impl ArcWake for Task {
     fn wake_by_ref(arc_self: &Arc<Self>) {
+        println!("Task wake by ref.");
         let cloned = arc_self.clone();
         arc_self
             .task_sender
