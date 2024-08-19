@@ -14,6 +14,14 @@ fn bar() -> impl Future<Output = u8> {
     }
 }
 
+async fn foo_ref(x: &u8) -> u8 {
+    *x
+}
+
+fn foo_ref_expanded<'a>(x: &'a u8) -> impl Future<Output = u8> + 'a {
+    async move { *x }
+}
+
 fn main() {
     env_logger::init();
 
