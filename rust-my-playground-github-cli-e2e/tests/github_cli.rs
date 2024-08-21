@@ -1,12 +1,12 @@
 use core::panic;
 use std::{env, fs, process::Command};
 
-use cucumber::{when, World};
+use cucumber::{given, World};
 
 #[derive(World, Default, Debug)]
 struct GithubCliWorld;
 
-#[when(expr = "set environment variable {word} is {word}")]
+#[given(expr = "set environment variable {word} is {word}")]
 async fn when_set_environment_variable(_world: &mut GithubCliWorld, key: String, value: String) {
     env::set_var(key, value);
 }
