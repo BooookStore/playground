@@ -28,6 +28,12 @@ async fn given_set_arg(world: &mut GithubCliWorld, arg: String) {
     world.add_arg(arg);
 }
 
+#[given(expr = "set arg {word} is {word}")]
+async fn given_set_arg_pair(world: &mut GithubCliWorld, key: String, value: String) {
+    world.add_arg(key);
+    world.add_arg(value);
+}
+
 #[when("run application")]
 async fn when_run_application(world: &mut GithubCliWorld) {
     let args = world.args.clone();
