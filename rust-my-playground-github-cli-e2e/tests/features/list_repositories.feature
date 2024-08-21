@@ -4,3 +4,4 @@ Feature: list organization repositories
     Given set environment variable TOKEN is fake-token
     Given set arg list
     When run application
+    Then exit status is success

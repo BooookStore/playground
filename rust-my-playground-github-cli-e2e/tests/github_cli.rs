@@ -4,7 +4,7 @@ use std::{
     process::{Command, Output},
 };
 
-use cucumber::{given, when, World};
+use cucumber::{given, then, when, World};
 
 #[derive(World, Default, Debug)]
 struct GithubCliWorld {
@@ -36,6 +36,18 @@ async fn when_run_application(world: &mut GithubCliWorld) {
         .output()
         .expect("Failed run application");
     world.output = Some(output);
+}
+
+#[then("exit status is success")]
+async fn then_exit_status_is_success(world: &mut GithubCliWorld) {
+    match &world.output {
+        Some(output) => {
+            if !output.status.success() {
+                panic!("exit status is failed")
+            }
+        }
+        None => panic!("not run application"),
+    }
 }
 
 #[tokio::main]
