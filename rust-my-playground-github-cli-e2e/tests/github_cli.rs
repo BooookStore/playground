@@ -15,7 +15,7 @@ impl GithubCliWorld {
 }
 
 #[given(expr = "set environment variable {word} is {word}")]
-async fn when_set_environment_variable(_world: &mut GithubCliWorld, key: String, value: String) {
+async fn given_set_environment_variable(_world: &mut GithubCliWorld, key: String, value: String) {
     env::set_var(key, value);
 }
 
