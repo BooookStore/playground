@@ -1,10 +1,15 @@
 use core::panic;
-use std::{fs, process::Command};
+use std::{env, fs, process::Command};
 
-use cucumber::World;
+use cucumber::{when, World};
 
 #[derive(World, Default, Debug)]
 struct GithubCliWorld;
+
+#[when(expr = "set environment variable {word} is {word}")]
+async fn when_set_environment_variable(_world: &mut GithubCliWorld, key: String, value: String) {
+    env::set_var(key, value);
+}
 
 #[tokio::main]
 async fn main() {
