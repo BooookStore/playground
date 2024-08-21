@@ -4,11 +4,24 @@ use std::{env, fs, process::Command};
 use cucumber::{given, World};
 
 #[derive(World, Default, Debug)]
-struct GithubCliWorld;
+struct GithubCliWorld {
+    args: Vec<String>,
+}
+
+impl GithubCliWorld {
+    fn add_arg(&mut self, arg: String) {
+        self.args.push(arg);
+    }
+}
 
 #[given(expr = "set environment variable {word} is {word}")]
 async fn when_set_environment_variable(_world: &mut GithubCliWorld, key: String, value: String) {
     env::set_var(key, value);
+}
+
+#[given(expr = "set arg {word}")]
+async fn given_set_arg(world: &mut GithubCliWorld, arg: String) {
+    world.add_arg(arg);
 }
 
 #[tokio::main]
