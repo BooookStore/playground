@@ -1,11 +1,15 @@
 use core::panic;
-use std::{env, fs, process::Command};
+use std::{
+    env, fs,
+    process::{Command, Output},
+};
 
-use cucumber::{given, World};
+use cucumber::{given, when, World};
 
 #[derive(World, Default, Debug)]
 struct GithubCliWorld {
     args: Vec<String>,
+    output: Option<Output>,
 }
 
 impl GithubCliWorld {
@@ -22,6 +26,16 @@ async fn given_set_environment_variable(_world: &mut GithubCliWorld, key: String
 #[given(expr = "set arg {word}")]
 async fn given_set_arg(world: &mut GithubCliWorld, arg: String) {
     world.add_arg(arg);
+}
+
+#[when("run application")]
+async fn when_run_application(world: &mut GithubCliWorld) {
+    let args = world.args.clone();
+    let output = Command::new("./rust-my-playground-github-cli")
+        .args(args)
+        .output()
+        .expect("Failed run application");
+    world.output = Some(output);
 }
 
 #[tokio::main]
