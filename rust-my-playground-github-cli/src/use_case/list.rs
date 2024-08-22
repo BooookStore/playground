@@ -1,3 +1,5 @@
-pub fn list_repository_by_organization(auth_token: &str, organization_name: &str) {
-    println!("cargo");
+use crate::port::GitHubPort;
+
+pub fn list_repository_by_organization<T: GitHubPort>(github_port: T, organization_name: &str) {
+    github_port.get_organization_repositories(organization_name);
 }
