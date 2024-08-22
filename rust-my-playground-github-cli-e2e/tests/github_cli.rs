@@ -60,7 +60,7 @@ async fn then_exit_status_is_success(world: &mut GithubCliWorld) {
 async fn then_stdout_contains(world: &mut GithubCliWorld, step: &Step) {
     let output = &world.output.as_ref().expect("not run application");
     let actual = String::from_utf8_lossy(&output.stdout);
-    let expected = docstring_to_str(step).expect("not found docstring");
+    let expected = docstring_to_str(step);
     assert!(actual.contains(expected), "nactual: {}", actual);
 }
 
@@ -95,6 +95,6 @@ fn clean() {
     fs::remove_file("./rust-my-playground-github-cli").expect("Failed remove file");
 }
 
-fn docstring_to_str(step: &Step) -> Option<&str> {
-    step.docstring.as_deref().and_then(|s| s.strip_prefix('\n'))
+fn docstring_to_str(step: &Step) -> &str {
+    step.docstring.as_deref().and_then(|s| s.strip_prefix('\n')).expect("not found docstring")
 }
