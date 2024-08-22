@@ -96,5 +96,8 @@ fn clean() {
 }
 
 fn docstring_to_str(step: &Step) -> &str {
-    step.docstring.as_deref().and_then(|s| s.strip_prefix('\n')).expect("not found docstring")
+    step.docstring
+        .as_deref()
+        .and_then(|s| s.strip_prefix('\n'))
+        .expect("not found docstring")
 }
