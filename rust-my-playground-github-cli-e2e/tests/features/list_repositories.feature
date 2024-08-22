@@ -6,3 +6,7 @@ Feature: list organization repositories
     Given set arg --org is rust-lang
     When run application
     Then exit status is success
+    Then stdout contains
+    """
+    cargo
+    """
