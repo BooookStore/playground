@@ -1,3 +1,9 @@
+mod command;
+
+use clap::Parser;
+
+use crate::command::Cli;
+
 fn main() {
-    println!("cargo!");
+    let cli = Cli::parse();
 }
