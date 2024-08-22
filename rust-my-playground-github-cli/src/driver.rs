@@ -1,3 +1,5 @@
+use async_trait::async_trait;
+
 use crate::port::GitHubPort;
 
 pub struct HttpGithubDriver {
@@ -10,8 +12,9 @@ impl HttpGithubDriver {
     }
 }
 
+#[async_trait]
 impl GitHubPort for HttpGithubDriver {
-    fn get_organization_repositories(&self, organization_name: &str) {
+    async fn get_organization_repositories(&self, organization_name: &str) {
         println!("cargo");
     }
 }
