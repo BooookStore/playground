@@ -4,5 +4,5 @@ use mockall::automock;
 #[automock]
 #[async_trait]
 pub trait Display {
-    async fn show_organization_repository(organization_name: &str, repository_name: &str);
+    async fn show_organization_repositories(organization_name: &str, repository_names: Vec<String>);
 }
