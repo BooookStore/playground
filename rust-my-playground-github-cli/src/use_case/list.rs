@@ -11,8 +11,9 @@ pub async fn list_repository_by_organization<T: GitHubPort>(
 
 #[cfg(test)]
 mod tests {
-    use crate::port::MockGitHubPort;
     use mockall::predicate;
+
+    use crate::port::MockGitHubPort;
     use crate::use_case::list::list_repository_by_organization;
 
     #[tokio::test]
@@ -22,7 +23,7 @@ mod tests {
             .expect_get_organization_repositories()
             .with(predicate::eq("rust-lang"))
             .returning(|_| "cargo".to_string());
-        
+
         list_repository_by_organization(mock_github_port, "rust-lang").await;
     }
 }
