@@ -14,7 +14,7 @@ impl HttpGithubDriver {
 
 #[async_trait]
 impl GitHubPort for HttpGithubDriver {
-    async fn get_organization_repositories(&self, organization_name: &str) {
-        println!("cargo");
+    async fn get_organization_repositories(&self, organization_name: &str) -> String {
+        "cargo".to_string()
     }
 }
