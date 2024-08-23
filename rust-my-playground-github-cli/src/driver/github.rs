@@ -1,6 +1,6 @@
 use async_trait::async_trait;
 
-use crate::port::GitHubPort;
+use crate::port::github::GitHubPort;
 
 pub struct HttpGithubDriver {
     auth_token: String,

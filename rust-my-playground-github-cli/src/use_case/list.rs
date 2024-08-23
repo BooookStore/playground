@@ -1,4 +1,4 @@
-use crate::port::GitHubPort;
+use crate::port::github::GitHubPort;
 
 pub async fn list_repository_by_organization<T: GitHubPort>(
     github_port: T,
@@ -13,7 +13,7 @@ pub async fn list_repository_by_organization<T: GitHubPort>(
 mod tests {
     use mockall::predicate;
 
-    use crate::port::MockGitHubPort;
+    use crate::port::github::MockGitHubPort;
     use crate::use_case::list::list_repository_by_organization;
 
     #[tokio::test]
