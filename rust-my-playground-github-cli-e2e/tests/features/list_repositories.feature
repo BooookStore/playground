@@ -1,8 +1,8 @@
 Feature: list organization repositories
 
-  Scenario: when organization specified, list organization repositories
+  Scenario: when organization specified, show organization repository one
     Given set environment variable TOKEN is fake-token
-    Given set arg list
+    Given set arg repository
     Given set arg --org is rust-lang
     When run application
     Then exit status is success
