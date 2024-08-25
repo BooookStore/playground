@@ -68,9 +68,9 @@ async fn then_stdout_contains(world: &mut GithubCliWorld, step: &Step) {
 async fn main() {
     build_and_copy();
     GithubCliWorld::cucumber()
+        .after(|_, _, _, _, _| Box::pin(async { clean() }))
         .run_and_exit("tests/features")
         .await;
-    clean();
 }
 
 fn build_and_copy() {
@@ -88,7 +88,7 @@ fn build_and_copy() {
         "../rust-my-playground-github-cli/target/debug/rust-my-playground-github-cli",
         "./rust-my-playground-github-cli",
     )
-    .expect("Failed copy");
+        .expect("Failed copy");
 }
 
 fn clean() {
