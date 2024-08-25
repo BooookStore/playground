@@ -2,7 +2,7 @@ use std::env;
 
 use clap::Parser;
 
-use driver::github::HttpGithubDriver;
+use driver::http_github_driver::HttpGithubDriver;
 
 use crate::config::{Cli, Commands::List};
 use crate::use_case::list;
