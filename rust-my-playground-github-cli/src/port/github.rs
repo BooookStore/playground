@@ -4,5 +4,5 @@ use mockall::automock;
 #[automock]
 #[async_trait]
 pub trait GitHubPort {
-    async fn get_organization_repositories(&self, organization_name: &str) -> Vec<String>;
+    async fn get_one_organization_repository(&self, organization_name: &str) -> Vec<String>;
 }

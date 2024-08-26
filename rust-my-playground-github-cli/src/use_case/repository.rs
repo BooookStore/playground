@@ -5,7 +5,7 @@ pub async fn output_one_organization_repository<T: GitHubPort>(
     organization_name: &str,
 ) {
     github_port
-        .get_organization_repositories(organization_name)
+        .get_one_organization_repository(organization_name)
         .await;
 }
 
