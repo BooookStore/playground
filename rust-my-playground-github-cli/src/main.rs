@@ -4,8 +4,11 @@ use clap::Parser;
 
 use driver::http_github_driver::HttpGithubDriver;
 
-use crate::config::{Cli, Commands::List};
-use crate::use_case::list;
+use crate::{
+    config::Cli,
+    config::Commands::Repository,
+    use_case::list
+};
 
 mod config;
 mod driver;
@@ -18,7 +21,7 @@ async fn main() {
     let token = env::var("TOKEN").expect("Require auth token in env with key is TOKEN");
 
     match cli.command {
-        List { org } => {
+        Repository { org } => {
             list::list_repository_by_organization(HttpGithubDriver::new(token), &org).await;
         }
     }

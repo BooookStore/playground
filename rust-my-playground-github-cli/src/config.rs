@@ -8,8 +8,8 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Commands {
-    /// list repository
-    List {
+    /// get repository
+    Repository {
         /// specify organization
         #[arg(short, long)]
         org: String,
