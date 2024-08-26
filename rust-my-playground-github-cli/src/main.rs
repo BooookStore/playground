@@ -7,7 +7,7 @@ use driver::http_github_driver::HttpGithubDriver;
 use crate::{
     config::Cli,
     config::Commands::Repository,
-    use_case::list
+    use_case::repository
 };
 
 mod config;
@@ -22,7 +22,7 @@ async fn main() {
 
     match cli.command {
         Repository { org } => {
-            list::list_repository_by_organization(HttpGithubDriver::new(token), &org).await;
+            repository::output_one_by_organization(HttpGithubDriver::new(token), &org).await;
         }
     }
 }

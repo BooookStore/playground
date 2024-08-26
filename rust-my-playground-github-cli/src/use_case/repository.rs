@@ -1,6 +1,6 @@
 use crate::port::github::GitHubPort;
 
-pub async fn list_repository_by_organization<T: GitHubPort>(
+pub async fn output_one_by_organization<T: GitHubPort>(
     github_port: T,
     organization_name: &str,
 ) {
@@ -14,16 +14,16 @@ mod tests {
     use mockall::predicate;
 
     use crate::port::github::MockGitHubPort;
-    use crate::use_case::list::list_repository_by_organization;
+    use crate::use_case::repository::output_one_by_organization;
 
     #[tokio::test]
-    async fn give_exist_organization_then_output_repositories() {
+    async fn give_exist_organization_then_output_one_repository() {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
             .expect_get_organization_repositories()
             .with(predicate::eq("rust-lang"))
             .returning(|_| vec!["cargo".to_string()]);
 
-        list_repository_by_organization(mock_github_port, "rust-lang").await;
+        output_one_by_organization(mock_github_port, "rust-lang").await;
     }
 }
