@@ -22,7 +22,7 @@ async fn main() {
 
     match cli.command {
         Repository { org } => {
-            repository::output_one_by_organization(HttpGithubDriver::new(token), &org).await;
+            repository::output_one_organization_repository(HttpGithubDriver::new(token), &org).await;
         }
     }
 }
