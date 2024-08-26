@@ -22,7 +22,7 @@ mod tests {
         mock_github_port
             .expect_get_one_organization_repository()
             .with(predicate::eq("rust-lang"))
-            .returning(|_| vec!["cargo".to_string()]);
+            .returning(|_| "cargo".to_string());
 
         output_one_organization_repository(mock_github_port, "rust-lang").await;
     }

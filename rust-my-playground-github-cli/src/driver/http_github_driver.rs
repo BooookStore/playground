@@ -14,7 +14,7 @@ impl HttpGithubDriver {
 
 #[async_trait]
 impl GitHubPort for HttpGithubDriver {
-    async fn get_one_organization_repository(&self, _organization_name: &str) -> Vec<String> {
+    async fn get_one_organization_repository(&self, _organization_name: &str) -> String {
         todo!()
     }
 }
