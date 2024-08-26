@@ -3,12 +3,12 @@ use async_trait::async_trait;
 use crate::port::github::GitHubPort;
 
 pub struct HttpGithubDriver {
-    auth_token: String,
+    _auth_token: String,
 }
 
 impl HttpGithubDriver {
     pub fn new(auth_token: String) -> HttpGithubDriver {
-        HttpGithubDriver { auth_token }
+        HttpGithubDriver { _auth_token: auth_token }
     }
 }
 
