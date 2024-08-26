@@ -20,7 +20,7 @@ mod tests {
     async fn give_exist_organization_then_output_one_repository() {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
-            .expect_get_organization_repositories()
+            .expect_get_one_organization_repository()
             .with(predicate::eq("rust-lang"))
             .returning(|_| vec!["cargo".to_string()]);
 
