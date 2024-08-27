@@ -6,12 +6,12 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
     display_port: U,
     organization_name: &str,
 ) {
-    github_port
+    let repository_name = github_port
         .get_one_organization_repository(organization_name)
         .await;
 
     display_port
-        .print_repository_with_organization("rust-lang", "cargo")
+        .print_repository_with_organization(organization_name, &repository_name)
         .await;
 }
 
