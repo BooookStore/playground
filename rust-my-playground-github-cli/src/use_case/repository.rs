@@ -31,14 +31,14 @@ mod tests {
             .expect_get_one_organization_repository()
             .with(eq("rust-lang"))
             .times(1)
-            .returning(|_| "cargo".to_string());
+            .return_const("cargo");
 
         let mut mock_display_port = MockDisplayPort::new();
         mock_display_port
             .expect_print_repository_with_organization()
             .with(eq("rust-lang"), eq("cargo"))
             .times(1)
-            .returning(|_, _| ());
+            .return_const(());
 
         output_one_organization_repository(mock_github_port, mock_display_port, "rust-lang").await;
     }
