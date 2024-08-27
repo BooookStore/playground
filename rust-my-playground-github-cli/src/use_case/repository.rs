@@ -1,7 +1,9 @@
+use crate::port::display::DisplayPort;
 use crate::port::github::GitHubPort;
 
-pub async fn output_one_organization_repository<T: GitHubPort>(
+pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
     github_port: T,
+    _display_port: U,
     organization_name: &str,
 ) {
     github_port
@@ -33,6 +35,6 @@ mod tests {
             .with(eq("rust-lang"), eq("cargo"))
             .times(1);
 
-        output_one_organization_repository(mock_github_port, "rust-lang").await;
+        output_one_organization_repository(mock_github_port, mock_display_port, "rust-lang").await;
     }
 }

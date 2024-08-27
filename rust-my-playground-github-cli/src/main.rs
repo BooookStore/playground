@@ -9,6 +9,7 @@ use crate::{
     config::Commands::Repository,
     use_case::repository
 };
+use crate::driver::console_display_driver::ConsoleDisplayDriver;
 
 mod config;
 mod driver;
@@ -22,7 +23,7 @@ async fn main() {
 
     match cli.command {
         Repository { org } => {
-            repository::output_one_organization_repository(HttpGithubDriver::new(token), &org).await;
+            repository::output_one_organization_repository(HttpGithubDriver::new(token), ConsoleDisplayDriver::new(), &org).await;
         }
     }
 }
