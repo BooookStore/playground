@@ -1,5 +1,4 @@
 use core::panic;
-use std::fmt::format;
 use std::{
     env, fs,
     process::{Command, Output},
