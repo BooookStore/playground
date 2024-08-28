@@ -5,14 +5,14 @@ use serde::Deserialize;
 use crate::port::github::GitHubPort;
 
 pub struct HttpGithubDriver {
-    _auth_token: String,
+    auth_token: String,
     client: Client,
 }
 
 impl HttpGithubDriver {
     pub fn new(auth_token: String) -> HttpGithubDriver {
         HttpGithubDriver {
-            _auth_token: auth_token,
+            auth_token,
             client: Client::new(),
         }
     }
@@ -20,21 +20,22 @@ impl HttpGithubDriver {
 
 #[async_trait]
 impl GitHubPort for HttpGithubDriver {
-    async fn get_one_organization_repository(&self, _organization_name: &str) -> String {
+    async fn get_one_organization_repository(&self, organization_name: &str) -> String {
         #[derive(Deserialize, Debug)]
         struct ApiResponse {
             name: String,
         }
 
+        let url = format!("http://localhost:8080/orgs/{}/repos", organization_name);
         let res = self
             .client
-            .get("http://localhost:8080/orgs/rust-lang/repos") // todo
+            .get(&url)
             .header("Accept", "application/vnd.github+json")
-            .header("Authorization", "Bearer fake-token") // todo
+            .header("Authorization", &format!("Bearer {}", &self.auth_token))
             .header("X-Github-Api-Version", "2022-11-28")
             .send()
             .await
-            .expect("Failed http get request to orgs/rust-lang/repos"); // todo
+            .unwrap_or_else(|_| panic!("Failed http get request to {}", &url));
 
         let json = res
             .json::<Vec<ApiResponse>>()
