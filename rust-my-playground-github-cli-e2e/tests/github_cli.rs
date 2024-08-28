@@ -1,4 +1,5 @@
 use core::panic;
+use std::fmt::format;
 use std::{
     env, fs,
     process::{Command, Output},
@@ -32,6 +33,12 @@ async fn given_set_arg(world: &mut GithubCliWorld, arg: String) {
 async fn given_set_arg_pair(world: &mut GithubCliWorld, key: String, value: String) {
     world.add_arg(key);
     world.add_arg(value);
+}
+
+#[given(expr = "github wiremock mapping {word}")]
+async fn given_github_wiremock_mapping(_world: &mut GithubCliWorld, file_path: String) {
+    let file_path = format!("fixture/github_wiremock{}", file_path);
+    let mapping = fs::read_to_string(file_path).unwrap();
 }
 
 #[when("run application")]
@@ -88,7 +95,7 @@ fn build_and_copy() {
         "../rust-my-playground-github-cli/target/debug/rust-my-playground-github-cli",
         "./rust-my-playground-github-cli",
     )
-        .expect("Failed copy");
+    .expect("Failed copy");
 }
 
 fn clean() {
