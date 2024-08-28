@@ -1,5 +1,6 @@
 use async_trait::async_trait;
-use reqwest::{Client, StatusCode};
+use reqwest::Client;
+use serde::Deserialize;
 
 use crate::port::github::GitHubPort;
 
@@ -20,6 +21,11 @@ impl HttpGithubDriver {
 #[async_trait]
 impl GitHubPort for HttpGithubDriver {
     async fn get_one_organization_repository(&self, _organization_name: &str) -> String {
+        #[derive(Deserialize, Debug)]
+        struct ApiResponse {
+            name: String,
+        }
+
         let res = self
             .client
             .get("http://localhost:8080/orgs/rust-lang/repos")
@@ -27,10 +33,17 @@ impl GitHubPort for HttpGithubDriver {
             .header("Authorization", "Bearer fake-token")
             .header("X-Github-Api-Version", "2022-11-28")
             .send()
-            .await;
+            .await
+            .expect("Failed http get request to orgs/rust-lang/repos");
 
-        assert_eq!(res.unwrap().status(), StatusCode::OK);
+        let json = res
+            .json::<Vec<ApiResponse>>()
+            .await
+            .expect("Failed to deserialize http response jseon");
 
-        "cargo".to_string()
+        json.first()
+            .expect("Unexpected repository size is 0")
+            .name
+            .clone()
     }
 }
