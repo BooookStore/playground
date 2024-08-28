@@ -5,14 +5,14 @@ use serde::Deserialize;
 use crate::port::github::GitHubPort;
 
 pub struct HttpGithubDriver {
-    auth_token: String,
+    bearer_token: String,
     client: Client,
 }
 
 impl HttpGithubDriver {
     pub fn new(auth_token: String) -> HttpGithubDriver {
         HttpGithubDriver {
-            auth_token,
+            bearer_token: format!("Bearer {}", auth_token),
             client: Client::new(),
         }
     }
@@ -31,7 +31,7 @@ impl GitHubPort for HttpGithubDriver {
             .client
             .get(&url)
             .header("Accept", "application/vnd.github+json")
-            .header("Authorization", &format!("Bearer {}", &self.auth_token))
+            .header("Authorization", &self.bearer_token)
             .header("X-Github-Api-Version", "2022-11-28")
             .send()
             .await
