@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/orgs/rust-lang/repos",
+    "headers": {
+      "Accept": {
+        "equalTo": "application/vnd.github+json"
+      },
+      "Authorization": {
+        "equalTo": "Bearer fake-token"
+      },
+      "X-GitHub-Api-Version": {
+        "equalTo": "2022-11-28"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      {
+        "name": "cargo"
+      }
+    ]
+  }
+}

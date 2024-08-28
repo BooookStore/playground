@@ -38,6 +38,16 @@ async fn given_set_arg_pair(world: &mut GithubCliWorld, key: String, value: Stri
 async fn given_github_wiremock_mapping(_world: &mut GithubCliWorld, file_path: String) {
     let file_path = format!("fixture/github_wiremock{}", file_path);
     let mapping = fs::read_to_string(file_path).unwrap();
+
+    let client = reqwest::Client::new();
+    let res = client
+        .post("http://localhost:8080/__admin/mappings")
+        .body(mapping)
+        .send()
+        .await
+        .unwrap();
+
+    assert_eq!(reqwest::StatusCode::CREATED, res.status());
 }
 
 #[when("run application")]
@@ -72,11 +82,23 @@ async fn then_stdout_contains(world: &mut GithubCliWorld, step: &Step) {
 
 #[tokio::main]
 async fn main() {
+    clean_wiremock_mappings().await;
     build_and_copy();
     GithubCliWorld::cucumber()
         .after(|_, _, _, _, _| Box::pin(async { clean() }))
         .run_and_exit("tests/features")
         .await;
+}
+
+async fn clean_wiremock_mappings() {
+    let client = reqwest::Client::new();
+    let res = client
+        .delete("http://localhost:8080/__admin/mappings")
+        .send()
+        .await
+        .unwrap();
+
+    assert_eq!(reqwest::StatusCode::OK, res.status());
 }
 
 fn build_and_copy() {
