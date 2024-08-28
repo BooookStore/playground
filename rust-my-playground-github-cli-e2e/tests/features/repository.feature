@@ -9,5 +9,6 @@ Feature: get one repository
     Then exit status is success
     Then stdout contains
     """
+    rust-lang
     cargo
     """
