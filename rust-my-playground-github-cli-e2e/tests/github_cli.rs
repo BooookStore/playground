@@ -83,9 +83,9 @@ async fn then_stdout_contains(world: &mut GithubCliWorld, step: &Step) {
 #[tokio::main]
 async fn main() {
     clean_wiremock_mappings().await;
-    build_and_copy();
+    build_and_copy_sut();
     GithubCliWorld::cucumber()
-        .after(|_, _, _, _, _| Box::pin(async { clean() }))
+        .after(|_, _, _, _, _| Box::pin(async { delete_sut() }))
         .run_and_exit("tests/features")
         .await;
 }
@@ -101,7 +101,7 @@ async fn clean_wiremock_mappings() {
     assert_eq!(reqwest::StatusCode::OK, res.status());
 }
 
-fn build_and_copy() {
+fn build_and_copy_sut() {
     let output = Command::new("cargo")
         .arg("build")
         .current_dir("../rust-my-playground-github-cli")
@@ -119,8 +119,8 @@ fn build_and_copy() {
     .expect("Failed copy");
 }
 
-fn clean() {
-    fs::remove_file("./rust-my-playground-github-cli").expect("Failed remove file");
+fn delete_sut() {
+    fs::remove_file("./rust-my-playground-github-cli").expect("Failed delete file");
 }
 
 fn docstring_to_str(step: &Step) -> &str {
