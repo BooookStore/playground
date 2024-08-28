@@ -28,13 +28,13 @@ impl GitHubPort for HttpGithubDriver {
 
         let res = self
             .client
-            .get("http://localhost:8080/orgs/rust-lang/repos")
+            .get("http://localhost:8080/orgs/rust-lang/repos") // todo
             .header("Accept", "application/vnd.github+json")
-            .header("Authorization", "Bearer fake-token")
+            .header("Authorization", "Bearer fake-token") // todo
             .header("X-Github-Api-Version", "2022-11-28")
             .send()
             .await
-            .expect("Failed http get request to orgs/rust-lang/repos");
+            .expect("Failed http get request to orgs/rust-lang/repos"); // todo
 
         let json = res
             .json::<Vec<ApiResponse>>()
