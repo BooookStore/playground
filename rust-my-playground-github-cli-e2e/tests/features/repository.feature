@@ -1,4 +1,4 @@
-Feature: list organization repositories
+Feature: get one repository
 
   Scenario: when organization specified, show organization repository one
     Given set environment variable TOKEN is fake-token
