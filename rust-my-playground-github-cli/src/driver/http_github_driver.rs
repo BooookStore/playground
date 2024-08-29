@@ -4,6 +4,12 @@ use serde::Deserialize;
 
 use crate::port::github::GitHubPort;
 
+#[cfg(feature = "production")]
+const GITHUB_URL: &str = "https://api.github.com";
+
+#[cfg(not(feature = "production"))]
+const GITHUB_URL: &str = "http://localhost:8080";
+
 pub struct HttpGithubDriver {
     bearer_token: String,
     client: Client,
@@ -26,7 +32,7 @@ impl GitHubPort for HttpGithubDriver {
             name: String,
         }
 
-        let url = format!("http://localhost:8080/orgs/{}/repos", organization_name);
+        let url = format!("{}/orgs/{}/repos", GITHUB_URL, organization_name);
         let res = self
             .client
             .get(&url)
