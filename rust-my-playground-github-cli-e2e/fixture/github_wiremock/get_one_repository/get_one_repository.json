@@ -11,6 +11,9 @@
       },
       "X-GitHub-Api-Version": {
         "equalTo": "2022-11-28"
+      },
+      "User-Agent": {
+        "equalTo": "fake-token"
       }
     }
   },
