@@ -20,9 +20,12 @@ async fn main() {
 
     match cli.command {
         Repository { org } => {
+            let http_github_driver = HttpGithubDriver::new(token, user_name);
+            let console_display_driver = ConsoleDisplayDriver::new();
+
             repository::output_one_organization_repository(
-                HttpGithubDriver::new(token, user_name),
-                ConsoleDisplayDriver::new(),
+                http_github_driver,
+                console_display_driver,
                 &org,
             )
             .await;
