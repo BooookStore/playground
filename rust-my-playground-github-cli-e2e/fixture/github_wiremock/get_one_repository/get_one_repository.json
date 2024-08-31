@@ -13,7 +13,7 @@
         "equalTo": "2022-11-28"
       },
       "User-Agent": {
-        "equalTo": "fake-token"
+        "equalTo": "fake-user-name"
       }
     }
   },
