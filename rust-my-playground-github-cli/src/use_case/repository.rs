@@ -25,7 +25,7 @@ mod tests {
     use crate::use_case::repository::output_one_organization_repository;
 
     #[tokio::test]
-    async fn give_exist_organization_then_output_one_repository() {
+    async fn output_one_organization_repository_name() {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
             .expect_get_one_organization_repository()
