@@ -1,5 +1,6 @@
 Feature: get one repository
 
+  @serial
   Scenario: when organization specified, show organization repository one
     Given github wiremock mapping /get_one_repository/get_one_repository.json
     Given set environment variable USER_NAME is fake-user-name
@@ -12,4 +13,18 @@ Feature: get one repository
     """
     rust-lang
     cargo
+    """
+
+  @serial
+  Scenario: show error message that failed to get repository
+    Given github wiremock mapping /show_error_message/failed_to_get_repository.json
+    Given set environment variable USER_NAME is fake-user-name
+    Given set environment variable TOKEN is fake-token
+    Given set arg repository
+    Given set arg --org is rust-lang
+    When run application
+    Then exit status is failure
+    Then stdout contains
+    """
+    Error: failed to get repository
     """
