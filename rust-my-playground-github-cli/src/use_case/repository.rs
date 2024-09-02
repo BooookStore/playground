@@ -8,12 +8,18 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
 ) {
     let repository_name = github_port
         .get_one_organization_repository(organization_name)
-        .await
-        .unwrap();
-
-    display_port
-        .print_repository_with_organization(organization_name, &repository_name)
         .await;
+
+    match repository_name {
+        Ok(repository_name) => {
+            display_port
+                .print_repository_with_organization(organization_name, &repository_name)
+                .await;
+        }
+        Err(message) => {
+            display_port.print_error(&format!("Error: {message}")).await;
+        }
+    }
 }
 
 #[cfg(test)]
