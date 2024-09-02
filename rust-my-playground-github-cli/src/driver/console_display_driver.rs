@@ -20,4 +20,8 @@ impl DisplayPort for ConsoleDisplayDriver {
         println!("{organization_name}");
         println!("{repository_name}");
     }
+
+    async fn print_error(&self, message: &str) {
+        todo!()
+    }
 }

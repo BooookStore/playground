@@ -53,6 +53,11 @@ mod tests {
             .return_const(Err("failed to get organization repository name".to_string()));
 
         let mut mock_display_port = MockDisplayPort::new();
+        mock_display_port
+            .expect_print_error()
+            .with(eq("Error: failed to get organization repository name"))
+            .times(1)
+            .return_const(());
 
         output_one_organization_repository(mock_github_port, mock_display_port, "rust-lang").await;
     }
