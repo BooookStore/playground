@@ -28,7 +28,7 @@ impl HttpGithubDriver {
 
 #[async_trait]
 impl GitHubPort for HttpGithubDriver {
-    async fn get_one_organization_repository(&self, organization_name: &str) -> String {
+    async fn get_one_organization_repository(&self, organization_name: &str) -> Result<String, String> {
         #[derive(Deserialize, Debug)]
         struct ApiResponse {
             name: String,
@@ -51,9 +51,9 @@ impl GitHubPort for HttpGithubDriver {
             .await
             .expect("Failed to deserialize http response jseon");
 
-        json.first()
+        Ok(json.first()
             .expect("Unexpected repository size is 0")
             .name
-            .clone()
+            .clone())
     }
 }

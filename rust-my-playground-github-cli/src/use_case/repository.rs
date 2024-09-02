@@ -8,7 +8,8 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
 ) {
     let repository_name = github_port
         .get_one_organization_repository(organization_name)
-        .await;
+        .await
+        .unwrap();
 
     display_port
         .print_repository_with_organization(organization_name, &repository_name)
@@ -31,7 +32,7 @@ mod tests {
             .expect_get_one_organization_repository()
             .with(eq("rust-lang"))
             .times(1)
-            .return_const("cargo");
+            .return_const(Ok("cargo".to_string()));
 
         let mut mock_display_port = MockDisplayPort::new();
         mock_display_port
@@ -39,6 +40,19 @@ mod tests {
             .with(eq("rust-lang"), eq("cargo"))
             .times(1)
             .return_const(());
+
+        output_one_organization_repository(mock_github_port, mock_display_port, "rust-lang").await;
+    }
+
+    #[tokio::test]
+    async fn output_error_message_failed_to_get_organization_repository_name() {
+        let mut mock_github_port = MockGitHubPort::new();
+        mock_github_port
+            .expect_get_one_organization_repository()
+            .with(eq("rust-lang"))
+            .return_const(Err("failed to get organization repository name".to_string()));
+
+        let mut mock_display_port = MockDisplayPort::new();
 
         output_one_organization_repository(mock_github_port, mock_display_port, "rust-lang").await;
     }
