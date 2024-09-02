@@ -82,9 +82,13 @@ async fn then_stdout_contains(world: &mut GithubCliWorld, step: &Step) {
 
 #[tokio::main]
 async fn main() {
-    clean_wiremock_mappings().await;
-    build_and_copy_sut();
     GithubCliWorld::cucumber()
+        .before(|_, _, _, _| {
+            Box::pin(async {
+                clean_wiremock_mappings().await;
+                build_and_copy_sut();
+            })
+        })
         .after(|_, _, _, _, _| Box::pin(async { delete_sut() }))
         .run_and_exit("tests/features")
         .await;
