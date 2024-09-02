@@ -60,12 +60,22 @@ async fn when_run_application(world: &mut GithubCliWorld) {
     world.output = Some(output);
 }
 
-#[then("exit status is success")]
-async fn then_exit_status_is_success(world: &mut GithubCliWorld) {
+#[then(expr = "exit status is {word}")]
+async fn then_exit_status_is_success(world: &mut GithubCliWorld, expected: String) {
     match &world.output {
         Some(output) => {
-            if !output.status.success() {
-                panic!("exit status is failed")
+            if expected.eq("success") {
+                assert!(
+                    output.status.success(),
+                    "expected success but actual failure"
+                )
+            } else if expected.eq("failure") {
+                assert!(
+                    !output.status.success(),
+                    "expected failure but actual success"
+                )
+            } else {
+                panic!("unrecognized expected status: {expected}")
             }
         }
         None => panic!("not run application"),
