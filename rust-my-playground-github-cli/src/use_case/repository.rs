@@ -16,14 +16,17 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
                 .print_repository_with_organization(organization_name, &repository_name)
                 .await;
         }
-        Err(message) => {
-            display_port.print_error(&message).await;
+        Err(_) => {
+            display_port
+                .print_error("failed to get organization repository name")
+                .await;
         }
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use anyhow::anyhow;
     use mockall::predicate;
     use predicate::eq;
 
@@ -38,7 +41,7 @@ mod tests {
             .expect_get_one_organization_repository()
             .with(eq("rust-lang"))
             .times(1)
-            .return_const(Ok("cargo".to_string()));
+            .returning(|_| Ok("cargo".to_string()));
 
         let mut mock_display_port = MockDisplayPort::new();
         mock_display_port
@@ -56,7 +59,7 @@ mod tests {
         mock_github_port
             .expect_get_one_organization_repository()
             .with(eq("rust-lang"))
-            .return_const(Err("failed to get organization repository name".to_string()));
+            .returning(|_| Err(anyhow!("failed")));
 
         let mut mock_display_port = MockDisplayPort::new();
         mock_display_port
