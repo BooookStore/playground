@@ -50,15 +50,14 @@ impl GitHubPort for HttpGithubDriver {
             return Err(anyhow!("Unexpected status code returned"));
         }
 
-        let json = res
+        let name = res
             .json::<Vec<ApiResponse>>()
-            .await
-            .expect("Failed to deserialize http response json");
-
-        Ok(json
+            .await?
             .first()
-            .expect("Unexpected repository size is 0")
+            .ok_or(anyhow!("Unexpected json structure"))?
             .name
-            .clone())
+            .clone();
+
+        Ok(name)
     }
 }
