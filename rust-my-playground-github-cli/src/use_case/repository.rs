@@ -18,7 +18,7 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
         }
         Err(_) => {
             display_port
-                .print_error("failed to get organization repository name")
+                .print_error("failed to get repository")
                 .await;
         }
     }
@@ -64,7 +64,7 @@ mod tests {
         let mut mock_display_port = MockDisplayPort::new();
         mock_display_port
             .expect_print_error()
-            .with(eq("failed to get organization repository name"))
+            .with(eq("failed to get repository"))
             .times(1)
             .return_const(());
 

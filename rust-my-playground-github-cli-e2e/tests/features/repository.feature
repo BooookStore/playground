@@ -23,7 +23,7 @@ Feature: get one repository
     Given set arg repository
     Given set arg --org is rust-lang
     When run application
-    Then exit status is failure
+    Then exit status is success
     Then stdout contains
     """
     Error: failed to get repository

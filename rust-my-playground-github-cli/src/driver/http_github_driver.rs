@@ -1,6 +1,6 @@
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use async_trait::async_trait;
-use reqwest::Client;
+use reqwest::{Client, StatusCode};
 use serde::Deserialize;
 
 use crate::port::github::GitHubPort;
@@ -44,13 +44,16 @@ impl GitHubPort for HttpGithubDriver {
             .header("Authorization", &self.bearer_token)
             .header("X-Github-Api-Version", "2022-11-28")
             .send()
-            .await
-            .unwrap_or_else(|_| panic!("Failed http get request to {}", &url));
+            .await?;
+
+        if !res.status().eq(&StatusCode::OK) {
+            return Err(anyhow!("Unexpected status code returned"));
+        }
 
         let json = res
             .json::<Vec<ApiResponse>>()
             .await
-            .expect("Failed to deserialize http response jseon");
+            .expect("Failed to deserialize http response json");
 
         Ok(json
             .first()

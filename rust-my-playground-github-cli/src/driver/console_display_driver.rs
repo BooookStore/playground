@@ -22,6 +22,6 @@ impl DisplayPort for ConsoleDisplayDriver {
     }
 
     async fn print_error(&self, message: &str) {
-        todo!()
+        println!("Error: {message}");
     }
 }
