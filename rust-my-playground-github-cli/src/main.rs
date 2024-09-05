@@ -14,6 +14,8 @@ mod use_case;
 
 #[tokio::main]
 async fn main() {
+    env_logger::init();
+    
     let cli = Cli::parse();
     let token = env::var("TOKEN").expect("Require auth token in env with key is TOKEN");
     let user_name = env::var("USER_NAME").expect("Require user name in env with key is USER_NAME");

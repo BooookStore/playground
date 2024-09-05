@@ -1,5 +1,6 @@
 use anyhow::{anyhow, Result};
 use async_trait::async_trait;
+use log::{debug, error};
 use reqwest::{Client, StatusCode};
 use serde::Deserialize;
 
@@ -36,6 +37,8 @@ impl GitHubPort for HttpGithubDriver {
         }
 
         let url = format!("{}/orgs/{}/repos", GITHUB_URL, organization_name);
+        debug!("http request to url: {}", url);
+
         let res = self
             .client
             .get(&url)
@@ -47,6 +50,7 @@ impl GitHubPort for HttpGithubDriver {
             .await?;
 
         if !res.status().eq(&StatusCode::OK) {
+            error!("http status code unexpected: {}", res.status());
             return Err(anyhow!("Unexpected status code returned"));
         }
 
