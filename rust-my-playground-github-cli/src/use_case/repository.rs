@@ -12,9 +12,9 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
         .await;
 
     match repository_name {
-        Ok(repository_name) => {
+        Ok(ref repository_name) => {
             display_port
-                .print_repository_with_organization(organization_name, &repository_name)
+                .print_repository_with_organization(organization_name, repository_name)
                 .await;
         }
         Err(_) => {
