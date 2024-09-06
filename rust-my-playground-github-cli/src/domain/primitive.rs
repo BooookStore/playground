@@ -1,1 +1,1 @@
-pub type OrganizationName = str;
+pub type OrganizationName = String;
