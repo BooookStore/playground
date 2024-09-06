@@ -11,6 +11,7 @@ mod config;
 mod driver;
 mod port;
 mod use_case;
+mod domain;
 
 #[tokio::main]
 async fn main() {

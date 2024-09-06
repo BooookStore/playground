@@ -1,10 +1,11 @@
+use crate::domain::primitive::OrganizationName;
 use crate::port::display::DisplayPort;
 use crate::port::github::GitHubPort;
 
 pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
     github_port: T,
     display_port: U,
-    organization_name: &str,
+    organization_name: OrganizationName<'_>,
 ) {
     let repository_name = github_port
         .get_one_organization_repository(organization_name)
@@ -17,9 +18,7 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
                 .await;
         }
         Err(_) => {
-            display_port
-                .print_error("failed to get repository")
-                .await;
+            display_port.print_error("failed to get repository").await;
         }
     }
 }
@@ -39,7 +38,7 @@ mod tests {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
             .expect_get_one_organization_repository()
-            .with(eq("rust-lang"))
+            .withf(|organization_name| *organization_name == "rust-lang")
             .times(1)
             .returning(|_| Ok("cargo".to_string()));
 
@@ -58,7 +57,7 @@ mod tests {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
             .expect_get_one_organization_repository()
-            .with(eq("rust-lang"))
+            .withf(|organization_name| *organization_name == "rust-lang")
             .returning(|_| Err(anyhow!("failed")));
 
         let mut mock_display_port = MockDisplayPort::new();
