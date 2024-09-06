@@ -1,5 +1,6 @@
 use async_trait::async_trait;
 
+use crate::domain::primitive::{OrganizationName, RepositoryName};
 use crate::port::display::DisplayPort;
 
 pub struct ConsoleDisplayDriver;
@@ -14,8 +15,8 @@ impl ConsoleDisplayDriver {
 impl DisplayPort for ConsoleDisplayDriver {
     async fn print_repository_with_organization(
         &self,
-        organization_name: &str,
-        repository_name: &str,
+        organization_name: &OrganizationName,
+        repository_name: &RepositoryName,
     ) {
         println!("{organization_name}");
         println!("{repository_name}");

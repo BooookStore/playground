@@ -45,7 +45,7 @@ mod tests {
         let mut mock_display_port = MockDisplayPort::new();
         mock_display_port
             .expect_print_repository_with_organization()
-            .with(eq("rust-lang"), eq("cargo"))
+            .with(eq(String::from("rust-lang")), eq(String::from("cargo")))
             .times(1)
             .return_const(());
 

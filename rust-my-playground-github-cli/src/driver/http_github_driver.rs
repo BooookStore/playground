@@ -4,7 +4,7 @@ use log::{debug, error};
 use reqwest::{Client, StatusCode};
 use serde::Deserialize;
 
-use crate::domain::primitive::OrganizationName;
+use crate::domain::primitive::{OrganizationName, RepositoryName};
 use crate::port::github::GitHubPort;
 
 #[cfg(feature = "production")]
@@ -34,7 +34,7 @@ impl GitHubPort for HttpGithubDriver {
     async fn get_one_organization_repository(
         &self,
         organization_name: &OrganizationName,
-    ) -> Result<String> {
+    ) -> Result<RepositoryName> {
         #[derive(Deserialize, Debug)]
         struct ApiResponse {
             name: String,
