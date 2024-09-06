@@ -1,1 +1,1 @@
-pub type OrganizationName<'a> = &'a str;
+pub type OrganizationName = str;

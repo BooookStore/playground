@@ -5,7 +5,7 @@ use crate::port::github::GitHubPort;
 pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
     github_port: T,
     display_port: U,
-    organization_name: OrganizationName<'_>,
+    organization_name: &OrganizationName,
 ) {
     let repository_name = github_port
         .get_one_organization_repository(organization_name)
@@ -38,7 +38,7 @@ mod tests {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
             .expect_get_one_organization_repository()
-            .withf(|organization_name| *organization_name == "rust-lang")
+            .with(eq("rust-lang"))
             .times(1)
             .returning(|_| Ok("cargo".to_string()));
 
@@ -57,7 +57,7 @@ mod tests {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
             .expect_get_one_organization_repository()
-            .withf(|organization_name| *organization_name == "rust-lang")
+            .with(eq("rust-lang"))
             .returning(|_| Err(anyhow!("failed")));
 
         let mut mock_display_port = MockDisplayPort::new();

@@ -31,9 +31,9 @@ impl HttpGithubDriver {
 
 #[async_trait]
 impl GitHubPort for HttpGithubDriver {
-    async fn get_one_organization_repository<'a>(
+    async fn get_one_organization_repository(
         &self,
-        organization_name: OrganizationName<'a>,
+        organization_name: &OrganizationName,
     ) -> Result<String> {
         #[derive(Deserialize, Debug)]
         struct ApiResponse {
