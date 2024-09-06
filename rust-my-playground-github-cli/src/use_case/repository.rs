@@ -38,7 +38,7 @@ mod tests {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
             .expect_get_one_organization_repository()
-            .with(eq("rust-lang".to_string()))
+            .with(eq(String::from("rust-lang")))
             .times(1)
             .returning(|_| Ok("cargo".to_string()));
 
@@ -52,7 +52,7 @@ mod tests {
         output_one_organization_repository(
             mock_github_port,
             mock_display_port,
-            &String::from("rust-lang")
+            &String::from("rust-lang"),
         )
         .await;
     }
@@ -62,7 +62,7 @@ mod tests {
         let mut mock_github_port = MockGitHubPort::new();
         mock_github_port
             .expect_get_one_organization_repository()
-            .with(eq("rust-lang".to_string()))
+            .with(eq(String::from("rust-lang")))
             .returning(|_| Err(anyhow!("failed")));
 
         let mut mock_display_port = MockDisplayPort::new();
