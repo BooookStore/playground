@@ -35,11 +35,10 @@ mod tests {
 
     #[tokio::test]
     async fn output_one_organization_repository_name() {
-        let mut mock_github_port = MockGitHubPort::new();
-        mock_github_port
+        let mut stub_github_port = MockGitHubPort::new();
+        stub_github_port
             .expect_get_one_organization_repository()
             .with(eq(String::from("rust-lang")))
-            .times(1)
             .returning(|_| Ok("cargo".to_string()));
 
         let mut mock_display_port = MockDisplayPort::new();
@@ -50,7 +49,7 @@ mod tests {
             .return_const(());
 
         output_one_organization_repository(
-            mock_github_port,
+            stub_github_port,
             mock_display_port,
             &String::from("rust-lang"),
         )
@@ -59,8 +58,8 @@ mod tests {
 
     #[tokio::test]
     async fn output_error_message_failed_to_get_organization_repository_name() {
-        let mut mock_github_port = MockGitHubPort::new();
-        mock_github_port
+        let mut stub_github_port = MockGitHubPort::new();
+        stub_github_port
             .expect_get_one_organization_repository()
             .with(eq(String::from("rust-lang")))
             .returning(|_| Err(anyhow!("failed")));
@@ -73,7 +72,7 @@ mod tests {
             .return_const(());
 
         output_one_organization_repository(
-            mock_github_port,
+            stub_github_port,
             mock_display_port,
             &String::from("rust-lang"),
         )
