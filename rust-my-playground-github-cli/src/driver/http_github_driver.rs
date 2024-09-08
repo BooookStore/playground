@@ -39,6 +39,12 @@ impl GitHubPort for HttpGithubDriver {
         struct ApiResponse {
             name: String,
         }
+        
+        impl ApiResponse {
+            fn repository_name(self) -> RepositoryName {
+                self.name
+            }
+        }
 
         let url = format!("{}/orgs/{}/repos", GITHUB_URL, organization_name);
         debug!("http request to url: {}", url);
@@ -63,6 +69,6 @@ impl GitHubPort for HttpGithubDriver {
             .await
             .inspect_err(|_| error!("unexpected json structure returned"))?;
 
-        Ok(api_responses.into_iter().map(|json| json.name).collect())
+        Ok(api_responses.into_iter().map(ApiResponse::repository_name).collect())
     }
 }
