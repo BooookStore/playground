@@ -63,6 +63,7 @@ impl GitHubPort for HttpGithubDriver {
             error!("http status code unexpected: {}", res.status());
             return Err(anyhow!("Unexpected status code returned"));
         }
+        debug!("http status is ok");
 
         let api_responses = res
             .json::<Vec<ApiResponse>>()
