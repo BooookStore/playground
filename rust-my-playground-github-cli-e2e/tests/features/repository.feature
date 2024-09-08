@@ -1,8 +1,8 @@
-Feature: get one repository
+Feature: get repository
 
   @serial
-  Scenario: when organization specified, show organization repository one
-    Given github wiremock mapping /get_one_repository/get_one_repository.json
+  Scenario: when organization specified, show organization repository
+    Given github wiremock mapping /get_repository/get_repository.json
     Given set environment variable USER_NAME is fake-user-name
     Given set environment variable TOKEN is fake-token
     Given set arg repository
@@ -12,6 +12,8 @@ Feature: get one repository
     Then stdout contains
     """
     rust-lang
+    rust
+    rustlings
     cargo
     """
 

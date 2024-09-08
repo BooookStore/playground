@@ -21,6 +21,12 @@
     "status": 200,
     "jsonBody": [
       {
+        "name": "rust"
+      },
+      {
+        "name": "rustlings"
+      },
+      {
         "name": "cargo"
       }
     ]
