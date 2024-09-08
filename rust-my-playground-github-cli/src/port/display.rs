@@ -9,7 +9,7 @@ pub trait DisplayPort {
     async fn print_repository_with_organization(
         &self,
         organization_name: &OrganizationName,
-        repository_name: &[RepositoryName],
+        repository_names: &[RepositoryName],
     );
 
     async fn print_error(&self, message: &str);

@@ -58,15 +58,11 @@ impl GitHubPort for HttpGithubDriver {
             return Err(anyhow!("Unexpected status code returned"));
         }
 
-        let name = res
+        let api_responses = res
             .json::<Vec<ApiResponse>>()
-            .await?
-            .first()
-            .ok_or(anyhow!("Unexpected json structure"))?
-            .name
-            .clone();
+            .await
+            .inspect_err(|_| error!("unexpected json structure returned"))?;
 
-        // todo
-        Ok(vec![name])
+        Ok(api_responses.into_iter().map(|json| json.name).collect())
     }
 }
