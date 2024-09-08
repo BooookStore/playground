@@ -16,10 +16,11 @@ impl DisplayPort for ConsoleDisplayDriver {
     async fn print_repository_with_organization(
         &self,
         organization_name: &OrganizationName,
-        repository_name: &RepositoryName,
+        repository_name: &[RepositoryName],
     ) {
         println!("{organization_name}");
-        println!("{repository_name}");
+        // todo
+        println!("{}", repository_name[0]);
     }
 
     async fn print_error(&self, message: &str) {

@@ -34,7 +34,7 @@ impl GitHubPort for HttpGithubDriver {
     async fn get_one_organization_repository(
         &self,
         organization_name: &OrganizationName,
-    ) -> Result<RepositoryName> {
+    ) -> Result<Vec<RepositoryName>> {
         #[derive(Deserialize, Debug)]
         struct ApiResponse {
             name: String,
@@ -66,6 +66,7 @@ impl GitHubPort for HttpGithubDriver {
             .name
             .clone();
 
-        Ok(name)
+        // todo
+        Ok(vec![name])
     }
 }

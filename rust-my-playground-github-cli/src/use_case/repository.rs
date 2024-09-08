@@ -39,12 +39,25 @@ mod tests {
         stub_github_port
             .expect_get_one_organization_repository()
             .with(eq(String::from("rust-lang")))
-            .returning(|_| Ok("cargo".to_string()));
+            .returning(|_| {
+                Ok(vec![
+                    String::from("rust"),
+                    String::from("rustlings"),
+                    String::from("cargo"),
+                ])
+            });
 
         let mut mock_display_port = MockDisplayPort::new();
         mock_display_port
             .expect_print_repository_with_organization()
-            .with(eq(String::from("rust-lang")), eq(String::from("cargo")))
+            .with(
+                eq(String::from("rust-lang")),
+                eq(vec![
+                    String::from("rust"),
+                    String::from("rustlings"),
+                    String::from("cargo"),
+                ]),
+            )
             .times(1)
             .return_const(());
 

@@ -10,5 +10,5 @@ pub trait GitHubPort {
     async fn get_one_organization_repository(
         &self,
         organization_name: &OrganizationName,
-    ) -> Result<RepositoryName>;
+    ) -> Result<Vec<RepositoryName>>;
 }
