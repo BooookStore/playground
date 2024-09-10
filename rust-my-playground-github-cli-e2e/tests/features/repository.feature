@@ -1,8 +1,9 @@
 Feature: get repository
 
   @serial
-  Scenario: when organization specified, show organization repository
+  Scenario: when organization specified, show organization repository name and contributors (first only)
     Given github wiremock mapping /get_repository/get_repository.json
+    Given github wiremock mapping /get_repository/get_rust_contributors.json
     Given set environment variable USER_NAME is fake-user-name
     Given set environment variable TOKEN is fake-token
     Given set arg repository
@@ -13,6 +14,8 @@ Feature: get repository
     """
     rust-lang
     rust
+      - bob
+      - alice
     rustlings
     cargo
     """
