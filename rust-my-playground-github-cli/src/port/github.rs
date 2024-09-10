@@ -7,7 +7,7 @@ use crate::domain::primitive::{OrganizationName, RepositoryName};
 #[automock]
 #[async_trait]
 pub trait GitHubPort {
-    async fn get_one_organization_repository(
+    async fn get_organization_repositories(
         &self,
         organization_name: &OrganizationName,
     ) -> Result<Vec<RepositoryName>>;

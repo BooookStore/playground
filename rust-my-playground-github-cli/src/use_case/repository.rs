@@ -8,7 +8,7 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
     organization_name: &OrganizationName,
 ) {
     let repository_name = github_port
-        .get_one_organization_repository(organization_name)
+        .get_organization_repositories(organization_name)
         .await;
 
     match repository_name {
@@ -37,7 +37,7 @@ mod tests {
     async fn output_one_organization_repository_name() {
         let mut stub_github_port = MockGitHubPort::new();
         stub_github_port
-            .expect_get_one_organization_repository()
+            .expect_get_organization_repositories()
             .with(eq(String::from("rust-lang")))
             .returning(|_| {
                 Ok(vec![
@@ -73,7 +73,7 @@ mod tests {
     async fn output_error_message_failed_to_get_organization_repository_name() {
         let mut stub_github_port = MockGitHubPort::new();
         stub_github_port
-            .expect_get_one_organization_repository()
+            .expect_get_organization_repositories()
             .with(eq(String::from("rust-lang")))
             .returning(|_| Err(anyhow!("failed")));
 

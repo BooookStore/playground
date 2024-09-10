@@ -31,7 +31,7 @@ impl HttpGithubDriver {
 
 #[async_trait]
 impl GitHubPort for HttpGithubDriver {
-    async fn get_one_organization_repository(
+    async fn get_organization_repositories(
         &self,
         organization_name: &OrganizationName,
     ) -> Result<Vec<RepositoryName>> {
