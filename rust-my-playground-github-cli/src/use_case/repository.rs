@@ -7,11 +7,11 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
     display_port: U,
     organization_name: &OrganizationName,
 ) {
-    let repository_name = github_port
+    let repository_names = github_port
         .get_organization_repositories(organization_name)
         .await;
 
-    match repository_name {
+    match repository_names {
         Ok(ref repository_name) => {
             display_port
                 .print_repository_with_organization(organization_name, repository_name)

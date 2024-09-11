@@ -11,13 +11,6 @@ pub trait DisplayPort {
         organization_name: &OrganizationName,
         repository_names: &[RepositoryName],
     );
-    
-    async fn print_repositories_with_contributors(
-        &self,
-        organization_name: &OrganizationName,
-        repository_name: RepositoryName,
-        
-    )
 
     async fn print_error(&self, message: &str);
 }
