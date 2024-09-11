@@ -40,12 +40,12 @@ mod tests {
         let mut stub_github_port = MockGitHubPort::new();
         stub_github_port
             .expect_get_organization_repositories()
-            .with(eq(String::from("rust-lang")))
+            .with(eq(OrganizationName::from("rust-lang")))
             .returning(|_| {
                 Ok(vec![
-                    String::from("rust"),
-                    String::from("rustlings"),
-                    String::from("cargo"),
+                    RepositoryName::from("rust"),
+                    RepositoryName::from("rustlings"),
+                    RepositoryName::from("cargo"),
                 ])
             });
         stub_github_port
