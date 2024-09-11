@@ -29,6 +29,7 @@ mod tests {
     use mockall::predicate;
     use predicate::eq;
 
+    use crate::domain::primitive::{ContributorName, OrganizationName, RepositoryName};
     use crate::port::display::MockDisplayPort;
     use crate::port::github::MockGitHubPort;
     use crate::use_case::repository::output_one_organization_repository;
@@ -44,6 +45,18 @@ mod tests {
                     String::from("rust"),
                     String::from("rustlings"),
                     String::from("cargo"),
+                ])
+            });
+        stub_github_port
+            .expect_get_repository_contributors()
+            .with(
+                eq(OrganizationName::from("rust-lang")),
+                eq(RepositoryName::from("rust")),
+            )
+            .returning(|_, _| {
+                Ok(vec![
+                    ContributorName::from("bob"),
+                    ContributorName::from("alice"),
                 ])
             });
 

@@ -4,7 +4,7 @@ use log::{debug, error};
 use reqwest::{Client, StatusCode};
 use serde::Deserialize;
 
-use crate::domain::primitive::{OrganizationName, RepositoryName};
+use crate::domain::primitive::{ContributorName, OrganizationName, RepositoryName};
 use crate::port::github::GitHubPort;
 
 #[cfg(feature = "production")]
@@ -39,7 +39,7 @@ impl GitHubPort for HttpGithubDriver {
         struct ApiResponse {
             name: String,
         }
-        
+
         impl ApiResponse {
             fn repository_name(self) -> RepositoryName {
                 self.name
@@ -70,6 +70,17 @@ impl GitHubPort for HttpGithubDriver {
             .await
             .inspect_err(|_| error!("unexpected json structure returned"))?;
 
-        Ok(api_responses.into_iter().map(ApiResponse::repository_name).collect())
+        Ok(api_responses
+            .into_iter()
+            .map(ApiResponse::repository_name)
+            .collect())
+    }
+
+    async fn get_repository_contributors(
+        &self,
+        _organization_name: &OrganizationName,
+        _repository_name: &RepositoryName,
+    ) -> Result<Vec<ContributorName>> {
+        todo!()
     }
 }
