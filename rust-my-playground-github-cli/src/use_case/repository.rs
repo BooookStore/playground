@@ -1,4 +1,4 @@
-use crate::domain::primitive::{ContributorName, OrganizationName};
+use crate::domain::primitive::{ContributorName, OrganizationName, RepositoryName};
 use crate::domain::repository::Repository;
 use crate::port::display::DisplayPort;
 use crate::port::github::GitHubPort;
@@ -14,28 +14,36 @@ pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
 
     match repository_names {
         Ok(repository_names) => {
-            let repositories: Vec<Repository> = repository_names
-                .into_iter()
-                .map(|repository_name| {
-                    if repository_name == "rust" {
-                        Repository::new(
-                            repository_name,
-                            vec![ContributorName::from("bob"), ContributorName::from("alice")],
-                        )
-                    } else {
-                        Repository::new(repository_name, vec![])
-                    }
-                })
-                .collect();
-
-            display_port
-                .print_repositories_with_contributors(organization_name, &repositories)
-                .await;
+            output(&display_port, organization_name, repository_names).await;
         }
         Err(_) => {
             display_port.print_error("failed to get repository").await;
         }
     }
+}
+
+async fn output<U: DisplayPort>(
+    display_port: &U,
+    organization_name: &OrganizationName,
+    repository_names: Vec<RepositoryName>,
+) {
+    let repositories: Vec<Repository> = repository_names
+        .into_iter()
+        .map(|repository_name| {
+            if repository_name == "rust" {
+                Repository::new(
+                    repository_name,
+                    vec![ContributorName::from("bob"), ContributorName::from("alice")],
+                )
+            } else {
+                Repository::new(repository_name, vec![])
+            }
+        })
+        .collect();
+
+    display_port
+        .print_repositories_with_contributors(organization_name, &repositories)
+        .await;
 }
 
 #[cfg(test)]
