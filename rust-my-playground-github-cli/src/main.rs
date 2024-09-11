@@ -26,7 +26,7 @@ async fn main() {
             let http_github_driver = HttpGithubDriver::new(token, user_name);
             let console_display_driver = ConsoleDisplayDriver::new();
 
-            repository::output_one_organization_repository(
+            repository::output_repositories_with_contributors(
                 http_github_driver,
                 console_display_driver,
                 &org,

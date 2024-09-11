@@ -3,7 +3,7 @@ use crate::domain::repository::Repository;
 use crate::port::display::DisplayPort;
 use crate::port::github::GitHubPort;
 
-pub async fn output_one_organization_repository<T: GitHubPort, U: DisplayPort>(
+pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort>(
     github_port: T,
     display_port: U,
     organization_name: &OrganizationName,
@@ -56,7 +56,7 @@ mod tests {
     use crate::domain::repository::Repository;
     use crate::port::display::MockDisplayPort;
     use crate::port::github::MockGitHubPort;
-    use crate::use_case::repository::output_one_organization_repository;
+    use crate::use_case::repository::output_repositories_with_contributors;
 
     #[tokio::test]
     async fn output_organization_repositories_with_contributors() {
@@ -101,7 +101,7 @@ mod tests {
             .return_const(())
             .times(1);
 
-        output_one_organization_repository(
+        output_repositories_with_contributors(
             stub_github_port,
             mock_display_port,
             &String::from("rust-lang"),
@@ -124,7 +124,7 @@ mod tests {
             .times(1)
             .return_const(());
 
-        output_one_organization_repository(
+        output_repositories_with_contributors(
             stub_github_port,
             mock_display_port,
             &String::from("rust-lang"),
