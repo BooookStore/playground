@@ -7,7 +7,7 @@ fn main() {
 fn find_customer<A: ServerAPort, B: ServerBPort>(
     server_a_port: A,
     server_b_port: B,
-    purchase_number: i32,
+    purchase_number: i32, // 検索元の注文番号
 ) -> Result<String> {
     // 初めにServerAに問い合わせる
     let server_a_response: Result<String> =
