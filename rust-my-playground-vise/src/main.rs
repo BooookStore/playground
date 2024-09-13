@@ -11,7 +11,7 @@ fn find_customer<A: ServerAPort, B: ServerBPort>(
 ) -> Result<String> {
     // 初めにServerAに問い合わせる
     let server_a_response: Result<String> =
-        server_a_port.find_customer_by_purchase_number(purchase_number);
+        server_a_port.find_fast(purchase_number);
 
     // 顧客情報が見つかったら呼び出し元に返し処理を終える
     if server_a_response.is_ok() {
@@ -20,12 +20,12 @@ fn find_customer<A: ServerAPort, B: ServerBPort>(
 
     // 顧客情報が見つからなかった場合ServerBに問い合わせ、
     // 結果を呼び出し元に返し処理を終える
-    server_b_port.find_customer_by_purchase_number(purchase_number)
+    server_b_port.find_slow(purchase_number)
 }
 
 // traitはJavaで言うInterfaceのようなもの
 trait ServerAPort {
-    fn find_customer_by_purchase_number(&self, number: i32) -> Result<String>;
+    fn find_fast(&self, number: i32) -> Result<String>;
 }
 
 struct ServerAGateway {
@@ -35,14 +35,14 @@ struct ServerAGateway {
 
 // traitで宣言されたメソッドを実装
 impl ServerAPort for ServerAGateway {
-    fn find_customer_by_purchase_number(&self, _number: i32) -> Result<String> {
+    fn find_fast(&self, _number: i32) -> Result<String> {
         // サーバーにリクエストを送る処理...
         todo!()
     }
 }
 
 trait ServerBPort {
-    fn find_customer_by_purchase_number(&self, number: i32) -> Result<String>;
+    fn find_slow(&self, number: i32) -> Result<String>;
 }
 
 struct ServerBGateway {
@@ -51,7 +51,7 @@ struct ServerBGateway {
 }
 
 impl ServerBPort for ServerBGateway {
-    fn find_customer_by_purchase_number(&self, _number: i32) -> Result<String> {
+    fn find_slow(&self, _number: i32) -> Result<String> {
         // サーバーにリクエストを送る処理...
         todo!()
     }
