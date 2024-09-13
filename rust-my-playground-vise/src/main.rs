@@ -23,6 +23,7 @@ fn find_customer<A: ServerAPort, B: ServerBPort>(
     server_b_port.find_customer_by_purchase_number(purchase_number)
 }
 
+// traitはJavaで言うInterfaceのようなもの
 trait ServerAPort {
     fn find_customer_by_purchase_number(&self, number: i32) -> Result<String>;
 }
@@ -32,6 +33,7 @@ struct ServerAGateway {
     port: i32,
 }
 
+// traitで宣言されたメソッドを実装
 impl ServerAPort for ServerAGateway {
     fn find_customer_by_purchase_number(&self, _number: i32) -> Result<String> {
         // サーバーにリクエストを送る処理...
