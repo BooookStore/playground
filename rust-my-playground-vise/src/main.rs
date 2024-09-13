@@ -33,7 +33,8 @@ struct ServerAGateway {
 }
 
 impl ServerAPort for ServerAGateway {
-    fn find_customer_by_purchase_number(&self, number: i32) -> Result<String> {
+    fn find_customer_by_purchase_number(&self, _number: i32) -> Result<String> {
+        // サーバーにリクエストを送る処理...
         todo!()
     }
 }
@@ -48,7 +49,8 @@ struct ServerBGateway {
 }
 
 impl ServerBPort for ServerBGateway {
-    fn find_customer_by_purchase_number(&self, number: i32) -> Result<String> {
+    fn find_customer_by_purchase_number(&self, _number: i32) -> Result<String> {
+        // サーバーにリクエストを送る処理...
         todo!()
     }
 }
