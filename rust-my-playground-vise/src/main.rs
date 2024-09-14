@@ -1,4 +1,5 @@
 use anyhow::Result;
+use mockall::automock;
 
 fn main() {
     println!("Hello, world!");
@@ -24,35 +25,47 @@ fn find_customer<A: ServerAPort, B: ServerBPort>(
 }
 
 // traitはJavaで言うInterfaceのようなもの
+#[automock]
 trait ServerAPort {
     fn search_customer_by_purchase_number(&self, number: i32) -> Result<String>;
 }
 
-struct ServerAGateway {
-    host: String,
-    port: i32,
-}
-
-// traitで宣言されたメソッドを実装
-impl ServerAPort for ServerAGateway {
-    fn search_customer_by_purchase_number(&self, _number: i32) -> Result<String> {
-        // サーバーにリクエストを送る処理...
-        todo!()
-    }
-}
-
+#[automock]
 trait ServerBPort {
     fn find_customer_by_purchase_number(&self, number: i32) -> Result<String>;
 }
 
-struct ServerBGateway {
-    host: String,
-    port: i32,
-}
+#[cfg(test)]
+mod tests {
+    use mockall::predicate::eq;
 
-impl ServerBPort for ServerBGateway {
-    fn find_customer_by_purchase_number(&self, _number: i32) -> Result<String> {
-        // サーバーにリクエストを送る処理...
-        todo!()
+    use crate::{find_customer, MockServerAPort, MockServerBPort};
+
+    #[test]
+    fn get_customer_from_server_a() {
+        // ServerAにアクセスする処理のテストダブル
+        // 以下の設定は、12345の購入番号で検索するとbobという顧客が見つかる様にしており、
+        // ServerAへ一度アクセスされることを検証する
+        let mut mock_server_a_port = MockServerAPort::new();
+        mock_server_a_port
+            .expect_search_customer_by_purchase_number()
+            .with(eq(12345))
+            .returning(|_| Ok(String::from("bob")))
+            .times(1);
+
+        // ServerBにアクセスする処理のテストダブル
+        // 以下の設定では、ServerBへのアクセスが発生しないことを検証する
+        let mut mock_server_b_port = MockServerBPort::new();
+        mock_server_b_port
+            .expect_find_customer_by_purchase_number()
+            .times(0);
+
+        // テスト対象を呼び出し、顧客情報を得る
+        let customer = find_customer(mock_server_a_port, mock_server_b_port, 12345);
+
+        // 顧客が見つかることを検証する
+        assert!(customer.is_ok());
+        // 顧客がbobであることを検証する
+        assert_eq!(String::from("bob"), customer.unwrap());
     }
 }
