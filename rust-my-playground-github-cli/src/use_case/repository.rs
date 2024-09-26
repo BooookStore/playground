@@ -1,4 +1,6 @@
-use crate::domain::primitive::{ContributorName, OrganizationName, RepositoryName};
+use futures::future::join_all;
+
+use crate::domain::primitive::{OrganizationName, RepositoryName};
 use crate::domain::repository::Repository;
 use crate::port::display::DisplayPort;
 use crate::port::github::GitHubPort;
@@ -14,7 +16,13 @@ pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort
 
     match repository_names {
         Ok(repository_names) => {
-            output(&display_port, organization_name, repository_names).await;
+            output(
+                &github_port,
+                &display_port,
+                organization_name,
+                repository_names,
+            )
+            .await;
         }
         Err(_) => {
             display_port.print_error("failed to get repository").await;
@@ -22,24 +30,26 @@ pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort
     }
 }
 
-async fn output<U: DisplayPort>(
+async fn output<T: GitHubPort, U: DisplayPort>(
+    github_port: &T,
     display_port: &U,
     organization_name: &OrganizationName,
     repository_names: Vec<RepositoryName>,
 ) {
-    let repositories: Vec<Repository> = repository_names
+    let repository_futures = repository_names
         .into_iter()
-        .map(|repository_name| {
+        .map(|repository_name| async move {
             if repository_name == "rust" {
-                Repository::new(
-                    repository_name,
-                    vec![ContributorName::from("bob"), ContributorName::from("alice")],
-                )
+                let contributor_names = github_port
+                    .get_repository_contributors(organization_name, &repository_name)
+                    .await
+                    .unwrap();
+                Repository::new(repository_name, contributor_names)
             } else {
                 Repository::new(repository_name, vec![])
             }
-        })
-        .collect();
+        });
+    let repositories = join_all(repository_futures).await;
 
     display_port
         .print_repositories_with_contributors(organization_name, &repositories)

@@ -25,10 +25,13 @@ impl DisplayPort for ConsoleDisplayDriver {
         }
     }
 
-    async fn print_repositories_with_contributors(&self, organization_name: &OrganizationName, repositories: &[Repository]) {
+    async fn print_repositories_with_contributors(
+        &self,
+        organization_name: &OrganizationName,
+        repositories: &[Repository],
+    ) {
         todo!()
     }
-
 
     async fn print_error(&self, message: &str) {
         println!("Error: {message}");

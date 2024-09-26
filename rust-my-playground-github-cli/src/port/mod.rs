@@ -1,2 +1,2 @@
-pub mod github;
 pub mod display;
+pub mod github;
