@@ -1,3 +1,4 @@
+use anyhow::Result;
 use futures::future::join_all;
 
 use crate::domain::primitive::{OrganizationName, RepositoryName};
@@ -16,13 +17,17 @@ pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort
 
     match repository_names {
         Ok(repository_names) => {
-            output(
-                &github_port,
-                &display_port,
-                organization_name,
-                repository_names,
-            )
-            .await;
+            let repositories = output(&github_port, organization_name, repository_names).await;
+            match repositories {
+                Ok(repositories) => {
+                    display_port
+                        .print_repositories_with_contributors(organization_name, &repositories)
+                        .await;
+                }
+                Err(_) => {
+                    display_port.print_error("failed to get repository").await;
+                }
+            }
         }
         Err(_) => {
             display_port.print_error("failed to get repository").await;
@@ -30,12 +35,11 @@ pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort
     }
 }
 
-async fn output<T: GitHubPort, U: DisplayPort>(
+async fn output<T: GitHubPort>(
     github_port: &T,
-    display_port: &U,
     organization_name: &OrganizationName,
     repository_names: Vec<RepositoryName>,
-) {
+) -> Result<Vec<Repository>> {
     let repository_futures = repository_names
         .into_iter()
         .map(|repository_name| async move {
@@ -50,10 +54,7 @@ async fn output<T: GitHubPort, U: DisplayPort>(
             }
         });
     let repositories = join_all(repository_futures).await;
-
-    display_port
-        .print_repositories_with_contributors(organization_name, &repositories)
-        .await;
+    Ok(repositories)
 }
 
 #[cfg(test)]
