@@ -15,8 +15,7 @@ pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort
     let repository_names = github_port.get_organization_repositories(organization_name);
 
     let repositories = repository_names.and_then(|repository_names| async move {
-        get_contributors_and_build_repository(github_port, organization_name, repository_names)
-            .await
+        to_repositories(github_port, organization_name, repository_names).await
     });
 
     match repositories.await {
@@ -31,7 +30,7 @@ pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort
     }
 }
 
-async fn get_contributors_and_build_repository<T: GitHubPort>(
+async fn to_repositories<T: GitHubPort>(
     github_port: &T,
     organization_name: &OrganizationName,
     repository_names: Vec<RepositoryName>,
