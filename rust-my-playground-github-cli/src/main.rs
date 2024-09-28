@@ -27,8 +27,8 @@ async fn main() {
             let console_display_driver = ConsoleDisplayDriver::new();
 
             repository::output_repositories_with_contributors(
-                http_github_driver,
-                console_display_driver,
+                &http_github_driver,
+                &console_display_driver,
                 &org,
             )
             .await;

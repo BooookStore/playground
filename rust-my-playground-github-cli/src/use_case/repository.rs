@@ -1,5 +1,6 @@
 use anyhow::Result;
 use futures::future::join_all;
+use futures::TryFutureExt;
 
 use crate::domain::primitive::{OrganizationName, RepositoryName};
 use crate::domain::repository::Repository;
@@ -7,27 +8,21 @@ use crate::port::display::DisplayPort;
 use crate::port::github::GitHubPort;
 
 pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort>(
-    github_port: T,
-    display_port: U,
+    github_port: &T,
+    display_port: &U,
     organization_name: &OrganizationName,
 ) {
-    let repository_names = github_port
+    let repositories = github_port
         .get_organization_repositories(organization_name)
-        .await;
+        .and_then(|repository_names| async move {
+            get_contributors(github_port, organization_name, repository_names).await
+        });
 
-    match repository_names {
-        Ok(repository_names) => {
-            let repositories = output(&github_port, organization_name, repository_names).await;
-            match repositories {
-                Ok(repositories) => {
-                    display_port
-                        .print_repositories_with_contributors(organization_name, &repositories)
-                        .await;
-                }
-                Err(_) => {
-                    display_port.print_error("failed to get repository").await;
-                }
-            }
+    match repositories.await {
+        Ok(repositories) => {
+            display_port
+                .print_repositories_with_contributors(organization_name, &repositories)
+                .await;
         }
         Err(_) => {
             display_port.print_error("failed to get repository").await;
@@ -35,7 +30,7 @@ pub async fn output_repositories_with_contributors<T: GitHubPort, U: DisplayPort
     }
 }
 
-async fn output<T: GitHubPort>(
+async fn get_contributors<T: GitHubPort>(
     github_port: &T,
     organization_name: &OrganizationName,
     repository_names: Vec<RepositoryName>,
@@ -113,8 +108,8 @@ mod tests {
             .times(1);
 
         output_repositories_with_contributors(
-            stub_github_port,
-            mock_display_port,
+            &stub_github_port,
+            &mock_display_port,
             &String::from("rust-lang"),
         )
         .await;
@@ -136,8 +131,8 @@ mod tests {
             .return_const(());
 
         output_repositories_with_contributors(
-            stub_github_port,
-            mock_display_port,
+            &stub_github_port,
+            &mock_display_port,
             &String::from("rust-lang"),
         )
         .await;
