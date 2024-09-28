@@ -1,5 +1,5 @@
 use anyhow::Result;
-use futures::future::join_all;
+use futures::future::try_join_all;
 use futures::TryFutureExt;
 
 use crate::domain::primitive::{OrganizationName, RepositoryName};
@@ -42,15 +42,15 @@ async fn to_repositories<T: GitHubPort>(
             if repository_name == "rust" {
                 let contributor_names = github_port
                     .get_repository_contributors(organization_name, &repository_name)
-                    .await
-                    .unwrap();
-                Repository::new(repository_name, contributor_names)
+                    .await;
+
+                contributor_names
+                    .map(|contributor_names| Repository::new(repository_name, contributor_names))
             } else {
-                Repository::new(repository_name, vec![])
+                Ok(Repository::new(repository_name, vec![]))
             }
         });
-    let repositories = join_all(repository_futures).await;
-    Ok(repositories)
+    try_join_all(repository_futures).await
 }
 
 #[cfg(test)]
