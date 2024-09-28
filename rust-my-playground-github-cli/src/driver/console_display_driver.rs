@@ -27,8 +27,8 @@ impl DisplayPort for ConsoleDisplayDriver {
 
     async fn print_repositories_with_contributors(
         &self,
-        organization_name: &OrganizationName,
-        repositories: &[Repository],
+        _organization_name: &OrganizationName,
+        _repositories: &[Repository],
     ) {
         todo!()
     }

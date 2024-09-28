@@ -7,6 +7,8 @@ use crate::domain::repository::Repository;
 #[automock]
 #[async_trait]
 pub trait DisplayPort {
+    
+    #[allow(dead_code)]
     async fn print_repository_with_organization(
         &self,
         organization_name: &OrganizationName,
