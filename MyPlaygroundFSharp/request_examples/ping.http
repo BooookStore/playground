@@ -1,0 +1,10 @@
+GET http://localhost:5000/ping
+
+###
+
+POST http://localhost:5000/echo
+Content-Type: application/json
+
+{
+  "echo": "hello!"
+}
