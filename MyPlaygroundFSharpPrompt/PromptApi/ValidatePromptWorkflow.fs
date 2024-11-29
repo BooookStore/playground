@@ -14,15 +14,15 @@ type UnvalidatedWord = {
   UnvalidatedCoefficient: UnvalidatedCoefficient
 }
 
-let validateText unvalidatedText =
-    match Text.create unvalidatedText with
-    | Ok v -> Success v
-    | Error msg -> Failure [ msg ]
+let validateText (unvalidatedText: UnvalidatedText) =
+    Text.create unvalidatedText
+    |> Result.mapError (fun e -> [ e ])
+    |> Validation.ofResult
 
-let validateCoefficient unvalidatedCoefficient =
-    match Coefficient.create unvalidatedCoefficient with
-    | Ok v -> Success v
-    | Error msg -> Failure [ msg ]
+let validateCoefficient (unvalidatedCoefficient: UnvalidatedCoefficient) =
+    Coefficient.create unvalidatedCoefficient
+    |> Result.mapError (fun e -> [ e ])
+    |> Validation.ofResult
 
 let validateWord unvalidatedWord =
     (fun text coefficient -> { Text = text; Coefficient = coefficient })
