@@ -30,6 +30,7 @@ let validateWord unvalidatedWord =
     (fun text coefficient -> { Text = text; Coefficient = coefficient })
     <!> validateText unvalidatedWord.UnvalidatedText
     <*> validateCoefficient unvalidatedWord.UnvalidatedCoefficient
+
 let validatePrompt: ValidatePrompt =
     fun unvalidatedWords ->
         unvalidatedWords
