@@ -7,16 +7,6 @@ open Prompt.Types
 open Prompt.CompoundTypes
 open Prompt.ValidatePromptWorkflow
 
-let shouldOk asserter target =
-    match target with
-    | Ok v -> asserter v
-    | Error _ -> Assert.Fail ""
-
-let shouldError target =
-    match target with
-    | Ok _ -> Assert.Fail ""
-    | Error _ -> ()
-
 let shouldSuccess asserter target  =
     match target with
     | Success v -> asserter v
