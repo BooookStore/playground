@@ -14,6 +14,8 @@ type UnvalidatedWord = {
   UnvalidatedCoefficient: UnvalidatedCoefficient
 }
 
+type ValidatePrompt = UnvalidatedWord list -> Validation<string list, Prompt>
+
 let validateText =
     Text.create
     >> Result.mapError (fun e -> [ e ])
