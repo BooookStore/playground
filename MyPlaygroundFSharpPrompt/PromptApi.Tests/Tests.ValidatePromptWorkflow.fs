@@ -34,3 +34,12 @@ let ``invalid text is error`` () =
         UnvalidatedCoefficient = 1.0
     }
     |> shouldFailure
+
+[<Fact>]
+let ``validate unvalidatedWord list`` () =
+    validateWords [
+        { UnvalidatedText = "beautiful";    UnvalidatedCoefficient = 1.0 };
+        { UnvalidatedText = "best quality"; UnvalidatedCoefficient = 1.2 };
+    ]
+    |> shouldSuccess (fun words ->
+        words.Length |> should equal 2)

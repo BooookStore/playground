@@ -30,3 +30,8 @@ let validateWord unvalidatedWord =
     (fun text coefficient -> { Text = text; Coefficient = coefficient })
     <!> validateText unvalidatedWord.UnvalidatedText
     <*> validateCoefficient unvalidatedWord.UnvalidatedCoefficient
+
+let validateWords (unvalidatedWords: UnvalidatedWord list) =
+    unvalidatedWords
+    |> List.map (fun w -> validateWord w)
+    |> List.sequence
