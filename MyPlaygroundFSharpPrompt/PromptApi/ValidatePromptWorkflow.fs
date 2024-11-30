@@ -30,14 +30,10 @@ let validateWord unvalidatedWord =
     (fun text coefficient -> { Text = text; Coefficient = coefficient })
     <!> validateText unvalidatedWord.UnvalidatedText
     <*> validateCoefficient unvalidatedWord.UnvalidatedCoefficient
-
-let validateWords (unvalidatedWords: UnvalidatedWord list) =
-    unvalidatedWords
-    |> List.traverse validateWord
-
 let validatePrompt: ValidatePrompt =
     fun unvalidatedWords ->
-        validateWords unvalidatedWords
+        unvalidatedWords
+        |> List.traverse validateWord
         |> Validation.bind (function
             | [] -> Failure [ "Prompt: must be least 1 word required" ]
             | [ w ] -> NonEmptyList.singleton w |> Success

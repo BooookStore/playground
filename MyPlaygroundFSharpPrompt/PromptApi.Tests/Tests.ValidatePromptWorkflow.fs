@@ -41,23 +41,6 @@ let ``invalid text is error`` () =
     |> shouldFailure
 
 [<Fact>]
-let ``validate unvalidatedWord list`` () =
-    validateWords [
-        { UnvalidatedText = "beautiful";    UnvalidatedCoefficient = 1.0 };
-        { UnvalidatedText = "best quality"; UnvalidatedCoefficient = 1.2 };
-    ]
-    |> shouldSuccess (fun words ->
-        words.Length |> should equal 2)
-
-[<Fact>]
-let ``invalid coefficient is error`` () =
-    validateWords [
-        { UnvalidatedText = "beautiful";    UnvalidatedCoefficient = 0.0 };
-        { UnvalidatedText = "best quality"; UnvalidatedCoefficient = 1.0 };
-    ]
-    |> shouldFailure
-
-[<Fact>]
 let ``validate prompt`` () =
     validatePrompt [
         { UnvalidatedText = "beautiful";    UnvalidatedCoefficient = 1.0; };
