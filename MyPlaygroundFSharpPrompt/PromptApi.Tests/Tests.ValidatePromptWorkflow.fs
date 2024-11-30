@@ -60,3 +60,11 @@ let ``validate prompt`` () =
     ]
     |> shouldSuccess (fun p ->
         p.Length |> should equal 2)
+
+[<Fact>]
+let ``invalid texts is failure`` () =
+    validatePrompt [
+        { UnvalidatedText = ""; UnvalidatedCoefficient = 1.0 };
+        { UnvalidatedText = ""; UnvalidatedCoefficient = 1.0 }
+    ]
+    |> shouldFailure
