@@ -18,15 +18,15 @@ type ResponseBadRequestJson = {
     message: string list
 }
 
-let convertUnvalidatedWordList jsonInput =
+let commandOfRequestJson jsonInput =
     jsonInput.words
     |> List.map (fun w ->
         { UnvalidatedText = w.text; UnvalidatedCoefficient = w.coefficient })
 
 let validatePrompt jsonInput =
     let validationResult = jsonInput
-                        |> convertUnvalidatedWordList
-                        |> validatePrompt
+                        |> commandOfRequestJson
+                        |> validatePromptWorkflow
     match validationResult with
     | Success _ -> Results.Ok ()
     | Failure messages -> { message = messages } |> Results.BadRequest

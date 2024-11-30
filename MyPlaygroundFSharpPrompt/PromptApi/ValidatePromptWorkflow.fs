@@ -16,6 +16,10 @@ type UnvalidatedWord = {
 
 type ValidatePrompt = UnvalidatedWord list -> Validation<string list, Prompt>
 
+type Command = UnvalidatedWord list
+
+type ValidatePromptWorkflow = Command -> Validation<string list, Prompt>
+
 let validateText =
     Text.create
     >> Result.mapError (fun e -> [ e ])
@@ -39,3 +43,6 @@ let validatePrompt: ValidatePrompt =
             | [] -> Failure [ "Prompt: must be least 1 word required" ]
             | [ w ] -> NonEmptyList.singleton w |> Success
             | head :: rest -> NonEmptyList.create head rest |> Success)
+
+let validatePromptWorkflow: ValidatePromptWorkflow =
+    fun command -> validatePrompt command
