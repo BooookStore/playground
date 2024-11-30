@@ -34,3 +34,13 @@ let validateWord unvalidatedWord =
 let validateWords (unvalidatedWords: UnvalidatedWord list) =
     unvalidatedWords
     |> List.traverse validateWord
+
+let validatePrompt: ValidatePrompt =
+    fun unvalidatedWords ->
+        match validateWords unvalidatedWords with
+        | Success words ->
+            match words with
+            | [] -> Failure [ "" ]
+            | [ w ] -> NonEmptyList.singleton w |> Success
+            | head :: rest -> NonEmptyList.create head rest |> Success
+        | Failure e -> Failure e

@@ -51,3 +51,12 @@ let ``invalid coefficient is error`` () =
         { UnvalidatedText = "best quality"; UnvalidatedCoefficient = 1.0 };
     ]
     |> shouldFailure
+
+[<Fact>]
+let ``validate prompt`` () =
+    validatePrompt [
+        { UnvalidatedText = "beautiful";    UnvalidatedCoefficient = 1.0; };
+        { UnvalidatedText = "best quality"; UnvalidatedCoefficient = 1.2; };
+    ]
+    |> shouldSuccess (fun p ->
+        p.Length |> should equal 2)
