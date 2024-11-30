@@ -17,6 +17,11 @@ let shouldFailure target =
     | Success _ -> Assert.Fail ""
     | Failure _ -> ()
 
+let shouldFailureWith asserter target =
+    match target with
+    | Success _ -> Assert.Fail ""
+    | Failure e -> asserter e
+
 [<Fact>]
 let ``validate unvalidatedWord`` () =
     validateWord {
@@ -67,4 +72,5 @@ let ``invalid texts is failure`` () =
         { UnvalidatedText = ""; UnvalidatedCoefficient = 1.0 };
         { UnvalidatedText = ""; UnvalidatedCoefficient = 1.0 }
     ]
-    |> shouldFailure
+    |> shouldFailureWith (fun e ->
+        e |> should haveLength 2)
