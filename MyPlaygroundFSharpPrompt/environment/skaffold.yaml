@@ -1,0 +1,22 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: prompt-api
+build:
+  artifacts:
+  - image: booookstore/prompt-api
+    context: ../
+    docker:
+      dockerfile: Dockerfile
+  local:
+    push: false
+    useBuildkit: true
+deploy:
+  helm:
+    releases:
+    - name: prompt-api
+      chartPath: helm
+      namespace: dev-prompt-api
+      createNamespace: true
+      setValueTemplates:
+        image: "{{.IMAGE_FULLY_QUALIFIED_booookstore_prompt_api}}"
