@@ -7,6 +7,7 @@
     <Compile Include="Types.fs" />
     <Compile Include="CompoundTypes.fs" />
     <Compile Include="ValidatePromptWorkflow.fs" />
+    <Compile Include="ValidatePromptRest.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
