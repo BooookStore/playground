@@ -5,10 +5,6 @@ open Microsoft.AspNetCore.Http
 
 open Prompt.ValidatePromptRest
 
-type Echo = {
-    message: string
-}
-
 [<EntryPoint>]
 let main args =
     let builder = WebApplication.CreateBuilder(args)
