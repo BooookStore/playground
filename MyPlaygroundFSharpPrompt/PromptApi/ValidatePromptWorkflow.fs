@@ -33,5 +33,4 @@ let validateWord unvalidatedWord =
 
 let validateWords (unvalidatedWords: UnvalidatedWord list) =
     unvalidatedWords
-    |> List.map (fun w -> validateWord w)
-    |> List.sequence
+    |> List.traverse validateWord
