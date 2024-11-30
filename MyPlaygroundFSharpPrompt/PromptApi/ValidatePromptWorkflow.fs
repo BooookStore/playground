@@ -37,10 +37,8 @@ let validateWords (unvalidatedWords: UnvalidatedWord list) =
 
 let validatePrompt: ValidatePrompt =
     fun unvalidatedWords ->
-        match validateWords unvalidatedWords with
-        | Success words ->
-            match words with
-            | [] -> Failure [ "" ]
+        validateWords unvalidatedWords
+        |> Validation.bind (function
+            | [] -> Failure [ "Prompt: must be least 1 word required" ]
             | [ w ] -> NonEmptyList.singleton w |> Success
-            | head :: rest -> NonEmptyList.create head rest |> Success
-        | Failure e -> Failure e
+            | head :: rest -> NonEmptyList.create head rest |> Success)
