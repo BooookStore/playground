@@ -31,9 +31,11 @@ let validateCoefficient =
     >> Validation.ofResult
 
 let validateWord unvalidatedWord =
-    (fun text coefficient -> { Text = text; Coefficient = coefficient })
-    <!> validateText unvalidatedWord.UnvalidatedText
-    <*> validateCoefficient unvalidatedWord.UnvalidatedCoefficient
+    applicative {
+        let! text = validateText unvalidatedWord.UnvalidatedText
+        and! coefficient = validateCoefficient unvalidatedWord.UnvalidatedCoefficient
+        return { Text = text; Coefficient = coefficient }
+    }
 
 let validatePrompt: ValidatePrompt =
     fun unvalidatedWords ->
