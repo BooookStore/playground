@@ -30,10 +30,12 @@ let validateCoefficient =
     >> Result.mapError (fun e -> [ e ])
     >> Validation.ofResult
 
-let validateWord unvalidatedWord =
+let validateWord
+        { UnvalidatedText = unvalidatedText
+          UnvalidatedCoefficient = unvalidatedCoefficient } =
     applicative {
-        let! text = validateText unvalidatedWord.UnvalidatedText
-        and! coefficient = validateCoefficient unvalidatedWord.UnvalidatedCoefficient
+        let! text = validateText unvalidatedText
+        and! coefficient = validateCoefficient unvalidatedCoefficient
         return { Text = text; Coefficient = coefficient }
     }
 
