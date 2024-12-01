@@ -15,4 +15,3 @@ let main args =
     app.Run()
 
     0 // Exit code
-
