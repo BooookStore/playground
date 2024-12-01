@@ -24,9 +24,9 @@ let commandOfRequestJson jsonInput =
         { UnvalidatedText = w.text; UnvalidatedCoefficient = w.coefficient })
 
 let validatePrompt jsonInput =
-    let validationResult = jsonInput
-                        |> commandOfRequestJson
-                        |> validatePromptWorkflow
-    match validationResult with
-    | Success _ -> Results.Ok ()
-    | Failure messages -> { message = messages } |> Results.BadRequest
+    jsonInput
+    |> commandOfRequestJson
+    |> validatePromptWorkflow
+    |> Validation.either
+        (fun e -> Results.BadRequest { message = e })
+        (fun _ -> Results.Ok ())
