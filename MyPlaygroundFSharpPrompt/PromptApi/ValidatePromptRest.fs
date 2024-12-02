@@ -23,9 +23,8 @@ let commandOfRequestJson jsonInput =
     |> List.map (fun w ->
         { UnvalidatedText = w.text; UnvalidatedCoefficient = w.coefficient })
 
-let toHttpResponse validation =
-    validation
-    |> Validation.either
+let toHttpResponse =
+    Validation.either
         (fun e -> Results.BadRequest { message = e })
         (fun _ -> Results.Ok ())
 
