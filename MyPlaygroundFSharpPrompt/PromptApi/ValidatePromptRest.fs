@@ -3,7 +3,6 @@ module Prompt.ValidatePromptRest
 open Microsoft.AspNetCore.Http
 open FSharpPlus.Data
 
-open Prompt.CompoundTypes
 open Prompt.ValidatePromptWorkflow
 
 type JsonWord = {
@@ -12,7 +11,7 @@ type JsonWord = {
 }
 
 type RequestJson = {
-    words: JsonWord list
+    prompt: JsonWord list
 }
 
 type ResponseBadRequestJson = {
@@ -20,7 +19,7 @@ type ResponseBadRequestJson = {
 }
 
 let commandOfRequestJson jsonInput =
-    jsonInput.words
+    jsonInput.prompt
     |> List.map (fun w ->
         { UnvalidatedText = w.text; UnvalidatedCoefficient = w.coefficient })
 

@@ -2,12 +2,12 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS builder
 WORKDIR /source
 
 COPY ./.config ./.config
-COPY ./PromptApi ./PromptApi
 COPY ./paket.dependencies .
 COPY ./paket.lock .
 
 RUN dotnet tool restore
 
+COPY ./PromptApi ./PromptApi
 WORKDIR /source/PromptApi
 
 RUN dotnet paket restore
