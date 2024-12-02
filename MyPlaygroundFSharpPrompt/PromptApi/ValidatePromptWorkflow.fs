@@ -48,5 +48,4 @@ let validatePrompt: ValidatePrompt =
             | [ w ] -> NonEmptyList.singleton w |> Success
             | head :: rest -> NonEmptyList.create head rest |> Success)
 
-let validatePromptWorkflow: ValidatePromptWorkflow =
-    fun command -> validatePrompt command
+let validatePromptWorkflow: ValidatePromptWorkflow = validatePrompt
