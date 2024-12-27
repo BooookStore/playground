@@ -1,13 +1,16 @@
 ﻿open FSharpPlus
 open FSharpPlus.Data
 
+type FetchRecentlyReadBook = unit -> Async<string>
+
 type FetchAuthor = string -> Async<string>
 
 type FetchBook = string -> Async<string list>
 
 type Dependency = {
-    fetchAuthor: FetchAuthor
-    fetchBook: FetchBook
+    FetchAuthor: FetchAuthor
+    FetchBook: FetchBook
+    FetchRecentlyReadBook: FetchRecentlyReadBook
 }
 
 let fetchAuthor: FetchAuthor =
@@ -18,21 +21,51 @@ let fetchBook: FetchBook =
     fun authorName ->
         async.Return ["Test Driven Development"; "Extream Programming"]
 
+let fetchRecentlyReadBook =
+    fun () ->
+        async.Return "Test Driven Development"
+
 let dependency = {
-    fetchAuthor = fetchAuthor
-    fetchBook = fetchBook
+    FetchAuthor = fetchAuthor
+    FetchBook = fetchBook
+    FetchRecentlyReadBook = fetchRecentlyReadBook
 }
 
-let fetchRelatedBooks bookTitle: Reader<Dependency, Async<string list>> =
+let fetchRecentlyReadBookUsecase: Reader<Dependency, Async<string>> =
+    monad {
+        let! deps = ask
+        deps.FetchRecentlyReadBook ()
+    }
+
+let fetchRelatedBooksUsecase bookTitle: Reader<Dependency, Async<string list>> =
     monad {
         let! deps = ask
         async {
-            let! authorName = deps.fetchAuthor bookTitle
-            let! books = deps.fetchBook authorName
+            let! authorName = deps.FetchAuthor bookTitle
+            let! books = deps.FetchBook authorName
             return books
         }
     }
 
-Reader.run (fetchRelatedBooks "Test Driven Development") dependency 
+let fetchRecommand: Reader<Dependency, Async<string list>> =
+    Reader (fun deps ->
+        async {
+            let! bookTitle = Reader.run fetchRecentlyReadBookUsecase deps
+            let! books = Reader.run (fetchRelatedBooksUsecase bookTitle) deps
+            return books
+        }
+    )
+
+let fetchRecommand': Reader<Dependency, Async<string list>> =
+    monad {
+        let! deps = ask
+        async {
+            let! bookTitle = Reader.run fetchRecentlyReadBookUsecase deps
+            let! books = Reader.run (fetchRelatedBooksUsecase bookTitle) deps
+            return books
+        }
+    }
+
+Reader.run (fetchRelatedBooksUsecase "Test Driven Development") dependency 
 |> Async.RunSynchronously
 |> printfn "%A"
