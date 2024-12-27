@@ -1,8 +1,9 @@
-﻿open FSharpPlus.Data
+﻿open FSharpPlus
+open FSharpPlus.Data
 
-type FetchAuthor = string -> string
+type FetchAuthor = string -> Async<string>
 
-type FetchBook = string -> string list
+type FetchBook = string -> Async<string list>
 
 type Dependency = {
     fetchAuthor: FetchAuthor
@@ -11,22 +12,26 @@ type Dependency = {
 
 let fetchAuthor: FetchAuthor =
     fun bookTitle ->
-        "Test Driven Development"
+        async.Return "Test Driven Development"
 
 let fetchBook: FetchBook =
     fun authorName ->
-        ["Test Driven Development"; "Extream Programming"]
+        async.Return ["Test Driven Development"; "Extream Programming"]
 
 let dependency = {
     fetchAuthor = fetchAuthor
     fetchBook = fetchBook
 }
 
-let fetchRelatedBooks: Reader<Dependency, string list> =
+let fetchRelatedBooks: Reader<Dependency, Async<string list>> =
     Reader(fun dependency ->
-        let authorName = dependency.fetchAuthor "Test Driven Development"
-        let books = dependency.fetchBook authorName
-        books
+        async {
+            let! authorName = dependency.fetchAuthor "Test Driven Development"
+            let! books = dependency.fetchBook authorName
+            return books
+        }
     )
 
-Reader.run fetchRelatedBooks dependency |> printfn "%A"
+Reader.run fetchRelatedBooks dependency 
+|> Async.RunSynchronously
+|> printfn "%A"
