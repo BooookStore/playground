@@ -24,13 +24,14 @@ let dependency = {
 }
 
 let fetchRelatedBooks: Reader<Dependency, Async<string list>> =
-    Reader(fun dependency ->
+    monad {
+        let! deps = ask
         async {
-            let! authorName = dependency.fetchAuthor "Test Driven Development"
-            let! books = dependency.fetchBook authorName
+            let! authorName = deps.fetchAuthor "Test Driven Development"
+            let! books = deps.fetchBook authorName
             return books
         }
-    )
+    }
 
 Reader.run fetchRelatedBooks dependency 
 |> Async.RunSynchronously
