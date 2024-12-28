@@ -35,9 +35,9 @@ let main args =
     let app = builder.Build()
 
     app.MapGet("/v2/book", Func<DbConnection, Task<IResult>>(fun dbConn ->
-        let deps = { GetAllBooks = GetAllBooksGateway dbConn }
+        let deps = { GetAllBooks = getAllBooksGateway dbConn }
         async {
-            let! books = Reader.run GetAllBooksUsecase deps
+            let! books = Reader.run getAllBooksUsecase deps
             return Results.Ok books
         } |> Async.StartAsTask
     ))

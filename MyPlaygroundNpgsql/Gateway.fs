@@ -7,7 +7,7 @@ open playground.Port
 
 module Gateway =
 
-    let GetAllBooksGateway (dbConnection: DbConnection) : GetAllBooksPort =
+    let getAllBooksGateway (dbConnection: DbConnection) : GetAllBooksPort =
         fun _ -> 
             task {
                 use! tx = dbConnection.BeginTransactionAsync()

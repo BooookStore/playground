@@ -8,7 +8,7 @@ open playground.Domain
 
 module Usecase =
 
-    let GetAllBooksUsecase: Reader<Dependency, Async<Book list>> =
+    let getAllBooksUsecase: Reader<Dependency, Async<Book list>> =
         monad {
             let! deps = ask
             return deps.GetAllBooks ()
