@@ -1,0 +1,1 @@
+INSERT INTO BOOK VALUES ('0001', 'Extream Programming');

@@ -1,6 +1,8 @@
 source https://api.nuget.org/v3/index.json
 
 storage: none
+nuget Dapper
+nuget Dapper.FSharp
 nuget FSharpPlus
 nuget Npgsql
 nuget Npgsql.FSharp

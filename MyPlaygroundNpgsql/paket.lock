@@ -1,6 +1,11 @@
 STORAGE: NONE
 NUGET
   remote: https://api.nuget.org/v3/index.json
+    Dapper (2.1.35)
+      System.Reflection.Emit.Lightweight (>= 4.7) - restriction: && (< net461) (< net5.0) (>= netstandard2.0)
+    Dapper.FSharp (4.9)
+      Dapper (>= 2.1.35) - restriction: >= net8.0
+      FSharp.Core (>= 8.0.200) - restriction: >= net8.0
     FSharp.Core (9.0.100) - restriction: || (>= net45) (>= netstandard2.0)
     FSharpPlus (1.7)
       FSharp.Core (>= 4.6.2) - restriction: >= net45
@@ -31,6 +36,9 @@ NUGET
       System.Memory (>= 4.5.5) - restriction: || (>= net462) (&& (< net8.0) (>= netstandard2.0))
       System.Threading.Tasks.Extensions (>= 4.5.4) - restriction: || (>= net462) (&& (< net8.0) (>= netstandard2.0))
     System.Memory (4.6) - restriction: || (&& (>= net462) (>= net6.0)) (&& (>= net6.0) (< net8.0))
+    System.Reflection.Emit.ILGeneration (4.7) - restriction: || (&& (< monoandroid) (< net45) (< netcoreapp2.0) (>= netstandard2.0) (< netstandard2.1) (< xamarintvos) (< xamarinwatchos)) (&& (>= netstandard2.0) (< portable-net45+wp8) (>= win8)) (&& (>= netstandard2.0) (< portable-net45+wp8) (< win8)) (&& (>= netstandard2.0) (>= uap10.1))
+    System.Reflection.Emit.Lightweight (4.7) - restriction: && (< net461) (< net5.0) (>= netstandard2.0)
+      System.Reflection.Emit.ILGeneration (>= 4.7) - restriction: || (&& (< monoandroid) (< monotouch) (< net45) (>= netstandard1.0) (< netstandard2.0) (< win8) (< wp8) (< wpa81) (< xamarintvos) (< xamarinwatchos)) (&& (< monoandroid) (< net45) (< netcoreapp2.0) (>= netstandard2.0) (< netstandard2.1) (< xamarintvos) (< xamarinwatchos)) (&& (< netstandard2.0) (>= wpa81)) (&& (>= portable-net45+win8+wp8+wpa81) (< portable-net45+wp8) (< win8)) (&& (< portable-net45+wp8) (>= win8)) (>= uap10.1)
     System.Runtime.CompilerServices.Unsafe (6.1) - restriction: && (>= net6.0) (< net8.0)
     System.Text.Encodings.Web (9.0) - restriction: || (&& (>= net462) (>= net6.0)) (&& (>= net6.0) (< net8.0))
       System.Buffers (>= 4.5.1) - restriction: || (>= net462) (&& (< net8.0) (>= netstandard2.0))
