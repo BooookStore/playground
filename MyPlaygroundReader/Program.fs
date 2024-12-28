@@ -47,15 +47,6 @@ let fetchRelatedBooksUsecase bookTitle: Reader<Dependency, Async<string list>> =
         }
     }
 
-let fetchRecommand: Reader<Dependency, Async<string list>> =
-    Reader (fun deps ->
-        async {
-            let! bookTitle = Reader.run fetchRecentlyReadBookUsecase deps
-            let! books = Reader.run (fetchRelatedBooksUsecase bookTitle) deps
-            return books
-        }
-    )
-
 let fetchRecommand': Reader<Dependency, Async<string list>> =
     monad {
         let! deps = ask
@@ -65,6 +56,15 @@ let fetchRecommand': Reader<Dependency, Async<string list>> =
             return books
         }
     }
+
+let fetchRecommand: Reader<Dependency, Async<string list>> =
+    Reader (fun deps ->
+        async {
+            let! bookTitle = Reader.run fetchRecentlyReadBookUsecase deps
+            let! books = Reader.run (fetchRelatedBooksUsecase bookTitle) deps
+            return books
+        }
+    )
 
 Reader.run (fetchRelatedBooksUsecase "Test Driven Development") dependency 
 |> Async.RunSynchronously
