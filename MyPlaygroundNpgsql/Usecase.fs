@@ -11,5 +11,5 @@ module Usecase =
     let getAllBooksUsecase: Reader<Dependency, Async<Book list>> =
         monad {
             let! deps = ask
-            return deps.GetAllBooks ()
+            return deps.GetAllBooksPort ()
         }
