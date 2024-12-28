@@ -47,10 +47,13 @@ let fetchRelatedBooksUsecase bookTitle: Reader<Dependency, Async<string list>> =
         }
     }
 
+let readerT reader =
+    reader |> Reader.run |> ReaderT
+
 let fetchRecommand'' =
     monad {
-        let! bookTitle = fetchRecentlyReadBookUsecase |> Reader.run |> ReaderT
-        let! books = (fetchRelatedBooksUsecase bookTitle) |> Reader.run |> ReaderT
+        let! bookTitle = fetchRecentlyReadBookUsecase |> readerT
+        let! books = (fetchRelatedBooksUsecase bookTitle) |> readerT
         return books
     }
 
