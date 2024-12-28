@@ -7,6 +7,11 @@ open Microsoft.Extensions.DependencyInjection
 open Npgsql
 open Npgsql.FSharp
 open Dapper.FSharp.PostgreSQL
+open FSharpPlus.Data
+
+open playground.Dependency
+open playground.Gateway
+open playground.Usecase
 
 // table mapping
 // reference: https://github.com/Dzoukr/Dapper.FSharp?tab=readme-ov-file#table-mappings
@@ -29,34 +34,14 @@ let main args =
     builder.Services.AddTransient<DbConnection>(fun _ -> dataSource.OpenConnection()) |> ignore
     let app = builder.Build()
 
-    app.MapGet("/v1/book",Func<DbConnection, Task<IResult>>(fun dbConn ->
-        use tx = dbConn.BeginTransaction()
-
-        // define select query
-        // reference: https://github.com/Dzoukr/Dapper.FSharp?tab=readme-ov-file#select
-        let query = select {
-            for book in BookTable do
-            selectAll
-        }
-        
-        // execute sql
-        let books = 
-            task {
-                let! books = query |> tx.Connection.SelectAsync<Book>
-                return Seq.toList books
-            } |> Async.AwaitTask
-
-        // mapping for response
-        let results =
-            async {
-                let! books = books
-                let titles = books |> List.map (fun b -> b.title)
-                return Results.Ok titles
-            }
-
-        results |> Async.StartAsTask
-     ))
-     |> ignore
+    app.MapGet("/v2/book", Func<DbConnection, Task<IResult>>(fun dbConn ->
+        let deps = { GetAllBooks = GetAllBooksGateway dbConn }
+        async {
+            let! books = Reader.run GetAllBooksUsecase deps
+            return Results.Ok books
+        } |> Async.StartAsTask
+    ))
+    |> ignore
 
     app.Run()
 

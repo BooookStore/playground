@@ -5,6 +5,12 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Domain.fs" />
+    <Compile Include="Port.fs" />
+    <Compile Include="Driver.fs" />
+    <Compile Include="Gateway.fs" />
+    <Compile Include="Dependency.fs" />
+    <Compile Include="Usecase.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <Import Project=".paket\Paket.Restore.targets" />
