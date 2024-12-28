@@ -12,7 +12,6 @@ module Gateway =
             task {
                 use! tx = dbConnection.BeginTransactionAsync()
                 let! bookRows = Driver.selectAllBookRows tx.Connection
-                let books = bookRows |> List.map (fun row -> { Id = row.id; Title = row.title })
-                return books
+                return bookRows |> List.map (fun row -> { Id = row.id; Title = row.title })
             }
             |> Async.AwaitTask
