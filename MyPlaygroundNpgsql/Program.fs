@@ -7,6 +7,7 @@ open Microsoft.Extensions.DependencyInjection
 open Npgsql
 open Npgsql.FSharp
 open Dapper.FSharp.PostgreSQL
+open FSharpPlus
 open FSharpPlus.Data
 
 open playground.Dependency
@@ -34,12 +35,11 @@ let main args =
     builder.Services.AddTransient<DbConnection>(fun _ -> dataSource.OpenConnection()) |> ignore
     let app = builder.Build()
 
-    app.MapGet("/v2/book", Func<DbConnection, Task<IResult>>(fun dbConn ->
-        let deps = { GetAllBooks = getAllBooksGateway dbConn }
-        async {
-            let! books = Reader.run getAllBooksUsecase deps
-            return Results.Ok books
-        } |> Async.StartAsTask
+    app.MapGet("/v2/book", Func<DbConnection, Task<IResult>>(fun dbConnection ->
+        { GetAllBooks = getAllBooksGateway dbConnection }
+        |> Reader.run getAllBooksUsecase
+        |> Async.map Results.Ok
+        |> Async.StartAsTask
     ))
     |> ignore
 
