@@ -14,12 +14,6 @@ open playground.Dependency
 open playground.Gateway
 open playground.Usecase
 
-// table mapping
-// reference: https://github.com/Dzoukr/Dapper.FSharp?tab=readme-ov-file#table-mappings
-type Book = { id: string; title: string }
-
-let BookTable = table'<Book> "book" |> inSchema "public"
-
 [<EntryPoint>]
 let main args =
     let connectionString =
