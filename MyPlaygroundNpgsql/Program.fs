@@ -6,7 +6,6 @@ open Microsoft.AspNetCore.Http
 open Microsoft.Extensions.DependencyInjection
 open Npgsql
 open Npgsql.FSharp
-open Dapper.FSharp.PostgreSQL
 open FSharpPlus
 open FSharpPlus.Data
 
