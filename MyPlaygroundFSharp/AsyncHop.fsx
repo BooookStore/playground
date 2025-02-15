@@ -1,3 +1,7 @@
+#r "nuget: FSharpPlus, 1.7.0"
+
+open FSharpPlus
+
 type LargeCategoryId = LargeCategoryId of string
 
 type MiddleCaterogyId = MiddleCategoryId of string
@@ -25,4 +29,18 @@ module SmallCategory =
                                                       SmallCategoryId "small-category-0032" ] )
         | _ -> async.Return (Error "not match middle category id")
 
-// Pattern A
+let searchA largeCategoryId =
+    async {
+        let! middleCategoryIdsResult = MiddleCategory.getMiddleCategoryIds largeCategoryId
+        match middleCategoryIdsResult with
+        | Ok middleCategoryIds ->
+            // 小カテゴリを取得しAsyncをアンラップする
+            let! smallCategoryIdsResult = middleCategoryIds
+                                            |> List.map SmallCategory.getSmallCategoryIds
+                                            |> traverse id
+            // Errorを取り除き、リストのリストをフラット化して一つのリストにフラット化する
+            return smallCategoryIdsResult
+                   |> List.choose Option.ofResult
+                   |> List.collect id
+        | Error msg -> return failwith msg
+    }
