@@ -20,7 +20,7 @@
 (defn validate-mail-address [mail-address]
   (if (str/includes? mail-address "@")
     {:result :ok}
-    {:result :error :message (str "'" mail-address "' not include '@'")}))
+    {:result :error :message (vector (str "'" mail-address "' not include '@'"))}))
 
 (defn valid-users-mail-address? [users]
   (let [mail-addresses (map :mail-address users)]
@@ -31,9 +31,21 @@
         f (fn [v ma] (if (result-ok? v) (validate-mail-address ma) v))]
     (reduce f {:result :ok} mail-addresses)))
 
+(defn join-message [result1 result2]
+  (update result1 :message #(flatten (conj % (:message result2)))))
+
+(defn validate-users-mail-address-results [users]
+  (let [mail-addresses (map :mail-address users)
+        validation-results (map validate-mail-address mail-addresses)
+        errors (:error (group-by #(:result %) validation-results))]
+    (if (empty? errors)
+      {:result :ok}
+      (reduce join-message {:result :error :message []} errors))))
+
 (comment
   (valid-users-mail-address? (load-users input-file-path))
   (validate-users-mail-address (load-users input-file-path))
+  (validate-users-mail-address-results (load-users input-file-path))
   )
 
 (defn orderd-users [users]
