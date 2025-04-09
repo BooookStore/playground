@@ -1,6 +1,6 @@
-Person A
-Person B
-Person C
-Person D
-Person E
-Person F
+pserson-a@example, Person A
+pserson-b@example, Person B
+pserson-c@example, Person C
+pserson-d@example, Person D
+pserson-e@example, Person E
+pserson-f@example, Person F
