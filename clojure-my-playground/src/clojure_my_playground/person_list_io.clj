@@ -29,7 +29,7 @@
     {:result :ok}
     {:result :error :message (vector (str "'" mail-address "'not domain example"))}))
 
-(defn join-message
+(defn join-errors
   ([result1 result2]
    (update result1 :message #(flatten (conj % (:message result2)))))
   ([] {:result :error :message []}))
@@ -40,7 +40,7 @@
           errors (:error (group-by :result results))]
       (if (empty? errors)
         {:result :ok}
-        (reduce join-message errors)))))
+        (reduce join-errors errors)))))
 
 (defn valid-users-mail-address? [users]
   (let [mail-addresses (map :mail-address users)
@@ -58,7 +58,7 @@
         errors (:error (group-by #(:result %) validation-results))]
     (if (empty? errors)
       {:result :ok}
-      (reduce join-message {:result :error :message []} errors))))
+      (reduce join-errors {:result :error :message []} errors))))
 
 (comment
   (valid-users-mail-address? (load-users input-file-path))
