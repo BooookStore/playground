@@ -1,5 +1,6 @@
 (ns clojure-my-playground.person-list-io
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.java.io :refer [reader]]))
 
 (def input-file-path "resources/person-list/person-list-1.txt")
 
@@ -9,26 +10,35 @@
         username (str/trim username)]
     {:mail-address mail-address :username username}))
 
-(defn load-users [path] 
-  (map user-builder (str/split (slurp path) #"\n")))
+(defn load-users [path]
+  (let [rdr (reader path)]
+    (map user-builder (line-seq rdr))))
 
 (comment
    (load-users input-file-path))
 
 (defn result-ok? [r] (= :ok (:result r)))
 
-(defn validate-mail-address [mail-address]
+(defn validate-contains-atmark [mail-address]
   (if (str/includes? mail-address "@")
     {:result :ok}
     {:result :error :message (vector (str "'" mail-address "' not include '@'"))}))
 
+(defn validate-domain [mail-address]
+  (if (str/ends-with? mail-address "example")
+    {:result :ok}
+    {:result :error :message (vector (str "'" mail-address "'not domain example"))}))
+
 (defn valid-users-mail-address? [users]
   (let [mail-addresses (map :mail-address users)]
-    (every? #(result-ok? (validate-mail-address %)) mail-addresses)))
+    (every? #(let [r1 (validate-contains-atmark %)
+                   r2 (validate-domain %)]
+               (every? result-ok? (vector r1 r2)))
+            mail-addresses)))
 
 (defn validate-users-mail-address [users]
   (let [mail-addresses (map :mail-address users)
-        f (fn [v ma] (if (result-ok? v) (validate-mail-address ma) v))]
+        f (fn [v ma] (if (result-ok? v) (validate-contains-atmark ma) v))]
     (reduce f {:result :ok} mail-addresses)))
 
 (defn join-message [result1 result2]
@@ -36,7 +46,7 @@
 
 (defn validate-users-mail-address-results [users]
   (let [mail-addresses (map :mail-address users)
-        validation-results (map validate-mail-address mail-addresses)
+        validation-results (map validate-contains-atmark mail-addresses)
         errors (:error (group-by #(:result %) validation-results))]
     (if (empty? errors)
       {:result :ok}
