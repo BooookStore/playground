@@ -29,20 +29,28 @@
     {:result :ok}
     {:result :error :message (vector (str "'" mail-address "'not domain example"))}))
 
+(defn join-message
+  ([result1 result2]
+   (update result1 :message #(flatten (conj % (:message result2)))))
+  ([] {:result :error :message []}))
+
+(defn comp-validator [& validators]
+  (fn [mail-address]
+    (let [results (map #(% mail-address) validators)
+          errors (:error (group-by :result results))]
+      (if (empty? errors)
+        {:result :ok}
+        (reduce join-message errors)))))
+
 (defn valid-users-mail-address? [users]
-  (let [mail-addresses (map :mail-address users)]
-    (every? #(let [r1 (validate-contains-atmark %)
-                   r2 (validate-domain %)]
-               (every? result-ok? (vector r1 r2)))
-            mail-addresses)))
+  (let [mail-addresses (map :mail-address users)
+        validate (comp-validator validate-contains-atmark validate-domain)]
+    (every? #(result-ok? (validate %)) mail-addresses)))
 
 (defn validate-users-mail-address [users]
   (let [mail-addresses (map :mail-address users)
         f (fn [v ma] (if (result-ok? v) (validate-contains-atmark ma) v))]
     (reduce f {:result :ok} mail-addresses)))
-
-(defn join-message [result1 result2]
-  (update result1 :message #(flatten (conj % (:message result2)))))
 
 (defn validate-users-mail-address-results [users]
   (let [mail-addresses (map :mail-address users)

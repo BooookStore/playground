@@ -1,4 +1,4 @@
-pserson-a@exampl, Person A
+pserson-a@example, Person A
 pserson-b@example, Person B
 pserson-c@example, Person C
 pserson-d@example, Person D
