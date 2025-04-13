@@ -5,12 +5,11 @@
 (defn skip-head [coll] (rest coll))
 
 (defn category-from-str [unvalidate-str]
-  (let [category ({"Regular" :regular
-                   "Partner" :partner}
-                  unvalidate-str)]
-    (if-not category
-      (result/error (format "unknown category of %s" unvalidate-str))
-      (result/ok category))))
+  (if-let [category ({"Regular" :regular
+                      "Partner" :partner}
+                     unvalidate-str)]
+    (result/ok category)
+    (result/error (format "unknown category of %s" unvalidate-str))))
 
 (defn run [path]
   (with-open [rdr (reader path)]
