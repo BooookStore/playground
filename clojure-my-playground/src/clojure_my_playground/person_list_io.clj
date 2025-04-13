@@ -17,12 +17,16 @@
 (comment
    (load-users input-file-path))
 
+(def ok {:result :ok})
+
+(defn error [msg] {:result :error :message [msg]})
+
 (defn result-ok? [r] (= :ok (:result r)))
 
 (defn validate-contains-atmark [mail-address]
   (if (str/includes? mail-address "@")
-    {:result :ok}
-    {:result :error :message (vector (str "'" mail-address "' not include '@'"))}))
+    ok
+    (error (str "'" mail-address "' not include '@'"))))
 
 (defn validate-domain [mail-address]
   (if (str/ends-with? mail-address "example")
