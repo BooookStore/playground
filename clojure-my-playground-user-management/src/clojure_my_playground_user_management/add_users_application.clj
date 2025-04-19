@@ -1,7 +1,8 @@
 (ns clojure-my-playground-user-management.add-users-application
   (:require [clojure.string :as str]
             [clojure.java.io :refer [reader]]
-            [clojure-my-playground-user-management.result :as result]))
+            [clojure-my-playground-user-management.result :as result]
+            [clojure-my-playground-user-management.add-users-usecase :as usecase]))
 
 (defn category-from-str [unvalidate-str]
   (if-let [category ({"Regular" :regular
@@ -14,14 +15,13 @@
 
 (defn split-comma [line] (str/split line #","))
 
-(defn build-unvalidate-user [[category email-address username manager]]
-  {:unvalidate-category category
-   :unvalidate-email-address email-address
-   :unvalidate-username username
-   :unvalidate-manager manager})
+(defn build-unvalidate-user-from-row [[category email-address username manager]]
+  (if (some nil? [category email-address username])
+    (result/error "not enough input")
+    (result/ok (usecase/build-unvalidate-user category email-address username (or manager :no-input)))))
 
 (defn run [path]
   (let [rdr (reader path)]
     (->> (line-seq rdr)
          (skip-head)
-         (map (comp build-unvalidate-user split-comma)))))
+         (map (comp build-unvalidate-user-from-row split-comma)))))
