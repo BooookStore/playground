@@ -18,20 +18,24 @@
            (category-from-str "miss")))))
 
 (deftest build-unvalidate-user-from-row-test
-  (testing "full input"
-    (is (= (result/ok {:unvalidate-category "Regular"
-                       :unvalidate-email-address "aaa@example"
-                       :unvalidate-username "User A"
-                       :unvalidate-manager "bbb@example"})
-           (build-unvalidate-user-from-row ["Regular" "aaa@example" "User A" "bbb@example"]))))
+  (are [input expected]
+       (= expected
+          (unvalidate-user-from-row input))
 
-  (testing "no input manager"
-    (is (= (result/ok {:unvalidate-category "Regular"
-                       :unvalidate-email-address "aaa@example"
-                       :unvalidate-username "User A"
-                       :unvalidate-manager :no-input})
-           (build-unvalidate-user-from-row ["Regular" "aaa@example" "User A"]))))
+    ["Regular" "aaa@example" "User A" "bbb@example"]
+    (result/ok {:unvalidate-category "Regular"
+                :unvalidate-email-address "aaa@example"
+                :unvalidate-username "User A"
+                :unvalidate-manager "bbb@example"})
 
-  (testing "not enough input"
-    (is (= (result/error "not enough input")
-           (build-unvalidate-user-from-row ["Regular" "aaa@example"])))))
+    ["Regular" "aaa@example" "User A"]
+    (result/ok {:unvalidate-category "Regular"
+                :unvalidate-email-address "aaa@example"
+                :unvalidate-username "User A"
+                :unvalidate-manager :no-input})
+
+    ["Regular" "aaa@example"]
+    (result/error "not enough input")
+    
+    ["Regular"]
+    (result/error "not enough input")))
