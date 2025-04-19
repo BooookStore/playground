@@ -20,7 +20,7 @@
 (deftest build-unvalidate-user-from-row-test
   (are [input expected]
        (= expected
-          (unvalidate-user-from-row input))
+          (unvalidate-user input))
 
     ["Regular" "aaa@example" "User A" "bbb@example"]
     (result/ok {:unvalidate-category "Regular"

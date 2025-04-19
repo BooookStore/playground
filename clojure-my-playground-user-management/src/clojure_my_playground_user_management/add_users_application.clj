@@ -15,7 +15,7 @@
 
 (defn split-comma [line] (str/split line #","))
 
-(defn unvalidate-user-from-row [[category email-address username manager]]
+(defn unvalidate-user [[category email-address username manager]]
   (if (some nil? [category email-address username])
     (result/error "not enough input")
     (result/ok (usecase/build-unvalidate-user category email-address username (or manager :no-input)))))
@@ -24,4 +24,4 @@
   (let [rdr (reader path)]
     (->> (line-seq rdr)
          (skip-head)
-         (map (comp unvalidate-user-from-row split-comma)))))
+         (map (comp unvalidate-user split-comma)))))
