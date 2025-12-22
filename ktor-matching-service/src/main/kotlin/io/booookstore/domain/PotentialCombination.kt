@@ -1,0 +1,35 @@
+package io.booookstore.domain
+
+data class PotentialCombinations(val values: Set<PotentialCombination>) {
+
+    companion object {
+
+        fun of(vararg potentialCombinations: PotentialCombination) =
+            PotentialCombinations(potentialCombinations.toSet())
+
+        fun every(users: Users) =
+            users.map {
+                val listener = Listener(it)
+                val speakers = users.map(::Speaker).toSet().let(::Speakers)
+                PotentialCombination(listener, speakers)
+            }.toSet().let(::PotentialCombinations)
+
+    }
+
+}
+
+data class PotentialCombination(val listener: Listener, val speakers: Speakers)
+
+data class Speakers(val values: Set<Speaker>) {
+
+    companion object {
+
+        fun of(vararg users: User): Speakers = Speakers(users.map(::Speaker).toSet())
+
+    }
+
+}
+
+data class Speaker(val user: User)
+
+data class Listener(val user: User)
