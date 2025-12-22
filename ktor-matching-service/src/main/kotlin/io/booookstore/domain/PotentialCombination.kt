@@ -2,6 +2,11 @@ package io.booookstore.domain
 
 data class PotentialCombinations(val values: Set<PotentialCombination>) {
 
+    fun excludeSpeakers(excludePolicy: ExcludePolicy) =
+        values.map {
+            PotentialCombination(it.listener, excludePolicy.exclude(it.listener, it.speakers))
+        }.toSet().let(::PotentialCombinations)
+
     companion object {
 
         fun of(vararg potentialCombinations: PotentialCombination) =

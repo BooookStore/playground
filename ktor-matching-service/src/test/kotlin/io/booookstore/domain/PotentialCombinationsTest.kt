@@ -22,6 +22,24 @@ class PotentialCombinationsTest {
         assertEquals(expected, potentialCombinations)
     }
 
+    @Test
+    fun `exclude self`() {
+        val userA = createUser()
+        val userB = createUser()
+
+        val users = Users.of(userA, userB)
+        val potentialCombinations = PotentialCombinations
+            .every(users)
+            .excludeSpeakers(Self)
+
+        val expected = PotentialCombinations.of(
+            PotentialCombination(Listener(userA), Speakers.of(userB)),
+            PotentialCombination(Listener(userB), Speakers.of(userA)),
+        )
+
+        assertEquals(expected, potentialCombinations)
+    }
+
     fun createUser(): User {
         val uuid = UUID.randomUUID()
         return User(
