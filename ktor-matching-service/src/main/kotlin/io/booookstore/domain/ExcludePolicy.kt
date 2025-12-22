@@ -9,6 +9,6 @@ interface ExcludePolicy {
 object Self : ExcludePolicy {
 
     override fun exclude(listener: Listener, speakers: Speakers): Speakers =
-        speakers.values.filterNot { speaker -> speaker.user == listener.user }.toSet().let(::Speakers)
+        speakers.filterNot { speaker -> speaker.user == listener.user }.toSet().let(::Speakers)
 
 }

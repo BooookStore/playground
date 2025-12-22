@@ -25,7 +25,8 @@ data class PotentialCombinations(val values: Set<PotentialCombination>) {
 
 data class PotentialCombination(val listener: Listener, val speakers: Speakers)
 
-data class Speakers(val values: Set<Speaker>) {
+@Suppress("JavaDefaultMethodsNotOverriddenByDelegation")
+data class Speakers(val values: Set<Speaker>) : Set<Speaker> by values {
 
     companion object {
 
