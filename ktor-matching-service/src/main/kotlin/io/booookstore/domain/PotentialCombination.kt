@@ -12,7 +12,7 @@ data class PotentialCombinations(val values: Set<PotentialCombination>) {
         fun of(vararg potentialCombinations: PotentialCombination) =
             PotentialCombinations(potentialCombinations.toSet())
 
-        fun every(users: Users) =
+        fun matchMakeEvery(users: Users) =
             users.map {
                 val listener = Listener(it)
                 val speakers = users.map(::Speaker).toSet().let(::Speakers)

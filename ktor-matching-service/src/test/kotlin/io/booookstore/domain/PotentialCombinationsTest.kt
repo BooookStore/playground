@@ -12,7 +12,7 @@ class PotentialCombinationsTest {
         val userB = createUser()
 
         val users = Users.of(userA, userB)
-        val potentialCombinations = PotentialCombinations.every(users)
+        val potentialCombinations = PotentialCombinations.matchMakeEvery(users)
 
         val expected = PotentialCombinations.of(
             PotentialCombination(Listener(userA), Speakers.of(userA, userB)),
@@ -23,13 +23,13 @@ class PotentialCombinationsTest {
     }
 
     @Test
-    fun `exclude self`() {
+    fun excludeSpeakers() {
         val userA = createUser()
         val userB = createUser()
 
         val users = Users.of(userA, userB)
         val potentialCombinations = PotentialCombinations
-            .every(users)
+            .matchMakeEvery(users)
             .excludeSpeakers(Self)
 
         val expected = PotentialCombinations.of(
