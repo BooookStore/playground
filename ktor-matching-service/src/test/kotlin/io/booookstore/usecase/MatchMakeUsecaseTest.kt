@@ -1,24 +1,25 @@
 package io.booookstore.usecase
 
 import io.booookstore.createUser
-import io.booookstore.domain.Listener
+import io.booookstore.domain.*
 import io.booookstore.domain.PotentialCombination.Companion.with
-import io.booookstore.domain.PotentialCombinations
-import io.booookstore.domain.Speakers
-import io.booookstore.domain.User
-import io.booookstore.domain.Users
 import io.booookstore.port.UsersPort
+import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class MatchMakeUsecaseTest {
 
+    val userA = createUser()
+    val userB = createUser()
+
+    @BeforeEach
+    fun setupUsersGatewayMock() {
+        UsersGatewayMock.hold(userA, userB)
+    }
+
     @Test
     fun execute() {
-        val userA = createUser()
-        val userB = createUser()
-        UsersGatewayMock.hold(userA, userB)
-
         val actual = MatchMakeUsecase(UsersGatewayMock).execute()
 
         val expected = PotentialCombinations.of(
