@@ -23,7 +23,15 @@ data class PotentialCombinations(val values: Set<PotentialCombination>) {
 
 }
 
-data class PotentialCombination(val listener: Listener, val speakers: Speakers)
+data class PotentialCombination(val listener: Listener, val speakers: Speakers) {
+
+    companion object {
+
+        infix fun Listener.with(speakers: Speakers) = PotentialCombination(this, speakers)
+
+    }
+
+}
 
 @Suppress("JavaDefaultMethodsNotOverriddenByDelegation")
 data class Speakers(val values: Set<Speaker>) : Set<Speaker> by values {
