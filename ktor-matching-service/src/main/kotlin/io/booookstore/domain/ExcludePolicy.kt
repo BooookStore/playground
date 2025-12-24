@@ -12,3 +12,10 @@ object Self : ExcludePolicy {
         speakers.filterNot { speaker -> speaker.user == listener.user }.toSet().let(::Speakers)
 
 }
+
+class BeforeCombination(val combinationsHistory: CombinationsHistory) : ExcludePolicy {
+
+    override fun exclude(listener: Listener, speakers: Speakers) =
+        speakers.filterNot { speaker -> combinationsHistory.isBeforeCombination(listener, speaker) }.toSet().let(::Speakers)
+
+}
