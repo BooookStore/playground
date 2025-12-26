@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ExcludeBeforeCombinationPolicyTest {
+class NarrowDownBeforeCombinationPolicyTest {
 
     val userA = createUser()
     val userB = createUser()
@@ -22,8 +22,8 @@ class ExcludeBeforeCombinationPolicyTest {
     }
 
     @Test
-    fun excludeBeforeCombination() {
-        val actual = beforeCombination.exclude(Listener(userA), Speakers.of(userB, userC))
+    fun applyBeforeCombination() {
+        val actual = beforeCombination.apply(Listener(userA), Speakers.of(userB, userC))
         val expected = Speakers.of(userC)
         assertEquals(expected, actual)
     }

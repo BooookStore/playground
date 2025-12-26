@@ -2,10 +2,10 @@ package io.booookstore.domain
 
 data class PotentialCombinations(val values: Set<PotentialCombination>) {
 
-    fun excludeSpeakers(excludePolicy: ExcludePolicy) =
-        values.map {
-            PotentialCombination(it.listener, excludePolicy.exclude(it.listener, it.speakers))
-        }.toSet().let(::PotentialCombinations)
+    fun narrowDown(policy: NarrowDownPolicy) =
+        values.map { PotentialCombination(it.listener, policy.apply(it.listener, it.speakers)) }
+            .toSet()
+            .let(::PotentialCombinations)
 
     companion object {
 

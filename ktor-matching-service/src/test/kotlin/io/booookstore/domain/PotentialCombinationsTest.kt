@@ -23,14 +23,14 @@ class PotentialCombinationsTest {
     }
 
     @Test
-    fun excludeSpeakers() {
+    fun narrowDown() {
         val userA = createUser()
         val userB = createUser()
 
         val users = Users.of(userA, userB)
         val potentialCombinations = PotentialCombinations
             .matchMakeEvery(users)
-            .excludeSpeakers(Self)
+            .narrowDown(Self)
 
         val expected = PotentialCombinations.of(
             PotentialCombination(Listener(userA), Speakers.of(userB)),

@@ -13,8 +13,8 @@ class MatchMakeUsecase(val usersPort: UsersPort, val combinationsHistoryPort: Co
 
         val potentialCombinations = PotentialCombinations
             .matchMakeEvery(users)
-            .excludeSpeakers(Self)
-            .excludeSpeakers(BeforeCombination(combinationsHistoryPort.find()))
+            .narrowDown(Self)
+            .narrowDown(BeforeCombination(combinationsHistoryPort.find()))
 
         return potentialCombinations
     }
