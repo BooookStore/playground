@@ -11,8 +11,8 @@ class PotentialCombinationsTest {
     fun matchMakeEvery() {
         val userA = createUser()
         val userB = createUser()
-
         val users = Users.of(userA, userB)
+
         val actual = PotentialCombinations.matchMakeEvery(users)
 
         val expected = PotentialCombinations.of(
