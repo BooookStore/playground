@@ -16,8 +16,8 @@ class PotentialCombinationsTest {
         val potentialCombinations = PotentialCombinations.matchMakeEvery(users)
 
         val expected = PotentialCombinations.of(
-            PotentialCombination(Listener(userA), Speakers.of(userA, userB)),
-            PotentialCombination(Listener(userB), Speakers.of(userA, userB)),
+            Listener(userA) with Speakers.of(userA, userB),
+            Listener(userB) with Speakers.of(userA, userB),
         )
 
         assertEquals(expected, potentialCombinations)
