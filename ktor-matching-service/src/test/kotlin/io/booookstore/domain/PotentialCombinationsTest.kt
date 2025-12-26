@@ -1,13 +1,14 @@
 package io.booookstore.domain
 
-import java.util.*
+import io.booookstore.createUser
+import io.booookstore.domain.PotentialCombination.Companion.with
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class PotentialCombinationsTest {
 
     @Test
-    fun every() {
+    fun matchMakeEvery() {
         val userA = createUser()
         val userB = createUser()
 
@@ -27,10 +28,10 @@ class PotentialCombinationsTest {
         val userA = createUser()
         val userB = createUser()
 
-        val users = Users.of(userA, userB)
-        val potentialCombinations = PotentialCombinations
-            .matchMakeEvery(users)
-            .narrowDown(Self)
+        val potentialCombinations = PotentialCombinations.of(
+            Listener(userA) with Speakers.of(userA, userB),
+            Listener(userB) with Speakers.of(userA, userB),
+        ).narrowDown(Self)
 
         val expected = PotentialCombinations.of(
             PotentialCombination(Listener(userA), Speakers.of(userB)),
@@ -40,11 +41,4 @@ class PotentialCombinationsTest {
         assertEquals(expected, potentialCombinations)
     }
 
-    fun createUser(): User {
-        val uuid = UUID.randomUUID()
-        return User(
-            UserId(uuid),
-            EmailAddress("$uuid@xxx")
-        )
-    }
 }
