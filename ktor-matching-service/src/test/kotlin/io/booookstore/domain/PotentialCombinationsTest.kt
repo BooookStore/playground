@@ -34,8 +34,8 @@ class PotentialCombinationsTest {
         ).narrowDown(Self)
 
         val expected = PotentialCombinations.of(
-            PotentialCombination(Listener(userA), Speakers.of(userB)),
-            PotentialCombination(Listener(userB), Speakers.of(userA)),
+            Listener(userA) with Speakers.of(userB),
+            Listener(userB) with Speakers.of(userA),
         )
 
         assertEquals(expected, potentialCombinations)
