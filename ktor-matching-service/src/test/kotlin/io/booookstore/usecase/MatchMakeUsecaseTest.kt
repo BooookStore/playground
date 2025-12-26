@@ -12,10 +12,11 @@ class MatchMakeUsecaseTest {
 
     val userA = createUser()
     val userB = createUser()
+    val userC = createUser()
 
     @BeforeEach
     fun setupUsersGatewayMock() {
-        UsersGatewayMock.hold(userA, userB)
+        UsersGatewayMock.hold(userA, userB, userC)
     }
 
     @Test
@@ -23,8 +24,9 @@ class MatchMakeUsecaseTest {
         val actual = MatchMakeUsecase(UsersGatewayMock).execute()
 
         val expected = PotentialCombinations.of(
-            Listener(userA) with Speakers.of(userB),
-            Listener(userB) with Speakers.of(userA),
+            Listener(userA) with Speakers.of(userB, userC),
+            Listener(userB) with Speakers.of(userA, userC),
+            Listener(userC) with Speakers.of(userB, userA),
         )
 
         assertEquals(expected, actual)
