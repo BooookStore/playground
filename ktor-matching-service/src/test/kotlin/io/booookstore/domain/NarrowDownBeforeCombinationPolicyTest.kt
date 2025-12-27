@@ -1,7 +1,6 @@
 package io.booookstore.domain
 
 import io.booookstore.createUser
-import io.booookstore.domain.CombinationHistory.Companion.with
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,7 +16,7 @@ class NarrowDownBeforeCombinationPolicyTest {
     @BeforeEach
     fun setCombinationsHistory() {
         beforeCombination = BeforeCombination(CombinationsHistory.of(
-            Listener(userA) with Speaker(userB),
+            Listener(userA) to Speaker(userB),
         ))
     }
 

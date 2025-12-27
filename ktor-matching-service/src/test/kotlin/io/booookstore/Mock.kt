@@ -1,6 +1,5 @@
 package io.booookstore
 
-import io.booookstore.domain.CombinationHistory
 import io.booookstore.domain.CombinationsHistory
 import io.booookstore.domain.Listener
 import io.booookstore.domain.Speaker
@@ -16,8 +15,7 @@ object CombinationsHistoryGatewayMock : CombinationsHistoryPort {
     override fun find(): CombinationsHistory = combinationsHistory ?: throw Exception("CombinationsHistory not found")
 
     fun hold(vararg pairs: Pair<Listener, Speaker>) {
-        val values = pairs.map { CombinationHistory(it.first, it.second) }.toTypedArray()
-        combinationsHistory = CombinationsHistory.of(*values)
+        combinationsHistory = CombinationsHistory.of(*pairs)
     }
 
     fun clearHolds() {

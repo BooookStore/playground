@@ -7,18 +7,11 @@ data class CombinationsHistory(val values: Set<CombinationHistory>) {
 
     companion object {
 
-        fun of(vararg values: CombinationHistory) = CombinationsHistory(values.toSet())
+        fun of(vararg pairs: Pair<Listener, Speaker>) =
+            CombinationsHistory(pairs.map { CombinationHistory(it.first, it.second) }.toSet())
 
     }
 
 }
 
-data class CombinationHistory(val listener: Listener, val speaker: Speaker) {
-
-    companion object {
-
-        infix fun Listener.with(speaker: Speaker) = CombinationHistory(this, speaker)
-
-    }
-
-}
+data class CombinationHistory(val listener: Listener, val speaker: Speaker)
