@@ -4,7 +4,6 @@ import io.booookstore.CombinationsHistoryGatewayMock
 import io.booookstore.UsersGatewayMock
 import io.booookstore.createUser
 import io.booookstore.domain.*
-import io.booookstore.domain.PotentialCombination.Companion.with
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
@@ -33,9 +32,9 @@ class MatchMakeUsecaseTest {
         val actual = MatchMakeUsecase(UsersGatewayMock, CombinationsHistoryGatewayMock).execute()
 
         val expected = PotentialCombinations.of(
-            Listener(userA) with Speakers.of(userB),
-            Listener(userB) with Speakers.of(userA, userC),
-            Listener(userC) with Speakers.of(userB, userA),
+            Listener(userA) to Speakers.of(userB),
+            Listener(userB) to Speakers.of(userA, userC),
+            Listener(userC) to Speakers.of(userB, userA),
         )
 
         assertEquals(expected, actual)

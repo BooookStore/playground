@@ -9,8 +9,8 @@ data class PotentialCombinations(val values: Set<PotentialCombination>) {
 
     companion object {
 
-        fun of(vararg potentialCombinations: PotentialCombination) =
-            PotentialCombinations(potentialCombinations.toSet())
+        fun of(vararg pairs: Pair<Listener, Speakers>) =
+            pairs.map(PotentialCombination::of).toSet().let(::PotentialCombinations)
 
         fun matchMakeEvery(users: Users) =
             users.map {
@@ -27,7 +27,7 @@ data class PotentialCombination(val listener: Listener, val speakers: Speakers) 
 
     companion object {
 
-        infix fun Listener.with(speakers: Speakers) = PotentialCombination(this, speakers)
+        fun of(pair: Pair<Listener, Speakers>) = PotentialCombination(pair.first, pair.second)
 
     }
 
