@@ -10,11 +10,12 @@ class MatchMakeUsecase(val usersPort: UsersPort, val combinationsHistoryPort: Co
 
     fun execute(): PotentialCombinations {
         val users = usersPort.findUsers()
+        val history = combinationsHistoryPort.find()
 
         val potentialCombinations = PotentialCombinations
             .matchMakeEvery(users)
             .narrowDown(ExcludeSelf)
-            .narrowDown(ExcludeBeforeCombination(combinationsHistoryPort.find()))
+            .narrowDown(ExcludeBeforeCombination(history))
 
         return potentialCombinations
     }
