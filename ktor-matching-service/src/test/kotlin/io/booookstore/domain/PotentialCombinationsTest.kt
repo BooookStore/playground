@@ -31,7 +31,7 @@ class PotentialCombinationsTest {
         val actual = PotentialCombinations.of(
             Listener(userA) with Speakers.of(userA, userB),
             Listener(userB) with Speakers.of(userA, userB),
-        ).narrowDown(Self)
+        ).narrowDown(ExcludeSelf)
 
         val expected = PotentialCombinations.of(
             Listener(userA) with Speakers.of(userB),

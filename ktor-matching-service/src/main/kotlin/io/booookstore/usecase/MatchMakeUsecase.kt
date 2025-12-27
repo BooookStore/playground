@@ -1,8 +1,8 @@
 package io.booookstore.usecase
 
-import io.booookstore.domain.BeforeCombination
+import io.booookstore.domain.ExcludeBeforeCombination
 import io.booookstore.domain.PotentialCombinations
-import io.booookstore.domain.Self
+import io.booookstore.domain.ExcludeSelf
 import io.booookstore.port.CombinationsHistoryPort
 import io.booookstore.port.UsersPort
 
@@ -13,8 +13,8 @@ class MatchMakeUsecase(val usersPort: UsersPort, val combinationsHistoryPort: Co
 
         val potentialCombinations = PotentialCombinations
             .matchMakeEvery(users)
-            .narrowDown(Self)
-            .narrowDown(BeforeCombination(combinationsHistoryPort.find()))
+            .narrowDown(ExcludeSelf)
+            .narrowDown(ExcludeBeforeCombination(combinationsHistoryPort.find()))
 
         return potentialCombinations
     }
