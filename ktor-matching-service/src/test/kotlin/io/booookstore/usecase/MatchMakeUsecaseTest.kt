@@ -1,10 +1,10 @@
 package io.booookstore.usecase
 
+import io.booookstore.CombinationsHistoryGatewayMock
+import io.booookstore.UsersGatewayMock
 import io.booookstore.createUser
 import io.booookstore.domain.*
 import io.booookstore.domain.PotentialCombination.Companion.with
-import io.booookstore.port.CombinationsHistoryPort
-import io.booookstore.port.UsersPort
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
@@ -19,7 +19,7 @@ class MatchMakeUsecaseTest {
     @BeforeEach
     fun setupUsersGatewayMock() {
         UsersGatewayMock.hold(userA, userB, userC)
-        CombinationsHistoryGatewayMock.hold(CombinationHistory(Listener(userA), Speaker(userC)))
+        CombinationsHistoryGatewayMock.hold(Listener(userA) to Speaker(userC))
     }
 
     @AfterEach
@@ -39,38 +39,6 @@ class MatchMakeUsecaseTest {
         )
 
         assertEquals(expected, actual)
-    }
-
-    object UsersGatewayMock : UsersPort {
-        
-        private var users: Users? = null
-
-        override fun findUsers(): Users = users ?: throw Exception("Users not initialized")
-      
-        fun hold(vararg user: User) {
-            users = Users.of(*user)
-        }
-
-        fun clearHolds() {
-            users = null
-        }
-
-    }
-
-    object CombinationsHistoryGatewayMock : CombinationsHistoryPort {
-
-        private var combinationsHistory: CombinationsHistory? = null
-
-        override fun find(): CombinationsHistory = combinationsHistory ?: throw Exception("CombinationsHistory not found")
-
-        fun hold(vararg combinationHistory: CombinationHistory) {
-            combinationsHistory = CombinationsHistory.of(*combinationHistory)
-        }
-
-        fun clearHolds() {
-            combinationsHistory = null
-        }
-
     }
 
 }
