@@ -11,7 +11,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>2.3.0</kotlin.version>
+        <ktor.version>3.3.3</ktor.version>
         <kotlin.code.style>official</kotlin.code.style>
+        <logback-classic.version>1.5.13</logback-classic.version>
         <kotlin.compiler.jvmTarget>24</kotlin.compiler.jvmTarget>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
@@ -34,7 +36,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.6.2</version>
                 <configuration>
-                    <mainClass>io.booookstore.MainKt</mainClass>
+                    <mainClass>io.booookstore.ApplicationKt</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -47,6 +49,21 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-core-jvm</artifactId>
+            <version>${ktor.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-server-netty-jvm</artifactId>
+            <version>${ktor.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-classic.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit5</artifactId>
