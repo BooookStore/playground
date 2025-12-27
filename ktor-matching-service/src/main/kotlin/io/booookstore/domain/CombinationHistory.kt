@@ -8,10 +8,20 @@ data class CombinationsHistory(val values: Set<CombinationHistory>) {
     companion object {
 
         fun of(vararg pairs: Pair<Listener, Speaker>) =
-            CombinationsHistory(pairs.map { CombinationHistory(it.first, it.second) }.toSet())
+            pairs.map(CombinationHistory::of)
+                .toSet()
+                .let(::CombinationsHistory)
 
     }
 
 }
 
-data class CombinationHistory(val listener: Listener, val speaker: Speaker)
+data class CombinationHistory(val listener: Listener, val speaker: Speaker) {
+
+    companion object {
+
+        fun of(pair: Pair<Listener, Speaker>) = CombinationHistory(pair.first, pair.second)
+
+    }
+
+}
