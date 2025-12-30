@@ -6,7 +6,7 @@ import io.booookstore.createUser
 import io.booookstore.domain.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class MatchMakeUsecaseTest {

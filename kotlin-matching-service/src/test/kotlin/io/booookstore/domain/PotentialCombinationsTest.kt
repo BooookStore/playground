@@ -1,7 +1,7 @@
 package io.booookstore.domain
 
 import io.booookstore.createUser
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class PotentialCombinationsTest {
