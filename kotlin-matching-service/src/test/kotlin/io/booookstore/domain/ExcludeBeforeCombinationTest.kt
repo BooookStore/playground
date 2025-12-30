@@ -1,7 +1,6 @@
 package io.booookstore.domain
 
 import io.booookstore.createUser
-import io.booookstore.speakersOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -17,8 +16,8 @@ class ExcludeBeforeCombinationTest {
             Listener(userA) to Speaker(userB),
         ))
 
-        val actual = policy.apply(Listener(userA), speakersOf(userB, userC))
-        val expected = speakersOf(userC)
+        val actual = policy.apply(Listener(userA), Speakers.of(userB, userC))
+        val expected = Speakers.of(userC)
 
         assertEquals(expected, actual)
     }

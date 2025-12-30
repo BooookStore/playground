@@ -34,7 +34,15 @@ data class PotentialCombination(val listener: Listener, val speakers: Speakers) 
 }
 
 @Suppress("JavaDefaultMethodsNotOverriddenByDelegation")
-data class Speakers(val values: Set<Speaker>) : Set<Speaker> by values
+data class Speakers(val values: Set<Speaker>) : Set<Speaker> by values {
+
+    companion object {
+
+        fun of(vararg users: User): Speakers = Speakers(users.map(::Speaker).toSet())
+
+    }
+
+}
 
 data class Speaker(val user: User)
 
