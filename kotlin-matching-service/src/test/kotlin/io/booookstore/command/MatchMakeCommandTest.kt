@@ -6,9 +6,12 @@ class MatchMakeCommandTest {
 
     @Test
     fun execute() {
-        // val usersGateway ...
-        // val combinationsHistoryGateway ...
-        // MatchMakeCommand() ...
+        val args = arrayOf(
+            "--users-file-path", "TODO",
+            "--combinations-history-file-path", "TODO"
+        )
+
+        MatchMakeCommand(args).execute()
     }
 
 }
