@@ -4,6 +4,6 @@ import io.booookstore.domain.Users
 
 interface UsersPort {
 
-    fun findUsers(): Users
+    fun find(): Users
 
 }

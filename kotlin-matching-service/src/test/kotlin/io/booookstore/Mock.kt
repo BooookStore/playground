@@ -28,7 +28,7 @@ object UsersGatewayMock : UsersPort {
 
     private var users: Users? = null
 
-    override fun findUsers(): Users = users ?: throw Exception("Users not initialized")
+    override fun find(): Users = users ?: throw Exception("Users not initialized")
 
     fun hold(vararg user: User) {
         users = Users.of(*user)

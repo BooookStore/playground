@@ -9,7 +9,7 @@ import io.booookstore.port.UsersPort
 class MatchMakeUsecase(val usersPort: UsersPort, val combinationsHistoryPort: CombinationsHistoryPort) {
 
     fun execute(): PotentialCombinations {
-        val users = usersPort.findUsers()
+        val users = usersPort.find()
         val history = combinationsHistoryPort.find()
 
         val potentialCombinations = PotentialCombinations
